@@ -12,6 +12,7 @@ public class MainActivity extends AppCompatActivity {
 
     MediaPlayer mp;
     Button btnPrincipal;
+    int valor = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,12 +34,6 @@ public class MainActivity extends AppCompatActivity {
 
     private void changeAudio(){
 
-        int valor = (int) (Math.random() * 17) + 1;
-
-        String val = ""+valor;
-
-
-        Log.i("Valor",val);
 
         if(valor == 1)
             mp = MediaPlayer.create(this,R.raw.fer1);
@@ -58,6 +53,8 @@ public class MainActivity extends AppCompatActivity {
             mp = MediaPlayer.create(this,R.raw.fer8);
         if(valor == 9)
             mp = MediaPlayer.create(this,R.raw.fer9);
+
+        valor++;
     }
 
 }
