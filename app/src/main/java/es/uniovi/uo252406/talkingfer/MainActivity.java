@@ -1,5 +1,6 @@
 package es.uniovi.uo252406.talkingfer;
 
+import android.media.MediaDataSource;
 import android.media.MediaPlayer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -7,12 +8,18 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+import java.lang.reflect.Array;
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity {
 
-    MediaPlayer mp;
+    MediaPlayer mp = new MediaPlayer();
+    ArrayList<String> audios;
+
     Button btnPrincipal;
-    int valor = 1;
-    final int maxValor = 17;
+    int valor = 0;
+    final int maxValor = 16;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,6 +27,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         btnPrincipal = findViewById(R.id.btnPrincipal);
+        createAudios();
+
 
         btnPrincipal.setOnClickListener(new View.OnClickListener() {
 
@@ -36,53 +45,39 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
     }
 
+    /**
+     *  Crea el ArrayList con el nombre de los audios.
+     *  Se llama cuando se crea el activity.
+     */
+    private void createAudios() {
+        audios = new ArrayList<>();
+        for(Field f: R.raw.class.getFields()){
+            audios.add(f.getName());
+        }
+    }
+
+    /**
+     *   Cambia el audio respecto al anteriormente reproducido.
+     *   Este método es llamado cada vez que el usuario presiona el botón principal.
+     */
     private void changeAudio(){
         if(valor > maxValor){
             valor = 1;
             mpNull();
         }
 
-        if(valor == 1)
-            mp = MediaPlayer.create(this,R.raw.fer1);
-        if(valor == 2)
-            mp = MediaPlayer.create(this,R.raw.fer2);
-        if(valor == 3)
-            mp = MediaPlayer.create(this,R.raw.fer3);
-        if(valor == 4)
-            mp = MediaPlayer.create(this,R.raw.fer4);
-        if(valor == 5)
-            mp = MediaPlayer.create(this,R.raw.fer5);
-        if(valor == 6)
-            mp = MediaPlayer.create(this,R.raw.fer6);
-        if(valor == 7)
-            mp = MediaPlayer.create(this,R.raw.fer7);
-        if(valor == 8)
-            mp = MediaPlayer.create(this,R.raw.fer8);
-        if(valor == 9)
-            mp = MediaPlayer.create(this,R.raw.fer9);
-        if(valor == 10)
-            mp = MediaPlayer.create(this,R.raw.fer10);
-        if(valor == 11)
-            mp = MediaPlayer.create(this,R.raw.fer11);
-        if(valor == 12)
-            mp = MediaPlayer.create(this,R.raw.fer12);
-        if(valor == 13)
-            mp = MediaPlayer.create(this,R.raw.fer13);
-        if(valor == 14)
-            mp = MediaPlayer.create(this,R.raw.fer14);
-        if(valor == 15)
-            mp = MediaPlayer.create(this,R.raw.fer15);
-        if(valor == 16)
-            mp = MediaPlayer.create(this,R.raw.fer16);
-        if(valor == 17)
-            mp = MediaPlayer.create(this,R.raw.fer17);
-        valor++;
+        //  Le pasamos el nombre del audio, de la carpeta y el paquete y nos devuelve un índice para acceder al recurso que deseamos.
+        int rawID = getResources().getIdentifier(audios.get(valor++),"raw",getPackageName());
+        mp = MediaPlayer.create(this,rawID);
 
     }
 
+    /**
+     *  Se encarga de parar el reproductor por si algún audio está sonando.
+     *  Este método es llamado cada vez que el usuario presiona el botón principal para evitar que se solapen los audios.
+     */
     private void mpNull(){
         try{
             mp.stop();
