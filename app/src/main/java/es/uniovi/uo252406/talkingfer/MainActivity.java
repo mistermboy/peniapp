@@ -44,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
             valor = 1;
             mpNull();
         }
+
         if(valor == 1)
             mp = MediaPlayer.create(this,R.raw.fer1);
         if(valor == 2)
@@ -86,7 +87,6 @@ public class MainActivity extends AppCompatActivity {
         try{
             mp.stop();
             mp.release();
-            mp = null;
         }catch(IllegalStateException e){
             Log.e("IllegalStateException", "Illegal State Exception: " + e.getMessage());
         }catch(Exception e){
