@@ -74,14 +74,25 @@ public class MainActivity extends AppCompatActivity {
      */
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.action_freeSelect) {
-            startFreeSelectionActivity();
-            return true;
+
+        switch (id){
+
+            case R.id.action_freeSelect:
+                startFreeSelectionActivity();
+                return true;
+
+            case R.id.action_principal:
+                startPrincipalActivity();
+                return true;
+
+            case R.id.action_fin:
+                finish();
+                return true;
         }
-        if (id == R.id.action_fin) {
-            finish();
-            return true;
-        }
+
+
+
+
 
         return super.onOptionsItemSelected(item);
     }
@@ -93,6 +104,12 @@ public class MainActivity extends AppCompatActivity {
     private void startFreeSelectionActivity(){
         intent = new Intent(MainActivity.this, FreeSelectionActivity.class);
         intent.putExtra("audios", audios);
+        startActivity(intent);
+    }
+
+
+    private void startPrincipalActivity(){
+        intent = new Intent(MainActivity.this, Principal.class);
         startActivity(intent);
     }
 

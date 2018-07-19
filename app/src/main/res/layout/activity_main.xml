@@ -4,15 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/es"
-    tools:background="@drawable/es"
     tools:context=".MainActivity">
 
 
     <Button
         android:id="@+id/btnPrincipal"
-        android:layout_width="211dp"
-        android:layout_height="172dp"
+        android:layout_width="241dp"
+        android:layout_height="207dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
@@ -23,7 +21,7 @@
         app:layout_constraintHorizontal_bias="0.503"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.53" />
+        app:layout_constraintVertical_bias="0.536" />
 
 
 </android.support.constraint.ConstraintLayout>

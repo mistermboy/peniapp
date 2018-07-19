@@ -2,7 +2,7 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item android:drawable="@drawable/secundaria" android:state_pressed="true"></item>
-    <item android:drawable="@drawable/principal" ></item>
+    <item android:drawable="@drawable/boton" ></item>
 
 </selector>
 

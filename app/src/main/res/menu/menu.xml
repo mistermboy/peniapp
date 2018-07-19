@@ -8,6 +8,12 @@
         android:orderInCategory="100"
         android:title="FreeSelect" />
 
+    <item
+        android:id="@+id/action_principal"
+        android:icon="@android:drawable/btn_dialog"
+        android:orderInCategory="100"
+        android:title="Principal" />
+
 
     <item
         android:id="@+id/action_fin"
