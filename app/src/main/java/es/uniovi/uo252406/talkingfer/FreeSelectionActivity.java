@@ -1,6 +1,5 @@
 package es.uniovi.uo252406.talkingfer;
 
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -47,7 +46,7 @@ public class FreeSelectionActivity extends AppCompatActivity {
             //Asignamos Texto al botón
             button.setText(buttonText);
             //Asignamos el listener
-            button.setOnClickListener(new ButtonsOnClickListener());
+            button.setOnClickListener(new ButtonsOnClickListener(audios.get(i)));
             //Añadimos el botón a la botonera
             lScroll.addView(button);
 
@@ -57,15 +56,21 @@ public class FreeSelectionActivity extends AppCompatActivity {
     }
 
 
-
     class ButtonsOnClickListener implements View.OnClickListener
     {
+
+        private String name;
+
+        public ButtonsOnClickListener(String name){
+            this.name = name;
+        }
+
         @Override
         public void onClick(View v)
         {
             if(Player.getInstance() != null)
                 Player.getInstance().mpNull();
-            Player.getInstance().changeAudio(getBaseContext(),audios);
+            Player.getInstance().selectAudio(getBaseContext(), name);
             try{
                 Player.getInstance().start();
             }catch(IllegalStateException e){

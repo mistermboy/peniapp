@@ -27,7 +27,7 @@ public class Player {
 
     /**
      *   Cambia el audio respecto al anteriormente reproducido.
-     *   Este método es llamado cada vez que el usuario presiona un botón de reproducción.
+     *   Este método es llamado cada vez que el usuario presiona el botón principal de reproducción.
      */
     public void changeAudio(Context context,ArrayList<String> audios){
         if(valor > maxValor){
@@ -41,10 +41,23 @@ public class Player {
 
     }
 
+    /**
+     * Selecciona un audio concreto
+     * @param context
+     * @param name
+     */
+    public void selectAudio(Context context,String name){
+
+        int rawID = context.getResources().getIdentifier(name,"raw",context.getPackageName());
+        mp = android.media.MediaPlayer.create(context,rawID);
+
+    }
+
+
 
     /**
      *  Se encarga de parar el reproductor por si algún audio está sonando.
-     *  Este método es llamado cada vez que el usuario presiona un botón de reproducción para evitar que se solapen los audios.
+     *  Este método es llamado cada vez que el usuario presiona el botón principal  de reproducción para evitar que se solapen los audios.
      */
     public void mpNull(){
         try{
