@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
@@ -13,7 +14,7 @@ public class FreeSelectionActivity extends AppCompatActivity {
 
     static int numBotones = 20;
 
-    ArrayList<Integer> audios;
+    ArrayList<String> audios;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,7 +23,7 @@ public class FreeSelectionActivity extends AppCompatActivity {
         setContentView(R.layout.activity_selection);
 
         //Obtenemos los audios enviados desde el MainActivity
-        audios = (ArrayList<Integer>)getIntent().getExtras().getSerializable("audios");
+        audios = (ArrayList<String>) getIntent().getExtras().getSerializable("audios");
 
         //Obtenemos el linear layout del scroll
         LinearLayout lScroll = (LinearLayout) findViewById(R.id.lScroll);
@@ -45,6 +46,8 @@ public class FreeSelectionActivity extends AppCompatActivity {
 
             //Asignamos Texto al botón
             button.setText(buttonText);
+            //Asignamos el listener
+            button.setOnClickListener(new ButtonsOnClickListener());
             //Añadimos el botón a la botonera
             lScroll.addView(button);
 
@@ -52,5 +55,24 @@ public class FreeSelectionActivity extends AppCompatActivity {
         }
 
     }
+
+
+
+    class ButtonsOnClickListener implements View.OnClickListener
+    {
+        @Override
+        public void onClick(View v)
+        {
+            if(Player.getInstance() != null)
+                Player.getInstance().mpNull();
+            Player.getInstance().changeAudio(getBaseContext(),audios);
+            try{
+                Player.getInstance().start();
+            }catch(IllegalStateException e){
+                Log.e("IllegalStateException", "Illegal State Exception: " + e.getMessage());
+            }
+        }
+
+    };
 
 }
