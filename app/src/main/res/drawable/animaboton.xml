@@ -4,5 +4,5 @@
     <item android:drawable="@drawable/secundaria" android:state_pressed="true"></item>
     <item android:drawable="@drawable/principal" ></item>
 
-
 </selector>
+
