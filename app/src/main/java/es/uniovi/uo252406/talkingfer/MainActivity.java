@@ -1,5 +1,6 @@
 package es.uniovi.uo252406.talkingfer;
 
+import android.content.Intent;
 import android.media.MediaDataSource;
 import android.media.MediaPlayer;
 import android.support.v7.app.AppCompatActivity;
@@ -89,5 +90,15 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
+
+    /**
+     *  Pasa del MainActivity al FreeSelectionActivity y le pasa como parámetro la lista de audios
+     */
+    private void startFreeSelectionActivity(){
+        Intent intent = new Intent(MainActivity.this, FreeSelectionActivity.class);
+        intent.putExtra("audios", audios);
+        startActivity(intent);
+    }
+
 
 }
