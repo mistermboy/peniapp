@@ -1,7 +1,9 @@
 package es.uniovi.uo252406.talkingfer;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
@@ -19,12 +21,8 @@ public class FreeSelectionActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_selection);
 
-
-
         //Obtenemos los audios enviados desde el MainActivity
         audios = (ArrayList<Integer>)getIntent().getExtras().getSerializable("audios");
-
-
 
         //Obtenemos el linear layout del scroll
         LinearLayout lScroll = (LinearLayout) findViewById(R.id.lScroll);
@@ -42,8 +40,11 @@ public class FreeSelectionActivity extends AppCompatActivity {
             Button button = new Button(this);
             //Asignamos propiedades de layout al boton
             button.setLayoutParams(lp);
+
+            String buttonText = String.valueOf(audios.get(i)).replace("_"," ");
+
             //Asignamos Texto al botón
-            button.setText(""+audios.get(i));
+            button.setText(buttonText);
             //Añadimos el botón a la botonera
             lScroll.addView(button);
 
