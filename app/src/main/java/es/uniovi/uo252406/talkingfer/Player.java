@@ -34,11 +34,7 @@ public class Player {
             valor = 1;
             mpNull();
         }
-
-        //  Le pasamos el nombre del audio, de la carpeta y el paquete y nos devuelve un índice para acceder al recurso que deseamos.
-        int rawID = context.getResources().getIdentifier(audios.get(valor++),"raw",context.getPackageName());
-        mp = android.media.MediaPlayer.create(context,rawID);
-
+       selectAudio(context,audios.get(valor++));
     }
 
     /**
@@ -48,12 +44,11 @@ public class Player {
      */
     public void selectAudio(Context context,String name){
 
+        //  Le pasamos el nombre del audio, de la carpeta y el paquete y nos devuelve un índice para acceder al recurso que deseamos.
         int rawID = context.getResources().getIdentifier(name,"raw",context.getPackageName());
         mp = android.media.MediaPlayer.create(context,rawID);
 
     }
-
-
 
     /**
      *  Se encarga de parar el reproductor por si algún audio está sonando.
@@ -71,7 +66,9 @@ public class Player {
 
     }
 
-
+    /**
+     *  Reproduce el audio
+     */
     public void start() {
         mp.start();
     }
