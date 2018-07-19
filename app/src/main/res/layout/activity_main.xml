@@ -8,6 +8,7 @@
     tools:background="@drawable/es"
     tools:context=".MainActivity">
 
+
     <Button
         android:id="@+id/btnPrincipal"
         android:layout_width="211dp"
@@ -22,7 +23,7 @@
         app:layout_constraintHorizontal_bias="0.503"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.433" />
+        app:layout_constraintVertical_bias="0.53" />
 
 
 </android.support.constraint.ConstraintLayout>
