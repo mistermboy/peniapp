@@ -6,6 +6,8 @@ import android.media.MediaPlayer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
@@ -21,6 +23,8 @@ public class MainActivity extends AppCompatActivity {
     Button btnPrincipal;
     int valor = 0;
     final int maxValor = 16;
+
+    Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,10 +96,41 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
+     * Crea el menu
+     * @param menu
+     * @return
+     */
+    @Override
+    public boolean onCreateOptionsMenu(final Menu menu) {
+        getMenuInflater().inflate(R.menu.menu, menu);
+        return true;
+    }
+
+    /**
+     * Detecta la opción del menu seleccionada
+     * @param item
+     * @return
+     */
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.action_freeSelect) {
+            startFreeSelectionActivity();
+            return true;
+        }
+        if (id == R.id.action_fin) {
+            finish();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+
+    /**
      *  Pasa del MainActivity al FreeSelectionActivity y le pasa como parámetro la lista de audios
      */
     private void startFreeSelectionActivity(){
-        Intent intent = new Intent(MainActivity.this, FreeSelectionActivity.class);
+        intent = new Intent(MainActivity.this, FreeSelectionActivity.class);
         intent.putExtra("audios", audios);
         startActivity(intent);
     }

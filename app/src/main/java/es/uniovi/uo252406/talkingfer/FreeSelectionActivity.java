@@ -19,27 +19,37 @@ public class FreeSelectionActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_selection);
 
+
+
         //Obtenemos los audios enviados desde el MainActivity
         audios = (ArrayList<Integer>)getIntent().getExtras().getSerializable("audios");
 
+
+
         //Obtenemos el linear layout del scroll
         LinearLayout lScroll = (LinearLayout) findViewById(R.id.lScroll);
+
 
         //Propiedades para los botones
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT );
 
+
         //Creaación de los botones
+
         for (int i=0; i<audios.size(); i++){
 
             Button button = new Button(this);
             //Asignamos propiedades de layout al boton
             button.setLayoutParams(lp);
             //Asignamos Texto al botón
-            button.setText(audios.get(i).toString());
+            button.setText(""+audios.get(i));
             //Añadimos el botón a la botonera
             lScroll.addView(button);
+
+
         }
+
     }
 
 }
