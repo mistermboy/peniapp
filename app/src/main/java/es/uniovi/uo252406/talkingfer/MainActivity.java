@@ -1,6 +1,5 @@
 package es.uniovi.uo252406.talkingfer;
 
-import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -23,7 +22,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         btnPrincipal = findViewById(R.id.btnPrincipal);
         createAudios();
 
@@ -31,12 +29,12 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                if(Player.getInstance() != null)
+                if (Player.getInstance() != null)
                     Player.getInstance().mpNull();
-                Player.getInstance().changeAudio(getBaseContext(),audios);
-                try{
+                Player.getInstance().changeAudio(getBaseContext(), audios);
+                try {
                     Player.getInstance().start();
-                }catch(IllegalStateException e){
+                } catch (IllegalStateException e) {
                     Log.e("IllegalStateException", "Illegal State Exception: " + e.getMessage());
                 }
             }
@@ -45,12 +43,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     *  Crea el ArrayList con el nombre de los audios.
-     *  Se llama cuando se crea el activity.
+     * Crea el ArrayList con el nombre de los audios.
+     * Se llama cuando se crea el activity.
      */
     private void createAudios() {
         audios = new ArrayList<>();
-        for(Field f: R.raw.class.getFields()){
+        for (Field f : R.raw.class.getFields()) {
             audios.add(f.getName());
         }
     }
@@ -58,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * Crea el menu
+     *
      * @param menu
      * @return
      */
@@ -69,6 +68,7 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * Detecta la opción del menu seleccionada
+     *
      * @param item
      * @return
      */
@@ -99,9 +99,9 @@ public class MainActivity extends AppCompatActivity {
 
 
     /**
-     *  Pasa del MainActivity al FreeSelectionActivity y le pasa como parámetro la lista de audios
+     * Pasa del MainActivity al FreeSelectionActivity y le pasa como parámetro la lista de audios
      */
-    private void startFreeSelectionActivity(){
+    private void startFreeSelectionActivity() {
         intent = new Intent(MainActivity.this, FreeSelectionActivity.class);
         intent.putExtra("audios", audios);
         startActivity(intent);
