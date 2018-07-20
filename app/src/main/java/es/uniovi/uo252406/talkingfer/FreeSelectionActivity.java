@@ -9,11 +9,14 @@ import android.widget.LinearLayout;
 
 import java.util.ArrayList;
 
+import es.uniovi.uo252406.talkingfer.Entities.Player;
+
 public class FreeSelectionActivity extends AppCompatActivity {
 
     static int numBotones = 20;
 
     ArrayList<String> audios;
+    String person;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,8 +24,10 @@ public class FreeSelectionActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_selection);
 
-        //Obtenemos los audios enviados desde el MainActivity
-        audios = (ArrayList<String>) getIntent().getExtras().getSerializable("audios");
+        //Obtenemos los objetos enviados desde el MainActivity
+        Bundle b = getIntent().getExtras();
+        audios = b.getStringArrayList("audios");
+        person = b.getString("person");
 
         //Obtenemos el linear layout del scroll
         LinearLayout lScroll = (LinearLayout) findViewById(R.id.lScroll);
@@ -40,16 +45,14 @@ public class FreeSelectionActivity extends AppCompatActivity {
             Button button = new Button(this);
             //Asignamos propiedades de layout al boton
             button.setLayoutParams(lp);
-
-            String buttonText = String.valueOf(audios.get(i)).replace("_"," ");
-
+            //Nos quedamos solo con el texto que nos interesa
+            String buttonText = String.valueOf(audios.get(i)).replace("_"," ").replace(person,"");
             //Asignamos Texto al botón
             button.setText(buttonText);
             //Asignamos el listener
             button.setOnClickListener(new ButtonsOnClickListener(audios.get(i)));
             //Añadimos el botón a la botonera
             lScroll.addView(button);
-
 
         }
 

@@ -17,7 +17,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".FreeSelectionActivity" />
-        <activity android:name=".Principal"></activity>
+        <activity android:name=".MainActivity" />
     </application>
 
 </manifest>

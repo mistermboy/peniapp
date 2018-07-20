@@ -12,18 +12,27 @@ import android.widget.Button;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 
+import es.uniovi.uo252406.talkingfer.Entities.Player;
+
 public class MainActivity extends AppCompatActivity {
 
     ArrayList<String> audios;
     Button btnPrincipal;
     Intent intent;
 
+    String person;
+
+    public final static int FREE_ACTIVITY=1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         btnPrincipal = findViewById(R.id.btnPrincipal);
-        createAudios();
+
+        person = (String) getIntent().getExtras().getSerializable("person");
+
+        createAudios(person);
 
         btnPrincipal.setOnClickListener(new View.OnClickListener() {
 
@@ -44,13 +53,22 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * Crea el ArrayList con el nombre de los audios.
+     * Escoge solo los audios que pertenezcan a la persona que se le pasa.
+     * Establece un límite en el reproductor
      * Se llama cuando se crea el activity.
      */
-    private void createAudios() {
+    private void createAudios(String person) {
         audios = new ArrayList<>();
+        int numAudios=0;
         for (Field f : R.raw.class.getFields()) {
-            audios.add(f.getName());
+            //Es  un audio de la persona que estamos buscando?
+           if(f.getName().split("_")[0].equals(person)){
+               audios.add(f.getName());
+               numAudios++;
+           }
+
         }
+        Player.getInstance().setMaxValor(numAudios);
     }
 
 
@@ -81,18 +99,10 @@ public class MainActivity extends AppCompatActivity {
                 startFreeSelectionActivity();
                 return true;
 
-            case R.id.action_principal:
-                startPrincipalActivity();
-                return true;
-
             case R.id.action_fin:
                 finish();
                 return true;
         }
-
-
-
-
 
         return super.onOptionsItemSelected(item);
     }
@@ -103,15 +113,14 @@ public class MainActivity extends AppCompatActivity {
      */
     private void startFreeSelectionActivity() {
         intent = new Intent(MainActivity.this, FreeSelectionActivity.class);
-        intent.putExtra("audios", audios);
-        startActivity(intent);
+
+        Bundle bundle = new Bundle();
+        bundle.putStringArrayList("audios", audios);
+        bundle.putString("person", person);
+
+        intent.putExtras(bundle);
+        startActivityForResult(intent,FREE_ACTIVITY);
+
     }
-
-
-    private void startPrincipalActivity(){
-        intent = new Intent(MainActivity.this, Principal.class);
-        startActivity(intent);
-    }
-
 
 }

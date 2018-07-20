@@ -1,4 +1,4 @@
-package es.uniovi.uo252406.talkingfer;
+package es.uniovi.uo252406.talkingfer.Entities;
 
 import android.content.Context;
 import android.util.Log;
@@ -12,7 +12,7 @@ public class Player {
     private android.media.MediaPlayer mp;
 
     int valor = 0;
-    final int maxValor = 16;
+    int maxValor;
 
     private Player(){
 
@@ -30,8 +30,8 @@ public class Player {
      *   Este método es llamado cada vez que el usuario presiona el botón principal de reproducción.
      */
     public void changeAudio(Context context,ArrayList<String> audios){
-        if(valor > maxValor){
-            valor = 1;
+        if(valor >= maxValor){
+            valor = 0;
             mpNull();
         }
        selectAudio(context,audios.get(valor++));
@@ -58,6 +58,7 @@ public class Player {
         try{
             mp.stop();
             mp.release();
+            mp = null;
         }catch(IllegalStateException e){
             Log.e("IllegalStateException", "Illegal State Exception: " + e.getMessage());
         }catch(Exception e){
@@ -71,5 +72,24 @@ public class Player {
      */
     public void start() {
         mp.start();
+    }
+
+
+    //Getters y Setters
+
+    public int getValor() {
+        return valor;
+    }
+
+    public void setValor(int valor) {
+        this.valor = valor;
+    }
+
+    public int getMaxValor() {
+        return maxValor;
+    }
+
+    public void setMaxValor(int maxValor) {
+        this.maxValor = maxValor;
     }
 }
