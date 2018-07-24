@@ -49,7 +49,7 @@ public class FreeSelectionActivity extends AppCompatActivity {
             //Asignamos propiedades de layout al boton
             button.setLayoutParams(lp);
             //Nos quedamos solo con el texto que nos interesa
-            String buttonText = String.valueOf(audios.get(i)).replace("_"," ").replace(person,"");
+            String buttonText = String.valueOf(audios.get(i)).replace("_"," ").replace(person,"").replace("0","ñ"); //Los audios no pueden llevar "ñ" así que ponemos un 0 y luego sustituimos
             //Asignamos Texto al botón
             button.setText(buttonText);
             //Asignamos el listener
