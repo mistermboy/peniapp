@@ -6,9 +6,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.ScrollView;
 
 import java.util.ArrayList;
 
@@ -35,10 +37,20 @@ public class FreeSelectionActivity extends AppCompatActivity {
         //Obtenemos el linear layout del scroll
         LinearLayout lScroll = (LinearLayout) findViewById(R.id.lScroll);
 
+    //    LinearLayout lhori = (LinearLayout) findViewById(R.id.lHori);
+
 
         //Propiedades para los botones
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT );
+
+
+        //Creamos el botón de fav
+        Button star = new Button(this);
+
+        int drawID = getResources().getIdentifier("btn_star_big_on","drawable","android");
+        star.setBackground(getResources().getDrawable(drawID));
+
 
 
         //Creaación de los botones
@@ -54,8 +66,20 @@ public class FreeSelectionActivity extends AppCompatActivity {
             button.setText(buttonText);
             //Asignamos el listener
             button.setOnClickListener(new ButtonsOnClickListener(audios.get(i)));
+
             //Añadimos el botón a la botonera
+
+
             lScroll.addView(button);
+
+            /*
+            if(lScroll.getParent()!=null)
+                ((ScrollView)lScroll.getParent()).removeView(lScroll); // <- fix
+
+            lScroll.addView(star);
+
+            */
+
 
         }
 
