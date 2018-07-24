@@ -1,11 +1,14 @@
 package es.uniovi.uo252406.talkingfer;
 
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 
 import java.util.ArrayList;
 
@@ -57,7 +60,6 @@ public class FreeSelectionActivity extends AppCompatActivity {
         }
 
     }
-
 
     class ButtonsOnClickListener implements View.OnClickListener
     {
