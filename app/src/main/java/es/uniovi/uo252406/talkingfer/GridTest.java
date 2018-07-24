@@ -22,20 +22,25 @@ public class GridTest extends AppCompatActivity {
         gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v,
                                     int position, long id) {
-               startMain();
+                startMain("fer");
+                //startMain("berto");
             }
         });
     }
 
 
     /**
-     * Pasa del MainActivity al FreeSelectionActivity y le pasa como parámetro la lista de audios
+     * Pasa al Main
      */
-    private void startMain() {
+    private void startMain(String person) {
         intent = new Intent(GridTest.this, MainActivity.class);
-        //Aquí hay que reeemplazar fer por la persona que se selecciona
-        intent.putExtra("person", "fer");
-        startActivity(intent);
+
+        Bundle bundle = new Bundle();
+        bundle.putString("person", person);
+
+        intent.putExtras(bundle);
+        startActivityForResult(intent,MainActivity.FREE_ACTIVITY);
+
     }
 
 }

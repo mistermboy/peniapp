@@ -30,8 +30,13 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         btnPrincipal = findViewById(R.id.btnPrincipal);
 
-        person = (String) getIntent().getExtras().getSerializable("person");
 
+        Bundle b = getIntent().getExtras();
+
+        person = (String) b.getString("person");
+
+
+        createButton(person);
         createAudios(person);
 
         btnPrincipal.setOnClickListener(new View.OnClickListener() {
@@ -48,6 +53,17 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
+    }
+
+    /**
+     * Asigna la imagen correcta al botón
+     */
+    private void createButton(String img) {
+
+        Button btn = (Button) findViewById(R.id.btnPrincipal);
+        int drawID = getResources().getIdentifier(img,"drawable",getPackageName());
+        btn.setBackground(getResources().getDrawable(drawID));
 
     }
 
