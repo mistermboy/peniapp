@@ -18,6 +18,7 @@ public class MainActivity extends AppCompatActivity {
 
     ArrayList<String> audios;
     Button btnPrincipal;
+    Button btnShowAll;
     Intent intent;
 
     String person;
@@ -28,16 +29,24 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        btnPrincipal = findViewById(R.id.btnPrincipal);
 
-
+        //Recogemos los datos
         Bundle b = getIntent().getExtras();
-
         person = (String) b.getString("person");
 
 
         createButton(person);
         createAudios(person);
+        asignaFuncionalidades();
+
+
+    }
+
+    /**
+     * Asigna funcionalidad a los botones
+     */
+    private void asignaFuncionalidades() {
+        btnPrincipal = findViewById(R.id.btnPrincipal);
 
         btnPrincipal.setOnClickListener(new View.OnClickListener() {
 
@@ -53,6 +62,17 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
+        btnShowAll = findViewById(R.id.btnShowAll);
+
+        btnShowAll.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+               startFreeSelectionActivity();
+            }
+        });
+
 
     }
 
@@ -88,42 +108,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    /**
-     * Crea el menu
-     *
-     * @param menu
-     * @return
-     */
-    @Override
-    public boolean onCreateOptionsMenu(final Menu menu) {
-        getMenuInflater().inflate(R.menu.menu, menu);
-        return true;
-    }
-
-    /**
-     * Detecta la opción del menu seleccionada
-     *
-     * @param item
-     * @return
-     */
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-
-        switch (id){
-
-            case R.id.action_freeSelect:
-                startFreeSelectionActivity();
-                return true;
-
-            case R.id.action_fin:
-                finish();
-                return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-
+    
     /**
      * Pasa del MainActivity al FreeSelectionActivity y le pasa como parámetro la lista de audios
      */

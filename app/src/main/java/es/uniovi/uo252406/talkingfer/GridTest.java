@@ -22,8 +22,8 @@ public class GridTest extends AppCompatActivity {
         gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v,
                                     int position, long id) {
-                startMain("fer");
-                //startMain("berto");
+                //startMain("fer");
+                startMain("berto");
             }
         });
     }
