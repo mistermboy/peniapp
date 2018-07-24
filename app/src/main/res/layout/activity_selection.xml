@@ -8,14 +8,16 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@drawable/fondo">
+
         <LinearLayout
+            android:id="@+id/lScroll"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:id="@+id/lScroll" >
+            android:orientation="vertical">
 
-
+            
 
         </LinearLayout>
 

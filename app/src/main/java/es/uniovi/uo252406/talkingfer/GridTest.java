@@ -3,6 +3,7 @@ package es.uniovi.uo252406.talkingfer;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
@@ -11,6 +12,12 @@ import android.widget.Toast;
 public class GridTest extends AppCompatActivity {
 
     private Intent intent;
+
+    private static int aux = 0;
+
+    private static void increment(){
+        aux++;
+    }
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,8 +29,11 @@ public class GridTest extends AppCompatActivity {
         gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v,
                                     int position, long id) {
-                startMain("fer");
-                //startMain("berto");
+
+                if(position %2==0)
+                    startMain("fer");
+                else
+                    startMain("berto");
             }
         });
     }

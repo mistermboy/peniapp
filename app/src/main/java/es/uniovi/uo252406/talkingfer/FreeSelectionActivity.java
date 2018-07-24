@@ -37,7 +37,6 @@ public class FreeSelectionActivity extends AppCompatActivity {
         //Obtenemos el linear layout del scroll
         LinearLayout lScroll = (LinearLayout) findViewById(R.id.lScroll);
 
-    //    LinearLayout lhori = (LinearLayout) findViewById(R.id.lHori);
 
 
         //Propiedades para los botones
@@ -45,11 +44,7 @@ public class FreeSelectionActivity extends AppCompatActivity {
                 LinearLayout.LayoutParams.WRAP_CONTENT );
 
 
-        //Creamos el botón de fav
-        Button star = new Button(this);
 
-        int drawID = getResources().getIdentifier("btn_star_big_on","drawable","android");
-        star.setBackground(getResources().getDrawable(drawID));
 
 
 
@@ -67,9 +62,14 @@ public class FreeSelectionActivity extends AppCompatActivity {
             //Asignamos el listener
             button.setOnClickListener(new ButtonsOnClickListener(audios.get(i)));
 
-            //Añadimos el botón a la botonera
 
+            //Creamos el botón de fav
+            Button star = new Button(this);
 
+            int drawID = getResources().getIdentifier("btn_star_big_on","drawable","android");
+            star.setBackground(getResources().getDrawable(drawID));
+
+            //Añadimos los botones a la botonera
             lScroll.addView(button);
 
             /*
