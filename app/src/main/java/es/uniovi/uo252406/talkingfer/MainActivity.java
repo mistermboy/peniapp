@@ -1,92 +1,126 @@
 package es.uniovi.uo252406.talkingfer;
 
-import android.media.MediaDataSource;
-import android.media.MediaPlayer;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
-import java.lang.reflect.Array;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 
+import es.uniovi.uo252406.talkingfer.Entities.Player;
+
 public class MainActivity extends AppCompatActivity {
 
-    MediaPlayer mp = new MediaPlayer();
     ArrayList<String> audios;
-
     Button btnPrincipal;
-    int valor = 0;
-    final int maxValor = 16;
+    Button btnShowAll;
+    Intent intent;
+
+    String person;
+
+    public final static int FREE_ACTIVITY=1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        btnPrincipal = findViewById(R.id.btnPrincipal);
-        createAudios();
+        //Recogemos los datos
+        Bundle b = getIntent().getExtras();
+        person = (String) b.getString("person");
 
+
+        createButton(person);
+        createAudios(person);
+        asignaFuncionalidades();
+
+
+    }
+
+    /**
+     * Asigna funcionalidad a los botones
+     */
+    private void asignaFuncionalidades() {
+        btnPrincipal = findViewById(R.id.btnPrincipal);
 
         btnPrincipal.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                if(mp != null)
-                    mpNull();
-                changeAudio();
-                try{
-                    mp.start();
-                }catch(IllegalStateException e){
+                if (Player.getInstance() != null)
+                    Player.getInstance().mpNull();
+                Player.getInstance().changeAudio(getBaseContext(), audios);
+                try {
+                    Player.getInstance().start();
+                } catch (IllegalStateException e) {
                     Log.e("IllegalStateException", "Illegal State Exception: " + e.getMessage());
                 }
             }
         });
 
+        btnShowAll = findViewById(R.id.btnShowAll);
+
+        btnShowAll.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+               startFreeSelectionActivity();
+            }
+        });
+
+
     }
 
     /**
-     *  Crea el ArrayList con el nombre de los audios.
-     *  Se llama cuando se crea el activity.
+     * Asigna la imagen correcta al botón
      */
-    private void createAudios() {
+    private void createButton(String img) {
+
+        Button btn = (Button) findViewById(R.id.btnPrincipal);
+        int drawID = getResources().getIdentifier(img,"drawable",getPackageName());
+        btn.setBackground(getResources().getDrawable(drawID));
+
+    }
+
+    /**
+     * Crea el ArrayList con el nombre de los audios.
+     * Escoge solo los audios que pertenezcan a la persona que se le pasa.
+     * Establece un límite en el reproductor
+     * Se llama cuando se crea el activity.
+     */
+    private void createAudios(String person) {
         audios = new ArrayList<>();
-        for(Field f: R.raw.class.getFields()){
-            audios.add(f.getName());
+        int numAudios=0;
+        for (Field f : R.raw.class.getFields()) {
+            //Es  un audio de la persona que estamos buscando?
+           if(f.getName().split("_")[0].equals(person)){
+               audios.add(f.getName());
+               numAudios++;
+           }
+
         }
+        Player.getInstance().setMaxValor(numAudios);
     }
 
-    /**
-     *   Cambia el audio respecto al anteriormente reproducido.
-     *   Este método es llamado cada vez que el usuario presiona el botón principal.
-     */
-    private void changeAudio(){
-        if(valor > maxValor){
-            valor = 1;
-            mpNull();
-        }
 
-        //  Le pasamos el nombre del audio, de la carpeta y el paquete y nos devuelve un índice para acceder al recurso que deseamos.
-        int rawID = getResources().getIdentifier(audios.get(valor++),"raw",getPackageName());
-        mp = MediaPlayer.create(this,rawID);
-
-    }
 
     /**
-     *  Se encarga de parar el reproductor por si algún audio está sonando.
-     *  Este método es llamado cada vez que el usuario presiona el botón principal para evitar que se solapen los audios.
+     * Pasa del MainActivity al FreeSelectionActivity y le pasa como parámetro la lista de audios
      */
-    private void mpNull(){
-        try{
-            mp.stop();
-            mp.release();
-        }catch(IllegalStateException e){
-            Log.e("IllegalStateException", "Illegal State Exception: " + e.getMessage());
-        }catch(Exception e){
-            Log.e("Exception", "General Exception: " + e.getMessage());
-        }
+    private void startFreeSelectionActivity() {
+        intent = new Intent(MainActivity.this, FreeSelectionActivity.class);
+
+        Bundle bundle = new Bundle();
+        bundle.putStringArrayList("audios", audios);
+        bundle.putString("person", person);
+
+        intent.putExtras(bundle);
+        startActivityForResult(intent,FREE_ACTIVITY);
 
     }
 

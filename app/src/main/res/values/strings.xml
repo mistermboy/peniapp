@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">TalkingFer</string>
+    <string name="audio_n">Audio Nº:</string>
 </resources>

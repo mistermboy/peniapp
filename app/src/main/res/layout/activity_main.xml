@@ -4,25 +4,48 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/es"
-    tools:background="@drawable/es"
+    android:background="@drawable/fondo"
     tools:context=".MainActivity">
+
 
     <Button
         android:id="@+id/btnPrincipal"
-        android:layout_width="211dp"
-        android:layout_height="172dp"
+        android:layout_width="241dp"
+        android:layout_height="207dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:background="@drawable/animaboton"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.503"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.433" />
+        app:layout_constraintVertical_bias="0.388" />
+
+    <Button
+        android:id="@+id/btnShowAll"
+        android:layout_width="270dp"
+        android:layout_height="60dp"
+        android:layout_marginBottom="24dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:background="@drawable/buttonshape"
+
+        android:shadowColor="#A8A8A8"
+        android:shadowDx="0"
+
+        android:shadowDy="0"
+        android:shadowRadius="5"
+        android:text="Ver todos"
+        android:textColor="#FFFFFF"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+
+        app:layout_constraintStart_toStartOf="parent"
+
+        />
 
 
 </android.support.constraint.ConstraintLayout>
