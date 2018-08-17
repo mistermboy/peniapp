@@ -28,10 +28,12 @@ public class MainActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View v,
                                     int position, long id) {
 
-                if(position %2==0)
+                if(position %2==0) {
+
                     startMain("fer");
-                else
+                }else {
                     startMain("berto");
+                }
             }
         });
     }
@@ -43,12 +45,11 @@ public class MainActivity extends AppCompatActivity {
     private void startMain(String person) {
         intent = new Intent(getApplicationContext(), MenuActivity.class);
 
-      /*  Bundle bundle = new Bundle();
+        Bundle bundle = new Bundle();
         bundle.putString("person", person);
 
         intent.putExtras(bundle);
 
-        */
         startActivity(intent);
 
     }

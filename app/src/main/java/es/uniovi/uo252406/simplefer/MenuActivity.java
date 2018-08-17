@@ -3,6 +3,7 @@ package es.uniovi.uo252406.simplefer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -23,13 +24,6 @@ public class MenuActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
 
-    ArrayList<String> audios;
-    Button btnPrincipal;
-    VideoView vView;
-    Uri uri;
-
-    public final static int FREE_ACTIVITY=1;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,11 +40,9 @@ public class MenuActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        FragmentManager fm = getSupportFragmentManager();
 
-        //Crea los audios correspondientes y asigna la funcionalidad al boton
-        createAudios("fer");
-        asignaFuncionalidades();
-
+        fm.beginTransaction().replace(R.id.escenario,new PrincipalPerson()).commit();
     }
 
     @Override
@@ -89,58 +81,4 @@ public class MenuActivity extends AppCompatActivity
         return true;
     }
 
-
-    /**
-     * Crea el ArrayList con el nombre de los audios.
-     * Escoge solo los audios que pertenezcan a la persona que se le pasa.
-     * Establece un límite en el reproductor
-     * Se llama cuando se crea el activity.
-     */
-    private void createAudios(String person) {
-        audios = new ArrayList<>();
-        int numAudios = 0;
-        for (Field f : R.raw.class.getFields()) {
-            //Es  un audio de la persona que estamos buscando?
-            if (f.getName().split("_")[0].equals(person)) {
-                audios.add(f.getName());
-                numAudios++;
-            }
-
-        }
-        Player.getInstance().setMaxValor(numAudios);
-    }
-
-
-    /**
-     * Asigna funcionalidad a los botones
-     */
-    private void asignaFuncionalidades() {
-        btnPrincipal = findViewById(R.id.btnPrincipal);
-
-        vView = (VideoView) findViewById(R.id.videoView);
-        uri = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.fervideo);
-
-
-        btnPrincipal.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-
-                vView.setVideoURI(uri);
-
-                vView.start();
-
-                if (Player.getInstance() != null)
-                    Player.getInstance().mpNull();
-                Player.getInstance().changeAudio(getBaseContext(), audios);
-                try {
-                    Player.getInstance().start();
-                } catch (IllegalStateException e) {
-                    Log.e("IllegalStateException", "Illegal State Exception: " + e.getMessage());
-                }
-            }
-        });
-
-
-    }
 }
