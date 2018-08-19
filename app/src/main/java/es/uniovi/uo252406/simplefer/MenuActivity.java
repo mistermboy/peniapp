@@ -1,6 +1,5 @@
 package es.uniovi.uo252406.simplefer;
 
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
@@ -9,16 +8,11 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
-import android.widget.VideoView;
-
-import java.lang.reflect.Field;
-import java.util.ArrayList;
 
 import es.uniovi.uo252406.simplefer.Entities.Player;
+import es.uniovi.uo252406.simplefer.Fragments.FreeSelectionFragment;
+import es.uniovi.uo252406.simplefer.Fragments.PrincipalPersonFragment;
 
 public class MenuActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -42,11 +36,12 @@ public class MenuActivity extends AppCompatActivity
 
         FragmentManager fm = getSupportFragmentManager();
 
-        fm.beginTransaction().replace(R.id.escenario,new PrincipalPerson()).commit();
+        fm.beginTransaction().replace(R.id.escenario,new PrincipalPersonFragment()).commit();
     }
 
     @Override
     public void onBackPressed() {
+        Player.getInstance().pause();
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
@@ -64,8 +59,10 @@ public class MenuActivity extends AppCompatActivity
 
         FragmentManager fm = getSupportFragmentManager();
         if (id == R.id.perfil) {
-            fm.beginTransaction().replace(R.id.escenario,new PrincipalPerson()).commit();
+            Player.getInstance().mpNull();
+            fm.beginTransaction().replace(R.id.escenario,new PrincipalPersonFragment()).commit();
         } else if (id == R.id.audios) {
+            Player.getInstance().mpNull();
             fm.beginTransaction().replace(R.id.escenario,new FreeSelectionFragment()).commit();
         }
 
@@ -73,5 +70,6 @@ public class MenuActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
 
 }

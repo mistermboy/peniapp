@@ -98,4 +98,9 @@ public class Player {
     public boolean isPlaying() {
         return  mp.isPlaying();
     }
+
+    public void pause() {
+        mp.pause();
+        mpNull();
+    }
 }
