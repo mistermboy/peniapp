@@ -58,7 +58,7 @@ public class Player {
      */
     public void mpNull(){
         try{
-            mp.stop();
+            mp.reset();
             mp.release();
             mp = null;
         }catch(IllegalStateException e){
@@ -97,5 +97,12 @@ public class Player {
 
     public boolean isPlaying() {
         return  mp.isPlaying();
+    }
+
+    public void pause() {
+
+        if(mp!=null)
+            mp.pause();
+        mpNull();
     }
 }
