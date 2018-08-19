@@ -59,10 +59,10 @@ public class MenuActivity extends AppCompatActivity
 
         FragmentManager fm = getSupportFragmentManager();
         if (id == R.id.perfil) {
-            Player.getInstance().mpNull();
+            Player.getInstance().pause();
             fm.beginTransaction().replace(R.id.escenario,new PrincipalPersonFragment()).commit();
         } else if (id == R.id.audios) {
-            Player.getInstance().mpNull();
+            Player.getInstance().pause();
             fm.beginTransaction().replace(R.id.escenario,new FreeSelectionFragment()).commit();
         }
 
