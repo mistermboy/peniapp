@@ -62,18 +62,11 @@ public class MenuActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
+        FragmentManager fm = getSupportFragmentManager();
+        if (id == R.id.perfil) {
+            fm.beginTransaction().replace(R.id.escenario,new PrincipalPerson()).commit();
+        } else if (id == R.id.audios) {
+            fm.beginTransaction().replace(R.id.escenario,new FreeSelectionFragment()).commit();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

@@ -1,6 +1,7 @@
 package es.uniovi.uo252406.simplefer;
 
 import android.content.Context;
+import android.graphics.Canvas;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -20,7 +21,7 @@ import es.uniovi.uo252406.simplefer.Entities.Player;
 public class PrincipalPerson extends Fragment{
 
 
-    ArrayList<String> audios;
+    static ArrayList<String> audios;
     Button btnPrincipal;
     VideoView vView;
     Uri uri;
@@ -60,7 +61,7 @@ public class PrincipalPerson extends Fragment{
      * Establece un límite en el reproductor
      * Se llama cuando se crea el activity.
      */
-    private void createAudios(String person) {
+    public static ArrayList<String> createAudios(String person) {
         audios = new ArrayList<>();
         int numAudios = 0;
         for (Field f : R.raw.class.getFields()) {
@@ -72,6 +73,7 @@ public class PrincipalPerson extends Fragment{
 
         }
         Player.getInstance().setMaxValor(numAudios);
+        return audios;
     }
 
 
@@ -85,21 +87,41 @@ public class PrincipalPerson extends Fragment{
         vView = (VideoView)  view.findViewById(R.id.videoView);
         uri = Uri.parse("android.resource://" + getActivity().getPackageName() + "/" + R.raw.fervideo);
 
+        vView.setVideoURI(uri);
+        vView.seekTo(vView.getDuration());
 
         btnPrincipal.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
 
-                vView.setVideoURI(uri);
 
-                vView.start();
 
                 if (Player.getInstance() != null)
                     Player.getInstance().mpNull();
                 Player.getInstance().changeAudio(getActivity().getBaseContext(), audios);
                 try {
                     Player.getInstance().start();
+
+                    vView.setVideoURI(uri);
+                    vView.start();
+
+                    new Thread(new Runnable() {
+                        public void run() {
+                            while (Player.getInstance().isPlaying()) {
+
+                                if (!vView.isPlaying()) {
+                                    vView.start();
+                                }
+                            }
+                            vView.pause();
+                            vView.seekTo(vView.getDuration());
+                        }
+                    }).start();
+
+
+
+
                 } catch (IllegalStateException e) {
                     Log.e("IllegalStateException", "Illegal State Exception: " + e.getMessage());
                 }
@@ -108,5 +130,7 @@ public class PrincipalPerson extends Fragment{
 
 
     }
+
+
 
 }

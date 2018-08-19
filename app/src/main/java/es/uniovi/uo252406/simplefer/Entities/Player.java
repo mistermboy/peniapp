@@ -1,6 +1,9 @@
 package es.uniovi.uo252406.simplefer.Entities;
 import android.content.Context;
+import android.net.Uri;
+import android.os.Handler;
 import android.util.Log;
+import android.widget.VideoView;
 
 import java.util.ArrayList;
 
@@ -69,7 +72,7 @@ public class Player {
     /**
      *  Reproduce el audio
      */
-    public void start() {
+    public void start(){
         mp.start();
     }
 
@@ -90,5 +93,9 @@ public class Player {
 
     public void setMaxValor(int maxValor) {
         this.maxValor = maxValor;
+    }
+
+    public boolean isPlaying() {
+        return  mp.isPlaying();
     }
 }

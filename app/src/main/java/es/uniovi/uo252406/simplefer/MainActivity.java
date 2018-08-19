@@ -11,12 +11,6 @@ public class MainActivity extends AppCompatActivity {
 
     private Intent intent;
 
-    private static int aux = 0;
-
-    private static void increment(){
-        aux++;
-    }
-
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
