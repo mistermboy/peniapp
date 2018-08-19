@@ -1,4 +1,4 @@
-package es.uniovi.uo252406.talkingfer;
+package es.uniovi.uo252406.simplefer;
 
 import android.content.Context;
 import android.view.View;

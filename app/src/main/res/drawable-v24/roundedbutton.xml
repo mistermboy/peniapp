@@ -33,7 +33,7 @@
     </item>
 
 
-    <item android:drawable="@drawable/principal" >
+    <item android:drawable="@drawable/fer" >
         <shape android:shape="oval">
             <corners android:bottomRightRadius="8dp"
                 android:bottomLeftRadius="8dp"

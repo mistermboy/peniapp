@@ -1,41 +1,51 @@
-package es.uniovi.uo252406.talkingfer;
+package es.uniovi.uo252406.simplefer;
 
-import android.os.Build;
-import android.support.annotation.RequiresApi;
-import android.support.v7.app.AppCompatActivity;
+import android.content.Context;
+import android.net.Uri;
 import android.os.Bundle;
+import android.app.Fragment;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
-import android.widget.ScrollView;
 
 import java.util.ArrayList;
 
-import es.uniovi.uo252406.talkingfer.Entities.Player;
+import es.uniovi.uo252406.simplefer.Entities.Player;
 
-public class FreeSelectionActivity extends AppCompatActivity {
+import static es.uniovi.uo252406.simplefer.PrincipalPerson.createAudios;
 
-    static int numBotones = 20;
+public class FreeSelectionFragment extends android.support.v4.app.Fragment {
+
+    View view;
 
     ArrayList<String> audios;
     String person;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_selection);
+    public FreeSelectionFragment() {
+        // Required empty public constructor
+    }
+
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        view = inflater.inflate(R.layout.fragment_free_selection, container, false);
+
 
         //Obtenemos los objetos enviados desde el MainActivity
-        Bundle b = getIntent().getExtras();
-        audios = b.getStringArrayList("audios");
-        person = b.getString("person");
+        Bundle b = getActivity().getIntent().getExtras();
+       // audios = b.getStringArrayList("audios");
+     //   person = b.getString("person");
+        person = (String) b.getString("person");
+        audios = createAudios(person);
 
         //Obtenemos el linear layout del scroll
-        LinearLayout lScroll = (LinearLayout) findViewById(R.id.lScroll);
+        LinearLayout lScroll = (LinearLayout) view.findViewById(R.id.lScroll);
 
 
 
@@ -44,15 +54,11 @@ public class FreeSelectionActivity extends AppCompatActivity {
                 LinearLayout.LayoutParams.WRAP_CONTENT );
 
 
-
-
-
-
         //Creaación de los botones
 
         for (int i=0; i<audios.size(); i++){
 
-            Button button = new Button(this);
+            Button button = new Button(view.getContext());
             //Asignamos propiedades de layout al boton
             button.setLayoutParams(lp);
             //Nos quedamos solo con el texto que nos interesa
@@ -60,11 +66,11 @@ public class FreeSelectionActivity extends AppCompatActivity {
             //Asignamos Texto al botón
             button.setText(buttonText);
             //Asignamos el listener
-            button.setOnClickListener(new ButtonsOnClickListener(audios.get(i)));
+            button.setOnClickListener(new FreeSelectionFragment.ButtonsOnClickListener(audios.get(i)));
 
 
             //Creamos el botón de fav
-            Button star = new Button(this);
+            Button star = new Button(view.getContext());
 
             int drawID = getResources().getIdentifier("btn_star_big_on","drawable","android");
             star.setBackground(getResources().getDrawable(drawID));
@@ -83,7 +89,11 @@ public class FreeSelectionActivity extends AppCompatActivity {
 
         }
 
+
+        return view;
     }
+
+
 
     class ButtonsOnClickListener implements View.OnClickListener
     {
@@ -99,7 +109,7 @@ public class FreeSelectionActivity extends AppCompatActivity {
         {
             if(Player.getInstance() != null)
                 Player.getInstance().mpNull();
-            Player.getInstance().selectAudio(getBaseContext(), name);
+            Player.getInstance().selectAudio(getActivity().getBaseContext(), name);
             try{
                 Player.getInstance().start();
             }catch(IllegalStateException e){
