@@ -100,7 +100,9 @@ public class Player {
     }
 
     public void pause() {
-        mp.pause();
+
+        if(mp!=null)
+            mp.pause();
         mpNull();
     }
 }
