@@ -86,7 +86,10 @@ public class PrincipalPersonFragment extends Fragment{
         btnPrincipal = view.findViewById(R.id.btnPrincipal);
 
         vView = (VideoView)  view.findViewById(R.id.videoView);
-        uri = Uri.parse("android.resource://" + getActivity().getPackageName() + "/" + R.raw.fervideo);
+
+        int rawID = getContext().getResources().getIdentifier(person+"video","raw",getContext().getPackageName());
+
+        uri = Uri.parse("android.resource://" + getActivity().getPackageName() + "/" + rawID);
 
         vView.setVideoURI(uri);
         vView.seekTo(vView.getDuration());

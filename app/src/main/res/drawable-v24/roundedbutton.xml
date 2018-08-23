@@ -33,7 +33,7 @@
     </item>
 
 
-    <item android:drawable="@drawable/perfil" >
+    <item android:drawable="@drawable/fercara" >
         <shape android:shape="oval">
             <corners android:bottomRightRadius="8dp"
                 android:bottomLeftRadius="8dp"
