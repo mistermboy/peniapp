@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.ImageView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -15,6 +16,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
+        /*
         GridView gridview = (GridView) findViewById(R.id.gridview);
         gridview.setAdapter(new ImageAdapter(this));
 
@@ -24,19 +27,41 @@ public class MainActivity extends AppCompatActivity {
 
                 if(position %2==0) {
 
-                    startMain("fer");
+                    startMenu("fer");
                 }else {
-                    startMain("berto");
+                    startMenu("berto");
                 }
             }
         });
+
+        */
+
+
+        ImageView fer = (ImageView) findViewById(R.id.imageFer);
+        ImageView berto = (ImageView) findViewById(R.id.imageBerto);
+
+        fer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startMenu("fer");
+            }
+        });
+
+        berto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startMenu("berto");
+            }
+        });
+
+
     }
 
 
     /**
-     * Pasa al Main
+     * Pasa al Menu
      */
-    private void startMain(String person) {
+    private void startMenu(String person) {
         intent = new Intent(getApplicationContext(), MenuActivity.class);
 
         Bundle bundle = new Bundle();

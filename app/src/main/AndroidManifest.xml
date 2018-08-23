@@ -21,7 +21,6 @@
         <activity
             android:name=".MenuActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".SelectPersonActivity"></activity>
     </application>
 
 </manifest>
