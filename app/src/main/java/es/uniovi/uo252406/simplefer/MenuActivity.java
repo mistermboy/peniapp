@@ -16,6 +16,7 @@ import android.widget.TextView;
 import es.uniovi.uo252406.simplefer.Entities.Player;
 import es.uniovi.uo252406.simplefer.Fragments.FreeSelectionFragment;
 import es.uniovi.uo252406.simplefer.Fragments.PrincipalPersonFragment;
+import es.uniovi.uo252406.simplefer.Fragments.QuizFragment;
 
 public class MenuActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -68,15 +69,18 @@ public class MenuActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
+        Player.getInstance().pause();
+
         FragmentManager fm = getSupportFragmentManager();
         if (id == R.id.perfil) {
-            Player.getInstance().pause();
             fm.beginTransaction().replace(R.id.escenario,new PrincipalPersonFragment()).commit();
         } else if (id == R.id.audios) {
-            Player.getInstance().pause();
             fm.beginTransaction().replace(R.id.escenario,new FreeSelectionFragment()).commit();
-        }else if (id == R.id.inicio) {
-            Player.getInstance().pause();
+        }
+        else if (id == R.id.quiz) {
+            fm.beginTransaction().replace(R.id.escenario,new QuizFragment()).commit();
+        }
+        else if (id == R.id.inicio) {
             finish();
         }
 

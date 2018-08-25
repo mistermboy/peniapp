@@ -13,10 +13,18 @@
             android:icon="@drawable/ic_baseline_audiotrack_24px"
             android:title="Audios" />
 
+
+        <item
+            android:id="@+id/quiz"
+            android:icon="@drawable/ic_round_school_24px"
+            android:title="Quiz" />
+
         <item
             android:id="@+id/inicio"
             android:icon="@drawable/ic_baseline_stay_primary_portrait_24px"
             android:title="Inicio" />
+
+
 
     </group>
 
