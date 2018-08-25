@@ -10,8 +10,8 @@
 
     <TextView
         android:id="@+id/textQuestion"
-        android:layout_width="309dp"
-        android:layout_height="119dp"
+        android:layout_width="357dp"
+        android:layout_height="155dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="32dp"
@@ -22,40 +22,35 @@
     <Button
         android:id="@+id/btnO1"
         android:layout_width="312dp"
-        android:layout_height="77dp"
+        android:layout_height="65dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="88dp"
+        android:layout_marginTop="80dp"
         android:background="@android:color/transparent"
+        android:textAlignment="viewStart"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textQuestion" />
 
     <Button
         android:id="@+id/btnO2"
-        android:layout_width="313dp"
-        android:layout_height="67dp"
+        android:layout_width="312dp"
+        android:layout_height="65dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="24dp"
         android:background="@android:color/transparent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnO1" />
 
     <Button
         android:id="@+id/btnO3"
-        android:layout_width="321dp"
-        android:layout_height="60dp"
+        android:layout_width="312dp"
+        android:layout_height="65dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="8dp"
         android:background="@android:color/transparent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.51"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnO2"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.162" />
+
 </android.support.constraint.ConstraintLayout>

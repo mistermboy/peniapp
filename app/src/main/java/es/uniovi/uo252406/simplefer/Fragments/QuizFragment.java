@@ -1,11 +1,6 @@
 package es.uniovi.uo252406.simplefer.Fragments;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
-import android.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,9 +8,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import org.json.JSONException;
-import org.json.JSONObject;
 
-import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -37,7 +30,7 @@ public class QuizFragment extends android.support.v4.app.Fragment {
     Button option2;
     Button option3;
 
-    private int cont = 0;
+    private int actualQuestion = 0;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -79,15 +72,37 @@ public class QuizFragment extends android.support.v4.app.Fragment {
         option2.setTextColor(getResources().getColor(R.color.white));
         option3.setTextColor(getResources().getColor(R.color.white));
 
-        question.setTextSize(24);
-        option1.setTextSize(18);
-        option2.setTextSize(18);
-        option3.setTextSize(18);
+        question.setTextSize(36);
+        option1.setTextSize(24);
+        option2.setTextSize(24);
+        option3.setTextSize(24);
 
         question.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-        option1.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-        option2.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-        option3.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+        option1.setTextAlignment(View.TEXT_ALIGNMENT_VIEW_START);
+        option2.setTextAlignment(View.TEXT_ALIGNMENT_VIEW_START);
+        option3.setTextAlignment(View.TEXT_ALIGNMENT_VIEW_START);
+
+
+        option1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                checkAnswer(1);
+            }
+        });
+
+        option2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                checkAnswer(2);
+            }
+        });
+
+        option3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                checkAnswer(3);
+            }
+        });
 
 
     }
@@ -97,10 +112,10 @@ public class QuizFragment extends android.support.v4.app.Fragment {
      */
     private void startQuiz() {
 
-        question.setText(questions.get(cont).getQuestion());
-        option1.setText("a) "+questions.get(cont).getOption1());
-        option2.setText("b) "+questions.get(cont).getOption2());
-        option3.setText("c) "+questions.get(cont++).getOption3());
+        question.setText(questions.get(actualQuestion).getQuestion());
+        option1.setText("a) "+questions.get(actualQuestion).getOption1());
+        option2.setText("b) "+questions.get(actualQuestion).getOption2());
+        option3.setText("c) "+questions.get(actualQuestion).getOption3());
 
     }
 
@@ -124,4 +139,63 @@ public class QuizFragment extends android.support.v4.app.Fragment {
 
         return sB;
     }
+
+
+
+    private void checkAnswer(int selected){
+
+        if(isCorrect(selected)){
+            markCorrect();
+        }else{
+
+            switch (selected){
+
+                case 1:
+                    option1.setTextColor(getResources().getColor(R.color.red));
+                    markCorrect();
+                    break;
+
+                case 2:
+                    option2.setTextColor(getResources().getColor(R.color.red));
+                    markCorrect();
+                    break;
+
+                case 3:
+                    option3.setTextColor(getResources().getColor(R.color.red));
+                    markCorrect();
+                    break;
+
+            }
+
+
+        }
+
+
+    }
+
+    private void markCorrect() {
+
+        switch (questions.get(actualQuestion).getAnswer()){
+
+            case 1:
+                option1.setTextColor(getResources().getColor(R.color.green));
+                break;
+
+            case 2:
+                option2.setTextColor(getResources().getColor(R.color.green));
+                break;
+
+            case 3:
+                option3.setTextColor(getResources().getColor(R.color.green));
+                break;
+
+        }
+
+    }
+
+    private boolean isCorrect(int selected) {
+        return  questions.get(actualQuestion).getAnswer() == selected;
+    }
+
+
 }
