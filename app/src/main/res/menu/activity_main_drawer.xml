@@ -6,25 +6,35 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/perfil"
-            android:icon="@drawable/ic_menu_camera"
-            android:title="Perfil" />
+            android:icon="@drawable/ic_baseline_face_24px"
+            android:title="Face" />
         <item
             android:id="@+id/audios"
-            android:icon="@drawable/ic_menu_gallery"
+            android:icon="@drawable/ic_baseline_audiotrack_24px"
             android:title="Audios" />
+
+
+        <item
+            android:id="@+id/quiz"
+            android:icon="@drawable/ic_round_school_24px"
+            android:title="Quiz" />
+
+        <item
+            android:id="@+id/inicio"
+            android:icon="@drawable/ic_baseline_stay_primary_portrait_24px"
+            android:title="Inicio" />
+
+
 
     </group>
 
     <item android:title="Communicate">
         <menu>
             <item
-                android:id="@+id/nav_share"
-                android:icon="@drawable/ic_menu_share"
-                android:title="Share" />
-            <item
-                android:id="@+id/nav_send"
-                android:icon="@drawable/ic_menu_send"
-                android:title="Send" />
+                android:id="@+id/aboutUs"
+                android:icon="@drawable/ic_baseline_people_24px"
+                android:title="About us" />
+
         </menu>
     </item>
 
