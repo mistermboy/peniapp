@@ -46,7 +46,7 @@ public class Parser {
         quiz = jsonObject.getJSONObject("quiz");
 
 
-        for (int i = 1; i < quiz.length(); i++) {
+        for (int i = 1; i <= quiz.length(); i++) {
 
             qObject = quiz.getJSONObject("q" + i);
             question = qObject.getString("question");

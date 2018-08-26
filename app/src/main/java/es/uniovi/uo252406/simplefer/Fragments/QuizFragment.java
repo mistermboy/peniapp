@@ -1,6 +1,7 @@
 package es.uniovi.uo252406.simplefer.Fragments;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import java.util.ArrayList;
 
 import es.uniovi.uo252406.simplefer.Entities.Question;
 import es.uniovi.uo252406.simplefer.Logical.Parser;
+import es.uniovi.uo252406.simplefer.Logical.Player;
 import es.uniovi.uo252406.simplefer.R;
 
 
@@ -52,7 +54,7 @@ public class QuizFragment extends android.support.v4.app.Fragment {
 
 
         prepareComponents();
-        startQuiz();
+        writeQuiz();
 
         return view;
     }
@@ -108,9 +110,9 @@ public class QuizFragment extends android.support.v4.app.Fragment {
     }
 
     /**
-     * Escribe la primera pregunta del quiz y sus respuestas
+     * Escribe el Quiz con la pregunta actual
      */
-    private void startQuiz() {
+    private void writeQuiz() {
 
         question.setText(questions.get(actualQuestion).getQuestion());
         option1.setText("a) "+questions.get(actualQuestion).getOption1());
@@ -118,6 +120,7 @@ public class QuizFragment extends android.support.v4.app.Fragment {
         option3.setText("c) "+questions.get(actualQuestion).getOption3());
 
     }
+
 
 
     public StringBuilder getJson() {
@@ -167,11 +170,35 @@ public class QuizFragment extends android.support.v4.app.Fragment {
 
             }
 
-
         }
 
 
+        new Thread(new Runnable() {
+            public void run() {
+                try {
+                    Thread.sleep(2000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                nextQuestion();
+            }
+        }).start();
+
+
+
+
+
     }
+
+    /**
+     * Espera un tiempo corto y pasa a la siguiente pregunta
+     */
+    private void nextQuestion() {
+        actualQuestion++;
+        prepareComponents();
+        writeQuiz();
+    }
+
 
     private void markCorrect() {
 
