@@ -14,7 +14,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 import es.uniovi.uo252406.simplefer.Entities.Question;
-import es.uniovi.uo252406.simplefer.Parser;
+import es.uniovi.uo252406.simplefer.Logical.Parser;
 import es.uniovi.uo252406.simplefer.R;
 
 

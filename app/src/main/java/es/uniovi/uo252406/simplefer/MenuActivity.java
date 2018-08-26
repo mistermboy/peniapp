@@ -13,9 +13,9 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import es.uniovi.uo252406.simplefer.Entities.Player;
-import es.uniovi.uo252406.simplefer.Fragments.FreeSelectionFragment;
-import es.uniovi.uo252406.simplefer.Fragments.PrincipalPersonFragment;
+import es.uniovi.uo252406.simplefer.Logical.Player;
+import es.uniovi.uo252406.simplefer.Fragments.AudiosFragment;
+import es.uniovi.uo252406.simplefer.Fragments.FaceFragment;
 import es.uniovi.uo252406.simplefer.Fragments.QuizFragment;
 
 public class MenuActivity extends AppCompatActivity
@@ -48,7 +48,7 @@ public class MenuActivity extends AppCompatActivity
 
         FragmentManager fm = getSupportFragmentManager();
 
-        fm.beginTransaction().replace(R.id.escenario,new PrincipalPersonFragment()).commit();
+        fm.beginTransaction().replace(R.id.escenario,new FaceFragment()).commit();
     }
 
     @Override
@@ -73,9 +73,9 @@ public class MenuActivity extends AppCompatActivity
 
         FragmentManager fm = getSupportFragmentManager();
         if (id == R.id.perfil) {
-            fm.beginTransaction().replace(R.id.escenario,new PrincipalPersonFragment()).commit();
+            fm.beginTransaction().replace(R.id.escenario,new FaceFragment()).commit();
         } else if (id == R.id.audios) {
-            fm.beginTransaction().replace(R.id.escenario,new FreeSelectionFragment()).commit();
+            fm.beginTransaction().replace(R.id.escenario,new AudiosFragment()).commit();
         }
         else if (id == R.id.quiz) {
             fm.beginTransaction().replace(R.id.escenario,new QuizFragment()).commit();

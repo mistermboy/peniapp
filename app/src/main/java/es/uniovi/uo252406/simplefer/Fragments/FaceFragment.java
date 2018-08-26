@@ -16,7 +16,7 @@ import es.uniovi.uo252406.simplefer.Logical.Player;
 import es.uniovi.uo252406.simplefer.R;
 
 
-public class PrincipalPersonFragment extends Fragment{
+public class FaceFragment extends Fragment{
 
 
     static ArrayList<String> audios;
@@ -28,7 +28,7 @@ public class PrincipalPersonFragment extends Fragment{
 
     View view;
 
-    public PrincipalPersonFragment(){
+    public FaceFragment(){
 
     }
 
@@ -37,7 +37,7 @@ public class PrincipalPersonFragment extends Fragment{
                              Bundle savedInstanceState) {
 
 
-        view = inflater.inflate(R.layout.fragment_principal_person, container, false);
+        view = inflater.inflate(R.layout.fragment_face, container, false);
 
         //Recogemos los datos
         Bundle b = getActivity().getIntent().getExtras();

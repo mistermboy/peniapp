@@ -43,8 +43,6 @@ public class Parser {
         questions = new ArrayList<Question>();
         jsonObject = new JSONObject(json.toString());
 
-        Log.i("DATOS", jsonObject.toString());
-
         quiz = jsonObject.getJSONObject("quiz");
 
 

@@ -14,7 +14,7 @@ import es.uniovi.uo252406.simplefer.Logical.Player;
 import es.uniovi.uo252406.simplefer.R;
 
 
-public class FreeSelectionFragment extends android.support.v4.app.Fragment {
+public class AudiosFragment extends android.support.v4.app.Fragment {
 
     View view;
 
@@ -22,7 +22,7 @@ public class FreeSelectionFragment extends android.support.v4.app.Fragment {
     String person;
 
 
-    public FreeSelectionFragment() {
+    public AudiosFragment() {
         // Required empty public constructor
     }
 
@@ -31,7 +31,7 @@ public class FreeSelectionFragment extends android.support.v4.app.Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        view = inflater.inflate(R.layout.fragment_free_selection, container, false);
+        view = inflater.inflate(R.layout.fragment_audios, container, false);
 
 
         //Obtenemos los objetos enviados desde el MainActivity
@@ -74,7 +74,7 @@ public class FreeSelectionFragment extends android.support.v4.app.Fragment {
             //Asignamos Texto al botón
             button.setText(buttonText);
             //Asignamos el listener
-            button.setOnClickListener(new FreeSelectionFragment.ButtonsOnClickListener(audios.get(i)));
+            button.setOnClickListener(new AudiosFragment.ButtonsOnClickListener(audios.get(i)));
 
 
             //Creamos el botón de fav
