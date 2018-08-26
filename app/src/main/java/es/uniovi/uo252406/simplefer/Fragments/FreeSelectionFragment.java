@@ -85,14 +85,6 @@ public class FreeSelectionFragment extends android.support.v4.app.Fragment {
             //Añadimos los botones a la botonera
             lScroll.addView(button);
 
-            /*
-            if(lScroll.getParent()!=null)
-                ((ScrollView)lScroll.getParent()).removeView(lScroll); // <- fix
-
-            lScroll.addView(star);
-
-            */
-
         }
     }
 
