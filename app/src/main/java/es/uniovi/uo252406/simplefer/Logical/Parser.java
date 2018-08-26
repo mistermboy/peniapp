@@ -1,14 +1,11 @@
-package es.uniovi.uo252406.simplefer;
+package es.uniovi.uo252406.simplefer.Logical;
 
-import android.support.design.shape.InterpolateOnScrollPositionChangeHelper;
 import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedInputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 import es.uniovi.uo252406.simplefer.Entities.Question;

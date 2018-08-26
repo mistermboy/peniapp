@@ -10,10 +10,9 @@ import android.widget.LinearLayout;
 
 import java.util.ArrayList;
 
-import es.uniovi.uo252406.simplefer.Entities.Player;
+import es.uniovi.uo252406.simplefer.Logical.Player;
 import es.uniovi.uo252406.simplefer.R;
 
-import static es.uniovi.uo252406.simplefer.Fragments.PrincipalPersonFragment.createAudios;
 
 public class FreeSelectionFragment extends android.support.v4.app.Fragment {
 
@@ -39,6 +38,7 @@ public class FreeSelectionFragment extends android.support.v4.app.Fragment {
         Bundle b = getActivity().getIntent().getExtras();
         person = (String) b.getString("person");
 
+
         selectAndDraw();
 
         return view;
@@ -50,7 +50,8 @@ public class FreeSelectionFragment extends android.support.v4.app.Fragment {
      */
     public void selectAndDraw() {
 
-        audios = createAudios(person);
+        //audios = createAudios(person);
+        audios = Player.getInstance().getAudios(person);
 
         //Obtenemos el linear layout del scroll
         LinearLayout lScroll = (LinearLayout) view.findViewById(R.id.lScroll);
