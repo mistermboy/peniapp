@@ -1,6 +1,9 @@
 package es.uniovi.uo252406.simplefer.Fragments;
 
+import android.graphics.Typeface;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -62,6 +65,7 @@ public class QuizFragment extends android.support.v4.app.Fragment {
     /**
      * Localiza los componentes del QuizFragment
      */
+    @RequiresApi(api = Build.VERSION_CODES.O)
     private void prepareComponents(){
 
         question = view.findViewById(R.id.textQuestion);
@@ -84,6 +88,12 @@ public class QuizFragment extends android.support.v4.app.Fragment {
         option2.setTextAlignment(View.TEXT_ALIGNMENT_VIEW_START);
         option3.setTextAlignment(View.TEXT_ALIGNMENT_VIEW_START);
 
+        Typeface typeface = getResources().getFont(R.font.indieflower);
+
+        question.setTypeface(typeface);
+        option1.setTypeface(typeface);
+        option2.setTypeface(typeface);
+        option3.setTypeface(typeface);
 
         option1.setOnClickListener(new View.OnClickListener() {
             @Override
