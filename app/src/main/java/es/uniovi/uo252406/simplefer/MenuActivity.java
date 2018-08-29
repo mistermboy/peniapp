@@ -55,7 +55,6 @@ public class MenuActivity extends AppCompatActivity
 
         fm.beginTransaction().replace(R.id.escenario,new FaceFragment()).commit();
 
-
     }
 
     @Override
