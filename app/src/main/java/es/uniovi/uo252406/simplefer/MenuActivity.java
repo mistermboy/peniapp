@@ -1,5 +1,6 @@
 package es.uniovi.uo252406.simplefer;
 
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
@@ -8,14 +9,18 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.view.Menu;
 import android.view.MenuItem;
+import android.view.SubMenu;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import es.uniovi.uo252406.simplefer.Entities.Player;
-import es.uniovi.uo252406.simplefer.Fragments.FreeSelectionFragment;
-import es.uniovi.uo252406.simplefer.Fragments.PrincipalPersonFragment;
+import es.uniovi.uo252406.simplefer.Logical.Player;
+import es.uniovi.uo252406.simplefer.Fragments.AudiosFragment;
+import es.uniovi.uo252406.simplefer.Fragments.FaceFragment;
 import es.uniovi.uo252406.simplefer.Fragments.QuizFragment;
 
 public class MenuActivity extends AppCompatActivity
@@ -48,7 +53,8 @@ public class MenuActivity extends AppCompatActivity
 
         FragmentManager fm = getSupportFragmentManager();
 
-        fm.beginTransaction().replace(R.id.escenario,new PrincipalPersonFragment()).commit();
+        fm.beginTransaction().replace(R.id.escenario,new FaceFragment()).commit();
+
     }
 
     @Override
@@ -73,9 +79,9 @@ public class MenuActivity extends AppCompatActivity
 
         FragmentManager fm = getSupportFragmentManager();
         if (id == R.id.perfil) {
-            fm.beginTransaction().replace(R.id.escenario,new PrincipalPersonFragment()).commit();
+            fm.beginTransaction().replace(R.id.escenario,new FaceFragment()).commit();
         } else if (id == R.id.audios) {
-            fm.beginTransaction().replace(R.id.escenario,new FreeSelectionFragment()).commit();
+            fm.beginTransaction().replace(R.id.escenario,new AudiosFragment()).commit();
         }
         else if (id == R.id.quiz) {
             fm.beginTransaction().replace(R.id.escenario,new QuizFragment()).commit();
@@ -125,6 +131,5 @@ public class MenuActivity extends AppCompatActivity
 
 
     }
-
 
 }

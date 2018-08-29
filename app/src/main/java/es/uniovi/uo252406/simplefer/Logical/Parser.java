@@ -1,14 +1,11 @@
-package es.uniovi.uo252406.simplefer;
+package es.uniovi.uo252406.simplefer.Logical;
 
-import android.support.design.shape.InterpolateOnScrollPositionChangeHelper;
 import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedInputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 import es.uniovi.uo252406.simplefer.Entities.Question;
@@ -46,12 +43,10 @@ public class Parser {
         questions = new ArrayList<Question>();
         jsonObject = new JSONObject(json.toString());
 
-        Log.i("DATOS", jsonObject.toString());
-
         quiz = jsonObject.getJSONObject("quiz");
 
 
-        for (int i = 1; i < quiz.length(); i++) {
+        for (int i = 1; i <= quiz.length(); i++) {
 
             qObject = quiz.getJSONObject("q" + i);
             question = qObject.getString("question");

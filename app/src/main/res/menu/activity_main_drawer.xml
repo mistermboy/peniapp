@@ -33,6 +33,7 @@
             <item
                 android:id="@+id/aboutUs"
                 android:icon="@drawable/ic_baseline_people_24px"
+                android:fontFamily="@font/indieflower"
                 android:title="About us" />
 
         </menu>

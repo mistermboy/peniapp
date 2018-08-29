@@ -14,11 +14,11 @@
 
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="16dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.046"
+        app:layout_constraintHorizontal_bias="0.133"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageSlns"
+        app:layout_constraintTop_toBottomOf="@+id/textSlns"
         app:srcCompat="@drawable/fercara" />
 
     <ImageView
@@ -26,28 +26,28 @@
         android:layout_width="214dp"
         android:layout_height="220dp"
 
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="36dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="100dp"
-        android:layout_marginTop="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.87"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageSlns"
-        app:layout_constraintVertical_bias="0.866"
         app:srcCompat="@drawable/bertocara" />
 
-    <ImageView
-        android:id="@+id/imageSlns"
-        android:layout_width="327dp"
-        android:layout_height="120dp"
+    <TextView
+        android:id="@+id/textSlns"
+        android:layout_width="263dp"
+        android:layout_height="144dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:src="@drawable/slns"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/reeniebeanie"
+        android:text="SLNS"
+        android:textAlignment="center"
+        android:textColor="@android:color/background_light"
+        android:textSize="100sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.512"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

@@ -35,6 +35,7 @@
         android:layout_marginStart="8dp"
         android:lineSpacingExtra="12sp"
         android:text="TextView"
+        android:fontFamily="@font/indieflower"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -51,12 +52,14 @@
         android:layout_marginTop="16dp"
         android:text="TextView"
         android:textSize="10sp"
+        android:fontFamily="@font/indieflower"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.024"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textName"
         app:layout_constraintVertical_bias="1.0" />
+
 
 
 </android.support.constraint.ConstraintLayout>

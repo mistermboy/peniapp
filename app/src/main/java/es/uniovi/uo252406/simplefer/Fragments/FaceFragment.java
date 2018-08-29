@@ -1,28 +1,22 @@
 package es.uniovi.uo252406.simplefer.Fragments;
 
-import android.content.Context;
-import android.graphics.Canvas;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.VideoView;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 
-import es.uniovi.uo252406.simplefer.Entities.Player;
+import es.uniovi.uo252406.simplefer.Logical.Player;
 import es.uniovi.uo252406.simplefer.R;
 
 
-public class PrincipalPersonFragment extends Fragment{
+public class FaceFragment extends Fragment{
 
 
     static ArrayList<String> audios;
@@ -34,7 +28,7 @@ public class PrincipalPersonFragment extends Fragment{
 
     View view;
 
-    public PrincipalPersonFragment(){
+    public FaceFragment(){
 
     }
 
@@ -43,41 +37,20 @@ public class PrincipalPersonFragment extends Fragment{
                              Bundle savedInstanceState) {
 
 
-        view = inflater.inflate(R.layout.fragment_principal_person, container, false);
+        view = inflater.inflate(R.layout.fragment_face, container, false);
 
         //Recogemos los datos
         Bundle b = getActivity().getIntent().getExtras();
         person = (String) b.getString("person");
 
 
-        createAudios(person);
+        audios = Player.getInstance().getAudios(person);
         asignaFuncionalidades();
 
         // Inflate the layout for this fragment
         return view;
     }
 
-
-    /**
-     * Crea el ArrayList con el nombre de los audios.
-     * Escoge solo los audios que pertenezcan a la persona que se le pasa.
-     * Establece un límite en el reproductor
-     * Se llama cuando se crea el activity.
-     */
-    public static ArrayList<String> createAudios(String person) {
-        audios = new ArrayList<>();
-        int numAudios = 0;
-        for (Field f : R.raw.class.getFields()) {
-            //Es  un audio de la persona que estamos buscando?
-            if (f.getName().split("_")[0].equals(person)) {
-                audios.add(f.getName());
-                numAudios++;
-            }
-
-        }
-        Player.getInstance().setMaxValor(numAudios);
-        return audios;
-    }
 
 
     /**
