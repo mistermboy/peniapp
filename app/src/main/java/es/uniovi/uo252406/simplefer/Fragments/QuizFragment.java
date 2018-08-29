@@ -1,11 +1,18 @@
 package es.uniovi.uo252406.simplefer.Fragments;
 
+import android.graphics.Typeface;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.VideoView;
 
 import org.json.JSONException;
 
@@ -14,7 +21,8 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 import es.uniovi.uo252406.simplefer.Entities.Question;
-import es.uniovi.uo252406.simplefer.Parser;
+import es.uniovi.uo252406.simplefer.Logical.Parser;
+import es.uniovi.uo252406.simplefer.Logical.Player;
 import es.uniovi.uo252406.simplefer.R;
 
 
@@ -31,7 +39,10 @@ public class QuizFragment extends android.support.v4.app.Fragment {
     Button option3;
 
     private int actualQuestion = 0;
+    private int correctAnswers = 0;
 
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -52,7 +63,7 @@ public class QuizFragment extends android.support.v4.app.Fragment {
 
 
         prepareComponents();
-        startQuiz();
+        writeQuiz();
 
         return view;
     }
@@ -60,6 +71,7 @@ public class QuizFragment extends android.support.v4.app.Fragment {
     /**
      * Localiza los componentes del QuizFragment
      */
+    @RequiresApi(api = Build.VERSION_CODES.O)
     private void prepareComponents(){
 
         question = view.findViewById(R.id.textQuestion);
@@ -82,6 +94,12 @@ public class QuizFragment extends android.support.v4.app.Fragment {
         option2.setTextAlignment(View.TEXT_ALIGNMENT_VIEW_START);
         option3.setTextAlignment(View.TEXT_ALIGNMENT_VIEW_START);
 
+        Typeface typeface = getResources().getFont(R.font.indieflower);
+
+        question.setTypeface(typeface);
+        option1.setTypeface(typeface);
+        option2.setTypeface(typeface);
+        option3.setTypeface(typeface);
 
         option1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -108,9 +126,9 @@ public class QuizFragment extends android.support.v4.app.Fragment {
     }
 
     /**
-     * Escribe la primera pregunta del quiz y sus respuestas
+     * Escribe el Quiz con la pregunta actual
      */
-    private void startQuiz() {
+    private void writeQuiz() {
 
         question.setText(questions.get(actualQuestion).getQuestion());
         option1.setText("a) "+questions.get(actualQuestion).getOption1());
@@ -118,6 +136,7 @@ public class QuizFragment extends android.support.v4.app.Fragment {
         option3.setText("c) "+questions.get(actualQuestion).getOption3());
 
     }
+
 
 
     public StringBuilder getJson() {
@@ -145,6 +164,7 @@ public class QuizFragment extends android.support.v4.app.Fragment {
     private void checkAnswer(int selected){
 
         if(isCorrect(selected)){
+            correctAnswers++;
             markCorrect();
         }else{
 
@@ -167,11 +187,39 @@ public class QuizFragment extends android.support.v4.app.Fragment {
 
             }
 
-
         }
 
 
+        new Thread(new Runnable() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
+            public void run() {
+                try {
+                    Thread.sleep(1700);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+                if(actualQuestion<questions.size()-1)
+                    nextQuestion();
+                else
+                    finishQuiz();
+            }
+        }).start();
+
+
     }
+
+    /**
+     * Espera un tiempo corto y pasa a la siguiente pregunta
+     */
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private void nextQuestion() {
+        actualQuestion++;
+        prepareComponents();
+        writeQuiz();
+    }
+
 
     private void markCorrect() {
 
@@ -197,5 +245,24 @@ public class QuizFragment extends android.support.v4.app.Fragment {
         return  questions.get(actualQuestion).getAnswer() == selected;
     }
 
+
+    private void finishQuiz(){
+        actualQuestion=0;
+
+        question.setText("Has respondido "+correctAnswers+ " preguntas bien de "+questions.size());
+        option1.setText("");
+        option2.setText("");
+        option3.setText("");
+
+        if(correctAnswers >= (questions.size()-1)/2 )
+            Player.getInstance().selectAudio(getContext(),"quiz_good_"+person);
+        else
+            Player.getInstance().selectAudio(getContext(),"quiz_bad_"+person);
+
+        Player.getInstance().start();
+
+        correctAnswers = 0;
+
+    }
 
 }

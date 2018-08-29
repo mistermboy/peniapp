@@ -1,11 +1,13 @@
-package es.uniovi.uo252406.simplefer.Entities;
+package es.uniovi.uo252406.simplefer.Logical;
 import android.content.Context;
-import android.net.Uri;
-import android.os.Handler;
 import android.util.Log;
-import android.widget.VideoView;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
+import es.uniovi.uo252406.simplefer.R;
 
 public class Player {
 
@@ -15,6 +17,9 @@ public class Player {
 
     int valor = 0;
     int maxValor;
+
+
+    private Map<String,ArrayList<String>> allAudios;
 
     private Player(){
 
@@ -75,6 +80,45 @@ public class Player {
     public void start(){
         mp.start();
     }
+
+
+
+    public void createAllAudios(){
+        allAudios = new HashMap<>();
+
+        allAudios.put("fer",getAudiosFromRaw("fer"));
+        allAudios.put("berto",getAudiosFromRaw("berto"));
+
+    }
+
+
+
+    private ArrayList<String> getAudiosFromRaw(String person) {
+        ArrayList<String> audios = new ArrayList<>();
+        int numAudios = 0;
+        for (Field f : R.raw.class.getFields()) {
+            //Es  un audio de la persona que estamos buscando?
+            if (f.getName().split("_")[0].equals(person)) {
+                audios.add(f.getName());
+                numAudios++;
+            }
+
+        }
+        Player.getInstance().setMaxValor(numAudios);
+        return audios;
+    }
+
+
+
+    /**
+     * Devuelve los audios de la persona que se le pasa por parámetro
+     * @param person
+     * @return
+     */
+    public ArrayList<String> getAudios(String person){
+        return allAudios.get(person);
+    }
+
 
 
     //Getters y Setters

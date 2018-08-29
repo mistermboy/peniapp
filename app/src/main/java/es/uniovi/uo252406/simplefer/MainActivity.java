@@ -4,9 +4,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.GridView;
 import android.widget.ImageView;
+
+import es.uniovi.uo252406.simplefer.Logical.Player;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -35,6 +35,9 @@ public class MainActivity extends AppCompatActivity {
         });
 
         */
+
+        //Crea todos los audios de todos los personajes
+        Player.getInstance().createAllAudios();
 
 
         ImageView fer = (ImageView) findViewById(R.id.imageFer);
@@ -72,5 +75,6 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
 
     }
+
 
 }
