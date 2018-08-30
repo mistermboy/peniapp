@@ -141,7 +141,7 @@ public class AudiosFragment extends android.support.v4.app.Fragment {
 
 
 
-    class ButtonsOnClickListener implements View.OnClickListener {
+     class ButtonsOnClickListener implements View.OnClickListener {
 
         private String name;
 
@@ -166,7 +166,7 @@ public class AudiosFragment extends android.support.v4.app.Fragment {
 
 
 
-    class ButtonsOnLongClickListener implements View.OnLongClickListener {
+     class ButtonsOnLongClickListener implements View.OnLongClickListener {
 
         private String name;
 
@@ -190,17 +190,23 @@ public class AudiosFragment extends android.support.v4.app.Fragment {
             Button btnRingtone = dialog.findViewById(R.id.btnLlamada);
             Button btnShare = dialog.findViewById(R.id.btnCompartir);
             Button btnCancel = dialog.findViewById(R.id.btnCancelar);
+            Button btnAlarm = dialog.findViewById(R.id.btnAlarm);
+            Button btnNotification = dialog.findViewById(R.id.btnNotification);
 
             bntFav.setTextSize(14);
             btnRingtone.setTextSize(14);
             btnShare.setTextSize(14);
             btnCancel.setTextSize(14);
+            btnAlarm.setTextSize(14);
+            btnNotification.setTextSize(14);
 
 
             bntFav.setTextColor(getResources().getColor(R.color.black));
             btnRingtone.setTextColor(getResources().getColor(R.color.black));
             btnShare.setTextColor(getResources().getColor(R.color.black));
             btnCancel.setTextColor(getResources().getColor(R.color.black));
+            btnAlarm.setTextColor(getResources().getColor(R.color.black));
+            btnNotification.setTextColor(getResources().getColor(R.color.black));
 
 
 
@@ -210,6 +216,8 @@ public class AudiosFragment extends android.support.v4.app.Fragment {
             btnRingtone.setTypeface(typeface);
             btnShare.setTypeface(typeface);
             btnCancel.setTypeface(typeface);
+            btnAlarm.setTypeface(typeface);
+            btnNotification.setTypeface(typeface);
 
 
             bntFav.setOnClickListener(new View.OnClickListener() {
@@ -224,18 +232,11 @@ public class AudiosFragment extends android.support.v4.app.Fragment {
                 public void onClick(View view) {
 
 
-                    if(!Settings.System.canWrite(getContext())){
-                        Intent intent = new Intent(Settings.ACTION_MANAGE_WRITE_SETTINGS);
-                        startActivity(intent);
+                    if(!havePermissons()) {
 
-                        if (ContextCompat.checkSelfPermission(getActivity(),
-                                Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                                != PackageManager.PERMISSION_GRANTED ) {
-                            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_ACCESS_FINE);
-                        }
+                        ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_ACCESS_FINE);
 
                     }else{
-
                         copyFile();
 
 
@@ -245,11 +246,66 @@ public class AudiosFragment extends android.support.v4.app.Fragment {
                                 writeDB()
                         );
 
-                        Toast toast = Toast.makeText(getContext(),"Se ha establecido un nuevo tono",Toast.LENGTH_SHORT);
+                        Toast toast = Toast.makeText(getContext(),"Se ha establecido un nuevo tono de llamada",Toast.LENGTH_SHORT);
                         toast.show();
 
                         dialog.dismiss();
                     }
+                }
+            });
+
+
+            btnAlarm.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    if(!havePermissons()) {
+
+                        ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_ACCESS_FINE);
+
+                    }else{
+                        copyFile();
+
+
+                        RingtoneManager.setActualDefaultRingtoneUri(
+                                getActivity(),
+                                RingtoneManager.TYPE_ALARM,
+                                writeDB()
+                        );
+
+                        Toast toast = Toast.makeText(getContext(),"Se ha establecido un nuevo tono de alarma",Toast.LENGTH_SHORT);
+                        toast.show();
+
+                        dialog.dismiss();
+                    }
+
+                }
+            });
+
+            btnNotification.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    if(!havePermissons()) {
+
+                        ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_ACCESS_FINE);
+
+                    }else{
+                        copyFile();
+
+
+                        RingtoneManager.setActualDefaultRingtoneUri(
+                                getActivity(),
+                                RingtoneManager.TYPE_NOTIFICATION,
+                                writeDB()
+                        );
+
+                        Toast toast = Toast.makeText(getContext(),"Se ha establecido un nuevo tono de notificación",Toast.LENGTH_SHORT);
+                        toast.show();
+
+                        dialog.dismiss();
+                    }
+
                 }
             });
 
@@ -347,6 +403,22 @@ public class AudiosFragment extends android.support.v4.app.Fragment {
         return getActivity().getContentResolver().insert(uri, values);
 
     }
+
+    private boolean havePermissons(){
+        if(!Settings.System.canWrite(getContext())){
+            Intent intent = new Intent(Settings.ACTION_MANAGE_WRITE_SETTINGS);
+            startActivity(intent);
+
+            if (ContextCompat.checkSelfPermission(getActivity(),
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                    != PackageManager.PERMISSION_GRANTED ) {
+                return false;
+            }
+
+        }
+        return true;
+    }
+
 
 
 }
