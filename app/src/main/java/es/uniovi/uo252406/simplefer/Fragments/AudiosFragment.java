@@ -49,12 +49,13 @@ public class AudiosFragment extends android.support.v4.app.Fragment {
     ArrayList<String> audios;
     String person;
 
-    private final int REQUEST_ACCESS_FINE =0;
-
-
     String exStoragePath = Environment.getExternalStorageDirectory().getAbsolutePath();
     String path=(exStoragePath +"/media/ringtones/");
 
+    String filename;
+    String pressed = "";
+
+    private final int REQUEST_ACCESS_FINE =0;
 
 
     public AudiosFragment() {
@@ -129,7 +130,7 @@ public class AudiosFragment extends android.support.v4.app.Fragment {
             button.setTextSize(16);
             //Asignamos los listener
             button.setOnClickListener(new AudiosFragment.ButtonsOnClickListener(audios.get(i)));
-             button.setOnLongClickListener(new AudiosFragment.ButtonsOnLongClickListener(audios.get(i)));
+            button.setOnLongClickListener(new AudiosFragment.ButtonsOnLongClickListener(audios.get(i)));
 
 
             //Añadimos los botones a la botonera
@@ -140,28 +141,28 @@ public class AudiosFragment extends android.support.v4.app.Fragment {
 
 
 
-        class ButtonsOnClickListener implements View.OnClickListener {
+    class ButtonsOnClickListener implements View.OnClickListener {
 
-            private String name;
+        private String name;
 
-            public ButtonsOnClickListener(String name) {
-                this.name = name;
-            }
-
-            @Override
-            public void onClick(View v) {
-                if (Player.getInstance() != null)
-                    Player.getInstance().mpNull();
-                Player.getInstance().selectAudio(getActivity().getBaseContext(), name);
-                try {
-                    Player.getInstance().start();
-                } catch (IllegalStateException e) {
-                    Log.e("IllegalStateException", "Illegal State Exception: " + e.getMessage());
-                }
-            }
-
-
+        public ButtonsOnClickListener(String name) {
+            this.name = name;
         }
+
+        @Override
+        public void onClick(View v) {
+            if (Player.getInstance() != null)
+                Player.getInstance().mpNull();
+            Player.getInstance().selectAudio(getActivity().getBaseContext(), name);
+            try {
+                Player.getInstance().start();
+            } catch (IllegalStateException e) {
+                Log.e("IllegalStateException", "Illegal State Exception: " + e.getMessage());
+            }
+        }
+
+
+    }
 
 
 
@@ -176,6 +177,8 @@ public class AudiosFragment extends android.support.v4.app.Fragment {
         @RequiresApi(api = Build.VERSION_CODES.O)
         @Override
         public boolean onLongClick(View v) {
+
+            pressed = name;
 
             final Dialog dialog = new Dialog(getActivity());
             dialog.setContentView(R.layout.custom_dialog);
@@ -220,10 +223,6 @@ public class AudiosFragment extends android.support.v4.app.Fragment {
                 public void onClick(View view) {
 
 
-                   // int rawID = getContext().getResources().getIdentifier("fer_ay_que_tonto_eres", "raw", getContext().getPackageName());
-                    //Uri newUri = Uri.parse("android.resource://" + getActivity().getPackageName() + "/" + rawID);
-
-
                     if(!Settings.System.canWrite(getContext())){
                         Intent intent = new Intent(Settings.ACTION_MANAGE_WRITE_SETTINGS);
                         startActivity(intent);
@@ -231,94 +230,13 @@ public class AudiosFragment extends android.support.v4.app.Fragment {
                         if (ContextCompat.checkSelfPermission(getActivity(),
                                 Manifest.permission.WRITE_EXTERNAL_STORAGE)
                                 != PackageManager.PERMISSION_GRANTED ) {
-
                             ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_ACCESS_FINE);
-
                         }
-
-
 
                     }else{
 
-
-
-                        byte[] buffer = null;
-                        InputStream fIn = getActivity().getBaseContext().getResources().openRawResource(
-                                R.raw.fer_ay_que_tonto_eres);
-                        int size = 0;
-
-                        try {
-                            size = fIn.available();
-                            buffer = new byte[size];
-                            fIn.read(buffer);
-                            fIn.close();
-                        } catch (IOException e) {
-                            return ;
-                        }
-
-                        String filename = "GO";
-
-                        boolean exists = (new File(path)).exists();
-                        if (!exists) {
-                            new File(path).mkdirs();
-                        }
-
-                        FileOutputStream save;
-                        try {
-                            save = new FileOutputStream(path + filename);
-                            save.write(buffer);
-                            save.flush();
-                            save.close();
-                        } catch (FileNotFoundException e) {
-                            return ;
-                        } catch (IOException e) {
-                            return ;
-                        }
-
-                        File k = new File(path,filename);
-
-                         // File k = new File("ringtones\\alarm\\auronplay.mp3"); // path is a file to /sdcard/media/ringtone
-
-                        ContentValues values = new ContentValues();
-                        values.put(MediaStore.MediaColumns.DATA, k.getAbsolutePath());
-                        values.put(MediaStore.MediaColumns.SIZE, 215454);
-                        values.put(MediaStore.MediaColumns.MIME_TYPE, "audio/mp3");
-                        values.put(MediaStore.Audio.Media.DURATION, 230);
-                        values.put(MediaStore.Audio.Media.IS_RINGTONE, true);
-                        values.put(MediaStore.Audio.Media.IS_NOTIFICATION, false);
-                        values.put(MediaStore.Audio.Media.IS_ALARM, false);
-                        values.put(MediaStore.Audio.Media.IS_MUSIC, false);
-
-                        //Insert it into the database
-                        Uri uri = MediaStore.Audio.Media.getContentUriForPath(k.getAbsolutePath());
-                        Uri newUri = getActivity().getContentResolver().insert(uri, values);
-
-                        RingtoneManager.setActualDefaultRingtoneUri(
-                                getActivity(),
-                                RingtoneManager.TYPE_RINGTONE,
-                                newUri
-                        );
-
-/*
-                        //fetch default Ringtone
-                        Ringtone defaultRingtone = RingtoneManager.getRingtone(getActivity(),
-                                Settings.System.DEFAULT_RINGTONE_URI);
-                        //fetch current Ringtone
-                        Uri currentRintoneUri = RingtoneManager.getActualDefaultRingtoneUri(getActivity()
-                                .getApplicationContext(), RingtoneManager.TYPE_RINGTONE);
-                        Ringtone currentRingtone = RingtoneManager.getRingtone(getActivity(), currentRintoneUri);
-
-                        //play current Ringtone
-                        currentRingtone.play();
-
-                        */
-
-                        Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_RINGTONE);
-                        Ringtone r = RingtoneManager.getRingtone(getActivity().getApplicationContext(), notification);
-                        r.play();
-
-
-
+                        copyFile();
+                        writeDB();
 
                     }
                 }
@@ -346,6 +264,79 @@ public class AudiosFragment extends android.support.v4.app.Fragment {
 
     }
 
+    private void copyFile(){
+
+
+        byte[] buffer = null;
+         int rawID = getContext().getResources().getIdentifier(pressed, "raw", getContext().getPackageName());
+
+        InputStream fIn = getActivity().getBaseContext().getResources().openRawResource(
+                rawID);
+        int size = 0;
+
+        try {
+            size = fIn.available();
+            buffer = new byte[size];
+            fIn.read(buffer);
+            fIn.close();
+        } catch (IOException e) {
+            return ;
+        }
+
+        filename = "GO"+Math.random();
+
+        boolean exists = (new File(path)).exists();
+        if (!exists) {
+            new File(path).mkdirs();
+        }
+
+        FileOutputStream save;
+        try {
+            save = new FileOutputStream(path + filename);
+            save.write(buffer);
+            save.flush();
+            save.close();
+        } catch (FileNotFoundException e) {
+            return ;
+        } catch (IOException e) {
+            return ;
+        }
+    }
+
+
+    private void writeDB(){
+
+        File k = new File(path,filename);
+
+
+        ContentValues values = new ContentValues();
+        values.put(MediaStore.MediaColumns.DATA, k.getAbsolutePath());
+        values.put(MediaStore.MediaColumns.SIZE, 215454);
+        values.put(MediaStore.MediaColumns.MIME_TYPE, "audio/mp3");
+        values.put(MediaStore.Audio.Media.DURATION, 230);
+        values.put(MediaStore.Audio.Media.IS_RINGTONE, true);
+        values.put(MediaStore.Audio.Media.IS_NOTIFICATION, false);
+        values.put(MediaStore.Audio.Media.IS_ALARM, false);
+        values.put(MediaStore.Audio.Media.IS_MUSIC, false);
+
+        //Insert it into the database
+        Uri uri = MediaStore.Audio.Media.getContentUriForPath(k.getAbsolutePath());
+        Uri newUri = getActivity().getContentResolver().insert(uri, values);
+
+        RingtoneManager.setActualDefaultRingtoneUri(
+                getActivity(),
+                RingtoneManager.TYPE_RINGTONE,
+                newUri
+        );
+
+
+        Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_RINGTONE);
+        Ringtone r = RingtoneManager.getRingtone(getActivity().getApplicationContext(), notification);
+        r.play();
+
+
+
+    }
 
 
 }
