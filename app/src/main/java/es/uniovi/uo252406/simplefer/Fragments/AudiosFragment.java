@@ -1,12 +1,22 @@
 package es.uniovi.uo252406.simplefer.Fragments;
 
+import android.app.Dialog;
+import android.graphics.Typeface;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.accessibility.AccessibilityManager;
+import android.widget.Adapter;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -27,6 +37,7 @@ public class AudiosFragment extends android.support.v4.app.Fragment {
     }
 
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -48,6 +59,7 @@ public class AudiosFragment extends android.support.v4.app.Fragment {
     /**
      * Selecciona los audios y crea todos los botones
      */
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public void selectAndDraw() {
 
         //audios = createAudios(person);
@@ -62,9 +74,19 @@ public class AudiosFragment extends android.support.v4.app.Fragment {
                 LinearLayout.LayoutParams.WRAP_CONTENT);
 
 
+        ArrayList<String> elementos = new ArrayList<>();
+
+        elementos.add("Guadar como favorito");
+        elementos.add("Compartir en whatsapp");
+        elementos.add("Establecer como tono de llamada");
+
+
+        ArrayAdapter arrayAdapter = new ArrayAdapter(getActivity(),android.R.layout.simple_spinner_dropdown_item,elementos);
+
         //Creaación de los botones
 
         for (int i = 0; i < audios.size(); i++) {
+
 
             Button button = new Button(view.getContext());
             //Asignamos propiedades de layout al boton
@@ -73,15 +95,15 @@ public class AudiosFragment extends android.support.v4.app.Fragment {
             String buttonText = String.valueOf(audios.get(i)).replace("_", " ").replace(person, "").replace("0", "ñ"); //Los audios no pueden llevar "ñ" así que ponemos un 0 y luego sustituimos
             //Asignamos Texto al botón
             button.setText(buttonText);
-            //Asignamos el listener
+            //Asignamos la fuente
+            Typeface typeface = getResources().getFont(R.font.indieflower);
+            button.setTypeface(typeface);
+            //Aumentamos el tamaño de la letra
+            button.setTextSize(16);
+            //Asignamos los listener
             button.setOnClickListener(new AudiosFragment.ButtonsOnClickListener(audios.get(i)));
+             button.setOnLongClickListener(new AudiosFragment.ButtonsOnLongClickListener(audios.get(i)));
 
-
-            //Creamos el botón de fav
-            Button star = new Button(view.getContext());
-
-            int drawID = getResources().getIdentifier("btn_star_big_on", "drawable", "android");
-            star.setBackground(getResources().getDrawable(drawID));
 
             //Añadimos los botones a la botonera
             lScroll.addView(button);
@@ -111,8 +133,65 @@ public class AudiosFragment extends android.support.v4.app.Fragment {
                 }
             }
 
+
         }
-        ;
+
+
+
+    class ButtonsOnLongClickListener implements View.OnLongClickListener {
+
+        private String name;
+
+        public ButtonsOnLongClickListener(String name) {
+            this.name = name;
+        }
+
+        @RequiresApi(api = Build.VERSION_CODES.O)
+        @Override
+        public boolean onLongClick(View v) {
+
+            final Dialog dialog = new Dialog(getActivity());
+            dialog.setTitle("Choose one");
+            dialog.setContentView(R.layout.custom_dialog);
+            dialog.show();
+
+            Button b1 = dialog.findViewById(R.id.btnFav);
+            Button b2 = dialog.findViewById(R.id.btnLlamada);
+            Button b3 = dialog.findViewById(R.id.btnCompartir);
+            Button b4 = dialog.findViewById(R.id.btnCancelar);
+
+            b1.setTextSize(18);
+            b2.setTextSize(18);
+            b3.setTextSize(18);
+            b4.setTextSize(18);
+
+
+            b1.setTextColor(getResources().getColor(R.color.white));
+            b2.setTextColor(getResources().getColor(R.color.white));
+            b3.setTextColor(getResources().getColor(R.color.white));
+            b4.setTextColor(getResources().getColor(R.color.white));
+
+            b1.setBackgroundColor(getResources().getColor(R.color.black));
+            b2.setBackgroundColor(getResources().getColor(R.color.black));
+            b3.setBackgroundColor(getResources().getColor(R.color.black));
+            b4.setBackgroundColor(getResources().getColor(R.color.black));
+
+            Typeface typeface = getResources().getFont(R.font.indieflower);
+
+            b1.setTypeface(typeface);
+            b2.setTypeface(typeface);
+            b3.setTypeface(typeface);
+            b4.setTypeface(typeface);
+
+
+            return true;
+        }
+
+    }
+
+
+
+
 
 
 }
