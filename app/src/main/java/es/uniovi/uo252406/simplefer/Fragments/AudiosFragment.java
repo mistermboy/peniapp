@@ -4,6 +4,7 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.ContentValues;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Typeface;
 import android.media.Ringtone;
@@ -31,6 +32,10 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 
 import es.uniovi.uo252406.simplefer.Logical.Player;
@@ -47,9 +52,16 @@ public class AudiosFragment extends android.support.v4.app.Fragment {
     private final int REQUEST_ACCESS_FINE =0;
 
 
+    String exStoragePath = Environment.getExternalStorageDirectory().getAbsolutePath();
+    String path=(exStoragePath +"/media/ringtones/");
+
+
+
     public AudiosFragment() {
         // Required empty public constructor
     }
+
+
 
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -208,33 +220,69 @@ public class AudiosFragment extends android.support.v4.app.Fragment {
                 public void onClick(View view) {
 
 
-                    int rawID = getContext().getResources().getIdentifier("fer_ay_que_tonto_eres", "raw", getContext().getPackageName());
-                    Uri newUri = Uri.parse("android.resource://" + getActivity().getPackageName() + "/" + rawID);
+                   // int rawID = getContext().getResources().getIdentifier("fer_ay_que_tonto_eres", "raw", getContext().getPackageName());
+                    //Uri newUri = Uri.parse("android.resource://" + getActivity().getPackageName() + "/" + rawID);
 
 
-                    if (ContextCompat.checkSelfPermission(getActivity(),
-                            Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                            != PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(getActivity(),
-                            Manifest.permission.WRITE_SETTINGS)
-                            != PackageManager.PERMISSION_GRANTED) {
+                    if(!Settings.System.canWrite(getContext())){
+                        Intent intent = new Intent(Settings.ACTION_MANAGE_WRITE_SETTINGS);
+                        startActivity(intent);
 
-                      //  ActivityCompat.requestPermissions(getActivity(),new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},REQUEST_ACCESS_FINE);
-                        ActivityCompat.requestPermissions(getActivity(),new String[]{Manifest.permission.WRITE_SETTINGS},REQUEST_ACCESS_FINE);
+                        if (ContextCompat.checkSelfPermission(getActivity(),
+                                Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                                != PackageManager.PERMISSION_GRANTED ) {
 
-                        Log.i("entra","IFFFF");
+                            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_ACCESS_FINE);
+
+                        }
+
+
 
                     }else{
 
-                        Log.i("entra","ELSEEEEEE");
 
-                        File k = new File(Environment.getExternalStorageDirectory(), "fer_ay_que_tonto_eres.mp3"); // path is a file to /sdcard/media/ringtone
+
+                        byte[] buffer = null;
+                        InputStream fIn = getActivity().getBaseContext().getResources().openRawResource(
+                                R.raw.fer_ay_que_tonto_eres);
+                        int size = 0;
+
+                        try {
+                            size = fIn.available();
+                            buffer = new byte[size];
+                            fIn.read(buffer);
+                            fIn.close();
+                        } catch (IOException e) {
+                            return ;
+                        }
+
+                        String filename = "GO";
+
+                        boolean exists = (new File(path)).exists();
+                        if (!exists) {
+                            new File(path).mkdirs();
+                        }
+
+                        FileOutputStream save;
+                        try {
+                            save = new FileOutputStream(path + filename);
+                            save.write(buffer);
+                            save.flush();
+                            save.close();
+                        } catch (FileNotFoundException e) {
+                            return ;
+                        } catch (IOException e) {
+                            return ;
+                        }
+
+                        File k = new File(path,filename);
+
+                         // File k = new File("ringtones\\alarm\\auronplay.mp3"); // path is a file to /sdcard/media/ringtone
 
                         ContentValues values = new ContentValues();
                         values.put(MediaStore.MediaColumns.DATA, k.getAbsolutePath());
-                        values.put(MediaStore.MediaColumns.TITLE, "My Song title");
                         values.put(MediaStore.MediaColumns.SIZE, 215454);
                         values.put(MediaStore.MediaColumns.MIME_TYPE, "audio/mp3");
-                        values.put(MediaStore.Audio.Media.ARTIST, "Madonna");
                         values.put(MediaStore.Audio.Media.DURATION, 230);
                         values.put(MediaStore.Audio.Media.IS_RINGTONE, true);
                         values.put(MediaStore.Audio.Media.IS_NOTIFICATION, false);
@@ -243,7 +291,7 @@ public class AudiosFragment extends android.support.v4.app.Fragment {
 
                         //Insert it into the database
                         Uri uri = MediaStore.Audio.Media.getContentUriForPath(k.getAbsolutePath());
-                        newUri = getActivity().getContentResolver().insert(uri, values);
+                        Uri newUri = getActivity().getContentResolver().insert(uri, values);
 
                         RingtoneManager.setActualDefaultRingtoneUri(
                                 getActivity(),
@@ -251,7 +299,7 @@ public class AudiosFragment extends android.support.v4.app.Fragment {
                                 newUri
                         );
 
-
+/*
                         //fetch default Ringtone
                         Ringtone defaultRingtone = RingtoneManager.getRingtone(getActivity(),
                                 Settings.System.DEFAULT_RINGTONE_URI);
@@ -262,6 +310,15 @@ public class AudiosFragment extends android.support.v4.app.Fragment {
 
                         //play current Ringtone
                         currentRingtone.play();
+
+                        */
+
+                        Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_RINGTONE);
+                        Ringtone r = RingtoneManager.getRingtone(getActivity().getApplicationContext(), notification);
+                        r.play();
+
+
+
 
                     }
                 }
@@ -288,9 +345,6 @@ public class AudiosFragment extends android.support.v4.app.Fragment {
         }
 
     }
-
-
-
 
 
 
