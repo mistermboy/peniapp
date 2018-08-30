@@ -1,5 +1,6 @@
 package es.uniovi.uo252406.simplefer.Fragments;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.graphics.Typeface;
 import android.os.Build;
@@ -151,30 +152,27 @@ public class AudiosFragment extends android.support.v4.app.Fragment {
         public boolean onLongClick(View v) {
 
             final Dialog dialog = new Dialog(getActivity());
-            dialog.setTitle("Choose one");
             dialog.setContentView(R.layout.custom_dialog);
             dialog.show();
+
 
             Button b1 = dialog.findViewById(R.id.btnFav);
             Button b2 = dialog.findViewById(R.id.btnLlamada);
             Button b3 = dialog.findViewById(R.id.btnCompartir);
             Button b4 = dialog.findViewById(R.id.btnCancelar);
 
-            b1.setTextSize(18);
-            b2.setTextSize(18);
-            b3.setTextSize(18);
-            b4.setTextSize(18);
+            b1.setTextSize(14);
+            b2.setTextSize(14);
+            b3.setTextSize(14);
+            b4.setTextSize(14);
 
 
-            b1.setTextColor(getResources().getColor(R.color.white));
-            b2.setTextColor(getResources().getColor(R.color.white));
-            b3.setTextColor(getResources().getColor(R.color.white));
-            b4.setTextColor(getResources().getColor(R.color.white));
+            b1.setTextColor(getResources().getColor(R.color.black));
+            b2.setTextColor(getResources().getColor(R.color.black));
+            b3.setTextColor(getResources().getColor(R.color.black));
+            b4.setTextColor(getResources().getColor(R.color.black));
 
-            b1.setBackgroundColor(getResources().getColor(R.color.black));
-            b2.setBackgroundColor(getResources().getColor(R.color.black));
-            b3.setBackgroundColor(getResources().getColor(R.color.black));
-            b4.setBackgroundColor(getResources().getColor(R.color.black));
+
 
             Typeface typeface = getResources().getFont(R.font.indieflower);
 
