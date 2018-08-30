@@ -194,7 +194,7 @@ public class QuizFragment extends android.support.v4.app.Fragment {
             @RequiresApi(api = Build.VERSION_CODES.O)
             public void run() {
                 try {
-                    Thread.sleep(1700);
+                    Thread.sleep(1500);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -254,10 +254,23 @@ public class QuizFragment extends android.support.v4.app.Fragment {
         option2.setText("");
         option3.setText("");
 
-        if(correctAnswers >= (questions.size()-1)/2 )
-            Player.getInstance().selectAudio(getContext(),"quiz_good_"+person);
-        else
-            Player.getInstance().selectAudio(getContext(),"quiz_bad_"+person);
+        if(correctAnswers == questions.size()){
+            Player.getInstance().selectAudio(getContext(), "himno");
+            option1.setText("ARRIBA");
+            option1.setTextColor(getResources().getColor(R.color.red));
+            option2.setText("ESPAÑA");
+            option2.setTextColor(getResources().getColor(R.color.yellow));
+            option3.setText("HOSTIA");
+            option3.setTextColor(getResources().getColor(R.color.red));
+        }else if(correctAnswers >= (questions.size())/2 ) {
+            Player.getInstance().selectAudio(getContext(), "quiz_good_" + person);
+            option1.setTextColor(getResources().getColor(R.color.green));
+            option1.setText("Eres un auténtico españoluzogi");
+        }else {
+            Player.getInstance().selectAudio(getContext(), "quiz_bad_" + person);
+            option1.setText("Realmente no sabes mucho de "+person);
+            option1.setTextColor(getResources().getColor(R.color.red));
+        }
 
         Player.getInstance().start();
 
