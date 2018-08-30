@@ -178,6 +178,7 @@ public class AudiosFragment extends android.support.v4.app.Fragment {
         @Override
         public boolean onLongClick(View v) {
 
+            Player.getInstance().pause();
             pressed = name;
 
             final Dialog dialog = new Dialog(getActivity());
@@ -185,40 +186,40 @@ public class AudiosFragment extends android.support.v4.app.Fragment {
             dialog.show();
 
 
-            Button b1 = dialog.findViewById(R.id.btnFav);
-            Button b2 = dialog.findViewById(R.id.btnLlamada);
-            Button b3 = dialog.findViewById(R.id.btnCompartir);
-            Button b4 = dialog.findViewById(R.id.btnCancelar);
+            Button bntFav = dialog.findViewById(R.id.btnFav);
+            Button btnRingtone = dialog.findViewById(R.id.btnLlamada);
+            Button btnShare = dialog.findViewById(R.id.btnCompartir);
+            Button btnCancel = dialog.findViewById(R.id.btnCancelar);
 
-            b1.setTextSize(14);
-            b2.setTextSize(14);
-            b3.setTextSize(14);
-            b4.setTextSize(14);
+            bntFav.setTextSize(14);
+            btnRingtone.setTextSize(14);
+            btnShare.setTextSize(14);
+            btnCancel.setTextSize(14);
 
 
-            b1.setTextColor(getResources().getColor(R.color.black));
-            b2.setTextColor(getResources().getColor(R.color.black));
-            b3.setTextColor(getResources().getColor(R.color.black));
-            b4.setTextColor(getResources().getColor(R.color.black));
+            bntFav.setTextColor(getResources().getColor(R.color.black));
+            btnRingtone.setTextColor(getResources().getColor(R.color.black));
+            btnShare.setTextColor(getResources().getColor(R.color.black));
+            btnCancel.setTextColor(getResources().getColor(R.color.black));
 
 
 
             Typeface typeface = getResources().getFont(R.font.indieflower);
 
-            b1.setTypeface(typeface);
-            b2.setTypeface(typeface);
-            b3.setTypeface(typeface);
-            b4.setTypeface(typeface);
+            bntFav.setTypeface(typeface);
+            btnRingtone.setTypeface(typeface);
+            btnShare.setTypeface(typeface);
+            btnCancel.setTypeface(typeface);
 
 
-            b1.setOnClickListener(new View.OnClickListener() {
+            bntFav.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
 
                 }
             });
 
-            b2.setOnClickListener(new View.OnClickListener() {
+            btnRingtone.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
 
@@ -236,20 +237,42 @@ public class AudiosFragment extends android.support.v4.app.Fragment {
                     }else{
 
                         copyFile();
-                        writeDB();
 
+
+                        RingtoneManager.setActualDefaultRingtoneUri(
+                                getActivity(),
+                                RingtoneManager.TYPE_RINGTONE,
+                                writeDB()
+                        );
+
+                        Toast toast = Toast.makeText(getContext(),"Se ha establecido un nuevo tono",Toast.LENGTH_SHORT);
+                        toast.show();
+
+                        dialog.dismiss();
                     }
                 }
             });
 
-            b3.setOnClickListener(new View.OnClickListener() {
+            btnShare.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
 
+
+                    copyFile();
+                    writeDB();
+
+                    String sharePath = path+filename;
+                    Uri uri = Uri.parse(sharePath);
+                    Intent share = new Intent(Intent.ACTION_SEND);
+                    share.setType("audio/mp3");
+                    share.putExtra(Intent.EXTRA_STREAM, uri);
+                    startActivity(Intent.createChooser(share, "Share Sound File"));
+
+                    dialog.dismiss();
                 }
             });
 
-            b4.setOnClickListener(new View.OnClickListener() {
+            btnCancel.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     dialog.dismiss();
@@ -283,7 +306,7 @@ public class AudiosFragment extends android.support.v4.app.Fragment {
             return ;
         }
 
-        filename = "GO"+Math.random();
+        filename = pressed+Math.random()+".mp3";
 
         boolean exists = (new File(path)).exists();
         if (!exists) {
@@ -304,7 +327,7 @@ public class AudiosFragment extends android.support.v4.app.Fragment {
     }
 
 
-    private void writeDB(){
+    private Uri writeDB(){
 
         File k = new File(path,filename);
 
@@ -321,20 +344,7 @@ public class AudiosFragment extends android.support.v4.app.Fragment {
 
         //Insert it into the database
         Uri uri = MediaStore.Audio.Media.getContentUriForPath(k.getAbsolutePath());
-        Uri newUri = getActivity().getContentResolver().insert(uri, values);
-
-        RingtoneManager.setActualDefaultRingtoneUri(
-                getActivity(),
-                RingtoneManager.TYPE_RINGTONE,
-                newUri
-        );
-
-
-        Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_RINGTONE);
-        Ringtone r = RingtoneManager.getRingtone(getActivity().getApplicationContext(), notification);
-        r.play();
-
-
+        return getActivity().getContentResolver().insert(uri, values);
 
     }
 
