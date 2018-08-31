@@ -8,16 +8,22 @@
             android:id="@+id/perfil"
             android:icon="@drawable/ic_baseline_face_24px"
             android:title="Face" />
-        <item
-            android:id="@+id/audios"
-            android:icon="@drawable/ic_baseline_audiotrack_24px"
-            android:title="Audios" />
 
 
         <item
             android:id="@+id/quiz"
             android:icon="@drawable/ic_round_school_24px"
             android:title="Quiz" />
+
+        <item
+            android:id="@+id/audios"
+            android:icon="@drawable/ic_baseline_audiotrack_24px"
+            android:title="Audios" />
+
+        <item
+            android:id="@+id/fav"
+            android:icon="@drawable/ic_round_favorite_24px"
+            android:title="Favoritos" />
 
         <item
             android:id="@+id/inicio"

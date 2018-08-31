@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +33,7 @@ import java.util.List;
         /**
          * Columnas de la tabla
          */
-        private final String[] allColumns = { MyDBHelper.COLUMN_ID, MyDBHelper.COLUMN_AUDIO,MyDBHelper.COLUMN_POSITION};
+        private final String[] allColumns = { MyDBHelper.COLUMN_ID, MyDBHelper.COLUMN_AUDIO};
         /**
          * Constructor.
          *
@@ -64,14 +65,12 @@ import java.util.List;
      * Método que añade el audio a favoritos
      * @param audio
      * @param person
-     * @param position
      * @return
      */
-        public long addFavorite(String audio,String person,int position) {
+        public long addFavorite(String audio,String person) {
             ContentValues values = new ContentValues();
             values.put(MyDBHelper.COLUMN_AUDIO,audio);
             values.put(MyDBHelper.COLUMN_PERSON,person);
-            values.put(MyDBHelper.COLUMN_POSITION,position);
 
             // Insertamos el audio
             long insertId = database.insert(MyDBHelper.TABLE_FAVORITES, null, values);
@@ -83,10 +82,10 @@ import java.util.List;
          *Método que elimina la audio de favoritos
          * @return
          */
-        public long removeFavorite(int position,String person){
+        public long removeFavorite(String pressed, String person){
 
             // Borramos la audio
-            long removeId = database.delete(MyDBHelper.TABLE_FAVORITES, MyDBHelper.COLUMN_POSITION+"="+position+" and "+MyDBHelper.COLUMN_PERSON+"="+person,null);
+            long removeId = database.delete(MyDBHelper.TABLE_FAVORITES, MyDBHelper.COLUMN_AUDIO+"= '"+pressed+"'",null);
 
             return removeId;
 
@@ -103,8 +102,11 @@ import java.util.List;
             // Lista que almacenara el resultado
             ArrayList<String> favoritesList = new ArrayList<String>();
             //hacemos una query porque queremos devolver un cursor
+            String[] args = new String[] {person};
+
             Cursor cursor = database.query(MyDBHelper.TABLE_FAVORITES, allColumns,
-                    null, null, null, null,null);
+                    "person=?", args, null, null,null);
+
             cursor.moveToFirst();
             while (!cursor.isAfterLast()) {
                 final String favorite = cursor.getString(1);
@@ -116,6 +118,22 @@ import java.util.List;
             cursor.close();
 
             return favoritesList;
+        }
+
+
+    /**
+     * Devuelve si el audio es favorito o no
+     * @param audio
+     * @param person
+     * @return
+     */
+    public boolean isFavourite(String audio,String person){
+            ArrayList<String> favs = getAllFavorites(person);
+            for(String s:favs){
+                if(s.equals(audio))
+                    return true;
+            }
+            return false;
         }
 
     }

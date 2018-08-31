@@ -14,12 +14,11 @@ public class MyDBHelper extends SQLiteOpenHelper {
     /**
      * Nombre de la tabla favorites y sus columnas
      */
-    public static final String TABLE_FAVORITES = "favorites";
+    public static final String TABLE_FAVORITES = "favourites";
 
     public static final String COLUMN_ID = "_id";
     public static final String COLUMN_AUDIO = "audio";
     public static final String COLUMN_PERSON = "person";
-    public static final String COLUMN_POSITION = "position";
 
 
 
@@ -29,8 +28,7 @@ public class MyDBHelper extends SQLiteOpenHelper {
     private static final String DATABASE_CREATE = "create table " + TABLE_FAVORITES
             + "( " + COLUMN_ID + " " +
             "integer primary key autoincrement, " + COLUMN_AUDIO
-            + " text not null, "+ COLUMN_PERSON + " text not null, " + COLUMN_POSITION
-            + " integer not null );";
+            + " text not null, "+ COLUMN_PERSON + " text not null);";
 
     /**
      * Script para borrar la base de datos

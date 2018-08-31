@@ -81,7 +81,23 @@ public class MenuActivity extends AppCompatActivity
         if (id == R.id.perfil) {
             fm.beginTransaction().replace(R.id.escenario,new FaceFragment()).commit();
         } else if (id == R.id.audios) {
-            fm.beginTransaction().replace(R.id.escenario,new AudiosFragment()).commit();
+
+            AudiosFragment af = new AudiosFragment();
+            Bundle args = new Bundle();
+            args.putBoolean("favourite",false);
+            af.setArguments(args);
+
+            fm.beginTransaction().replace(R.id.escenario,af).commit();
+
+        } else if (id == R.id.fav) {
+
+            AudiosFragment af = new AudiosFragment();
+            Bundle args = new Bundle();
+            args.putBoolean("favourite",true);
+            af.setArguments(args);
+
+            fm.beginTransaction().replace(R.id.escenario,af).commit();
+
         }
         else if (id == R.id.quiz) {
             fm.beginTransaction().replace(R.id.escenario,new QuizFragment()).commit();
@@ -89,6 +105,7 @@ public class MenuActivity extends AppCompatActivity
         else if (id == R.id.inicio) {
             finish();
         }
+
 
 
 

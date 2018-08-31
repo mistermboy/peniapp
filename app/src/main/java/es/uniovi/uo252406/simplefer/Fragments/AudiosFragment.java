@@ -17,6 +17,9 @@ import android.provider.MediaStore;
 import android.provider.Settings;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -39,6 +42,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 
 import es.uniovi.uo252406.simplefer.Logical.Player;
+import es.uniovi.uo252406.simplefer.Persistence.FavouritesDataSource;
 import es.uniovi.uo252406.simplefer.R;
 
 
@@ -48,6 +52,7 @@ public class AudiosFragment extends android.support.v4.app.Fragment {
 
     ArrayList<String> audios;
     String person;
+    boolean isFavouriteFragment;
 
     String exStoragePath = Environment.getExternalStorageDirectory().getAbsolutePath();
     String path=(exStoragePath +"/media/ringtones/");
@@ -55,13 +60,14 @@ public class AudiosFragment extends android.support.v4.app.Fragment {
     String filename;
     String pressed = "";
 
+    FavouritesDataSource bd;
+
     private final int REQUEST_ACCESS_FINE =0;
 
 
     public AudiosFragment() {
         // Required empty public constructor
     }
-
 
 
 
@@ -76,7 +82,7 @@ public class AudiosFragment extends android.support.v4.app.Fragment {
         //Obtenemos los objetos enviados desde el MainActivity
         Bundle b = getActivity().getIntent().getExtras();
         person = (String) b.getString("person");
-
+        isFavouriteFragment = (boolean) getArguments().getBoolean("favourite");
 
         selectAndDraw();
 
@@ -91,7 +97,15 @@ public class AudiosFragment extends android.support.v4.app.Fragment {
     public void selectAndDraw() {
 
         //audios = createAudios(person);
-        audios = Player.getInstance().getAudios(person);
+        if(isFavouriteFragment) {
+
+            openDB();
+            audios = bd.getAllFavorites(person);
+            closeDB();
+
+        }else
+            audios = Player.getInstance().getAudios(person);
+
 
         //Obtenemos el linear layout del scroll
         LinearLayout lScroll = (LinearLayout) view.findViewById(R.id.lScroll);
@@ -117,6 +131,7 @@ public class AudiosFragment extends android.support.v4.app.Fragment {
 
 
             Button button = new Button(view.getContext());
+            button.setId(i);
             //Asignamos propiedades de layout al boton
             button.setLayoutParams(lp);
             //Nos quedamos solo con el texto que nos interesa
@@ -141,12 +156,13 @@ public class AudiosFragment extends android.support.v4.app.Fragment {
 
 
 
-     class ButtonsOnClickListener implements View.OnClickListener {
+    class ButtonsOnClickListener  implements View.OnClickListener {
 
         private String name;
 
         public ButtonsOnClickListener(String name) {
             this.name = name;
+
         }
 
         @Override
@@ -159,11 +175,9 @@ public class AudiosFragment extends android.support.v4.app.Fragment {
             } catch (IllegalStateException e) {
                 Log.e("IllegalStateException", "Illegal State Exception: " + e.getMessage());
             }
+
         }
-
-
     }
-
 
 
      class ButtonsOnLongClickListener implements View.OnLongClickListener {
@@ -186,14 +200,21 @@ public class AudiosFragment extends android.support.v4.app.Fragment {
             dialog.show();
 
 
-            Button bntFav = dialog.findViewById(R.id.btnFav);
+            Button btnFav = dialog.findViewById(R.id.btnFav);
             Button btnRingtone = dialog.findViewById(R.id.btnLlamada);
             Button btnShare = dialog.findViewById(R.id.btnCompartir);
             Button btnCancel = dialog.findViewById(R.id.btnCancelar);
             Button btnAlarm = dialog.findViewById(R.id.btnAlarm);
             Button btnNotification = dialog.findViewById(R.id.btnNotification);
 
-            bntFav.setTextSize(14);
+
+            openDB();
+            if(bd.isFavourite(pressed,person))
+                btnFav.setText("Quitar de favoritos");
+
+            closeDB();
+
+            btnFav.setTextSize(14);
             btnRingtone.setTextSize(14);
             btnShare.setTextSize(14);
             btnCancel.setTextSize(14);
@@ -201,7 +222,7 @@ public class AudiosFragment extends android.support.v4.app.Fragment {
             btnNotification.setTextSize(14);
 
 
-            bntFav.setTextColor(getResources().getColor(R.color.black));
+            btnFav.setTextColor(getResources().getColor(R.color.black));
             btnRingtone.setTextColor(getResources().getColor(R.color.black));
             btnShare.setTextColor(getResources().getColor(R.color.black));
             btnCancel.setTextColor(getResources().getColor(R.color.black));
@@ -212,7 +233,7 @@ public class AudiosFragment extends android.support.v4.app.Fragment {
 
             Typeface typeface = getResources().getFont(R.font.indieflower);
 
-            bntFav.setTypeface(typeface);
+            btnFav.setTypeface(typeface);
             btnRingtone.setTypeface(typeface);
             btnShare.setTypeface(typeface);
             btnCancel.setTypeface(typeface);
@@ -220,9 +241,37 @@ public class AudiosFragment extends android.support.v4.app.Fragment {
             btnNotification.setTypeface(typeface);
 
 
-            bntFav.setOnClickListener(new View.OnClickListener() {
+            btnFav.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+
+                    Toast toast;
+                    openDB();
+                    if(!bd.isFavourite(pressed,person)) {
+                        bd.addFavorite(pressed, person);
+                        toast = Toast.makeText(getContext(), "Se ha añadido a favoritos", Toast.LENGTH_SHORT);
+                    }else {
+                        bd.removeFavorite(pressed, person);
+                        toast = Toast.makeText(getContext(), "Se ha eliminado de favoritos", Toast.LENGTH_SHORT);
+
+                        if(isFavouriteFragment) {
+                            FragmentManager fm = getActivity().getSupportFragmentManager();
+
+                            AudiosFragment af = new AudiosFragment();
+                            Bundle args = new Bundle();
+                            args.putBoolean("favourite", true);
+                            af.setArguments(args);
+
+                            fm.beginTransaction().replace(R.id.escenario, af).commit();
+                        }
+                    }
+                    closeDB();
+
+
+                    toast.show();
+
+                    dialog.dismiss();
+
 
                 }
             });
@@ -419,6 +468,22 @@ public class AudiosFragment extends android.support.v4.app.Fragment {
         return true;
     }
 
+
+
+    /**
+     * Método que se conecta a la base de datos
+     */
+    public void openDB(){
+        bd = new FavouritesDataSource(getActivity().getApplicationContext());
+        bd.open();
+    }
+
+    /**
+     * Método que cierra la base de datos
+     */
+    public void closeDB(){
+        bd.close();
+    }
 
 
 }
