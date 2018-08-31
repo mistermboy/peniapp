@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -70,7 +71,6 @@ import java.util.List;
             ContentValues values = new ContentValues();
             values.put(MyDBHelper.COLUMN_AUDIO,audio);
             values.put(MyDBHelper.COLUMN_PERSON,person);
-          //  values.put(MyDBHelper.COLUMN_POSITION,position);
 
             // Insertamos el audio
             long insertId = database.insert(MyDBHelper.TABLE_FAVORITES, null, values);
@@ -82,10 +82,10 @@ import java.util.List;
          *Método que elimina la audio de favoritos
          * @return
          */
-        public long removeFavorite(String person){
+        public long removeFavorite(String pressed, String person){
 
             // Borramos la audio
-            long removeId = database.delete(MyDBHelper.TABLE_FAVORITES, MyDBHelper.COLUMN_PERSON+"="+person,null);
+            long removeId = database.delete(MyDBHelper.TABLE_FAVORITES, MyDBHelper.COLUMN_AUDIO+"= '"+pressed+"'",null);
 
             return removeId;
 

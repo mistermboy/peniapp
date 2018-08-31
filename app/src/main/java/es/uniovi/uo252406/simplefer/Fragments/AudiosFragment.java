@@ -17,6 +17,9 @@ import android.provider.MediaStore;
 import android.provider.Settings;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -242,11 +245,29 @@ public class AudiosFragment extends android.support.v4.app.Fragment {
                 @Override
                 public void onClick(View view) {
 
+                    Toast toast;
                     openDB();
-                    bd.addFavorite(pressed,person);
+                    if(!bd.isFavourite(pressed,person)) {
+                        bd.addFavorite(pressed, person);
+                        toast = Toast.makeText(getContext(), "Se ha añadido a favoritos", Toast.LENGTH_SHORT);
+                    }else {
+                        bd.removeFavorite(pressed, person);
+                        toast = Toast.makeText(getContext(), "Se ha eliminado de favoritos", Toast.LENGTH_SHORT);
+
+                        if(isFavouriteFragment) {
+                            FragmentManager fm = getActivity().getSupportFragmentManager();
+
+                            AudiosFragment af = new AudiosFragment();
+                            Bundle args = new Bundle();
+                            args.putBoolean("favourite", true);
+                            af.setArguments(args);
+
+                            fm.beginTransaction().replace(R.id.escenario, af).commit();
+                        }
+                    }
                     closeDB();
 
-                    Toast toast = Toast.makeText(getContext(),"Se ha añadido un nuevo audio a favoritos",Toast.LENGTH_SHORT);
+
                     toast.show();
 
                     dialog.dismiss();
