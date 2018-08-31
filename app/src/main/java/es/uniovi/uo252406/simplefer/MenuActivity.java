@@ -17,11 +17,13 @@ import android.view.SubMenu;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import es.uniovi.uo252406.simplefer.Logical.Player;
 import es.uniovi.uo252406.simplefer.Fragments.AudiosFragment;
 import es.uniovi.uo252406.simplefer.Fragments.FaceFragment;
 import es.uniovi.uo252406.simplefer.Fragments.QuizFragment;
+import es.uniovi.uo252406.simplefer.Persistence.FavouritesDataSource;
 
 public class MenuActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -91,12 +93,26 @@ public class MenuActivity extends AppCompatActivity
 
         } else if (id == R.id.fav) {
 
-            AudiosFragment af = new AudiosFragment();
-            Bundle args = new Bundle();
-            args.putBoolean("favourite",true);
-            af.setArguments(args);
+            FavouritesDataSource bd = new FavouritesDataSource(getApplicationContext());
+            bd.open();
 
-            fm.beginTransaction().replace(R.id.escenario,af).commit();
+            if(bd.getAllFavorites(person).size()>0){
+
+                AudiosFragment af = new AudiosFragment();
+                Bundle args = new Bundle();
+                args.putBoolean("favourite",true);
+                af.setArguments(args);
+
+                fm.beginTransaction().replace(R.id.escenario,af).commit();
+
+            }else{
+                
+                Toast toast = Toast.makeText(getApplicationContext(), "Aún no hay favoritos", Toast.LENGTH_SHORT);
+                toast.show();
+
+            }
+
+
 
         }
         else if (id == R.id.quiz) {

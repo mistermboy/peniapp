@@ -255,14 +255,20 @@ public class AudiosFragment extends android.support.v4.app.Fragment {
                         toast = Toast.makeText(getContext(), "Se ha eliminado de favoritos", Toast.LENGTH_SHORT);
 
                         if(isFavouriteFragment) {
-                            FragmentManager fm = getActivity().getSupportFragmentManager();
 
+                            FragmentManager fm = getActivity().getSupportFragmentManager();
                             AudiosFragment af = new AudiosFragment();
                             Bundle args = new Bundle();
-                            args.putBoolean("favourite", true);
-                            af.setArguments(args);
 
+                            if(bd.getAllFavorites(person).size()>0) {
+                                args.putBoolean("favourite", true);
+                            }else{
+                                args.putBoolean("favourite", false);
+                            }
+
+                            af.setArguments(args);
                             fm.beginTransaction().replace(R.id.escenario, af).commit();
+
                         }
                     }
                     closeDB();
