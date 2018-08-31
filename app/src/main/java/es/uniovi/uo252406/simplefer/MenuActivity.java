@@ -79,6 +79,10 @@ public class MenuActivity extends AppCompatActivity
 
         Player.getInstance().pause();
 
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("");
+        toolbar.setSubtitle("");
+
         FragmentManager fm = getSupportFragmentManager();
         if (id == R.id.perfil) {
             fm.beginTransaction().replace(R.id.escenario,new FaceFragment()).commit();
@@ -90,6 +94,10 @@ public class MenuActivity extends AppCompatActivity
             af.setArguments(args);
 
             fm.beginTransaction().replace(R.id.escenario,af).commit();
+
+            toolbar.setTitle("Pulsa para reproducir");
+            toolbar.setSubtitle("Mantén pulsado para más opciones");
+            toolbar.setTitleTextColor(getResources().getColor(R.color.white));
 
         } else if (id == R.id.fav) {
 
@@ -105,8 +113,12 @@ public class MenuActivity extends AppCompatActivity
 
                 fm.beginTransaction().replace(R.id.escenario,af).commit();
 
+                toolbar.setTitle("Pulsa para reproducir");
+                toolbar.setSubtitle("Mantén pulsado para más opciones");
+                toolbar.setTitleTextColor(getResources().getColor(R.color.white));
+
             }else{
-                
+
                 Toast toast = Toast.makeText(getApplicationContext(), "Aún no hay favoritos", Toast.LENGTH_SHORT);
                 toast.show();
 
