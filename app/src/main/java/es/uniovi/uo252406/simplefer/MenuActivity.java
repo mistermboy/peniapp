@@ -95,8 +95,8 @@ public class MenuActivity extends AppCompatActivity
 
             fm.beginTransaction().replace(R.id.escenario,af).commit();
 
-            toolbar.setTitle("Pulsa para reproducir");
-            toolbar.setSubtitle("Mantén pulsado para más opciones");
+          //  toolbar.setTitle("Pulsa para reproducir");
+          //  toolbar.setSubtitle("Mantén pulsado para más opciones");
             toolbar.setTitleTextColor(getResources().getColor(R.color.white));
 
         } else if (id == R.id.fav) {
@@ -113,8 +113,8 @@ public class MenuActivity extends AppCompatActivity
 
                 fm.beginTransaction().replace(R.id.escenario,af).commit();
 
-                toolbar.setTitle("Pulsa para reproducir");
-                toolbar.setSubtitle("Mantén pulsado para más opciones");
+           //     toolbar.setTitle("Pulsa para reproducir");
+           //     toolbar.setSubtitle("Mantén pulsado para más opciones");
                 toolbar.setTitleTextColor(getResources().getColor(R.color.white));
 
             }else{
