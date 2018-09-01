@@ -1,14 +1,22 @@
 package es.uniovi.uo252406.simplefer.Fragments;
 
+import android.app.Activity;
+import android.app.Dialog;
 import android.graphics.Typeface;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.support.annotation.RequiresApi;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.VideoView;
 
 import org.json.JSONException;
 
@@ -36,6 +44,7 @@ public class QuizFragment extends android.support.v4.app.Fragment {
 
     private int actualQuestion = 0;
     private int correctAnswers = 0;
+    private View vView;
 
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -69,6 +78,11 @@ public class QuizFragment extends android.support.v4.app.Fragment {
      */
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void prepareComponents(){
+
+
+        vView = view.findViewById(R.id.vViewQuiz);
+
+        vView.setVisibility(View.INVISIBLE);
 
         question = view.findViewById(R.id.textQuestion);
         option1 = view.findViewById(R.id.btnO1);
@@ -126,6 +140,16 @@ public class QuizFragment extends android.support.v4.app.Fragment {
      */
     private void writeQuiz() {
 
+
+        getActivity().runOnUiThread(new Runnable() {
+
+            public void run() {
+                option1.setEnabled(true);
+                option2.setEnabled(true);
+                option3.setEnabled(true);
+            }
+        });
+
         question.setText(questions.get(actualQuestion).getQuestion());
         option1.setText("a) "+questions.get(actualQuestion).getOption1());
         option2.setText("b) "+questions.get(actualQuestion).getOption2());
@@ -158,6 +182,19 @@ public class QuizFragment extends android.support.v4.app.Fragment {
 
 
     private void checkAnswer(int selected){
+
+
+        getActivity().runOnUiThread(new Runnable() {
+
+            public void run() {
+                option1.setEnabled(false);
+                option2.setEnabled(false);
+                option3.setEnabled(false);
+            }
+        });
+
+
+
 
         if(isCorrect(selected)){
             correctAnswers++;
@@ -242,8 +279,8 @@ public class QuizFragment extends android.support.v4.app.Fragment {
     }
 
 
-    private void finishQuiz(){
-        actualQuestion=0;
+    private void finishQuiz() {
+        actualQuestion = 0;
 
         question.setText("Has respondido "+correctAnswers+ " preguntas bien de "+questions.size());
         option1.setText("");
@@ -252,26 +289,58 @@ public class QuizFragment extends android.support.v4.app.Fragment {
 
         if(correctAnswers == questions.size()){
             Player.getInstance().selectAudio(getContext(), "himno");
-            option1.setText("ARRIBA");
-            option1.setTextColor(getResources().getColor(R.color.red));
-            option2.setText("ESPAÑA");
-            option2.setTextColor(getResources().getColor(R.color.yellow));
-            option3.setText("HOSTIA");
-            option3.setTextColor(getResources().getColor(R.color.red));
         }else if(correctAnswers >= (questions.size())/2 ) {
             Player.getInstance().selectAudio(getContext(), "quiz_good_" + person);
-            option1.setTextColor(getResources().getColor(R.color.green));
-            option1.setText("Eres un auténtico españoluzogi");
         }else {
             Player.getInstance().selectAudio(getContext(), "quiz_bad_" + person);
-            option1.setText("Realmente no sabes mucho de "+person);
-            option1.setTextColor(getResources().getColor(R.color.red));
         }
 
-        Player.getInstance().start();
+        getActivity().runOnUiThread(new Runnable() {
+            public void run() {
+
+                question.setEnabled(false);
+                option1.setEnabled(false);
+                option2.setEnabled(false);
+                option3.setEnabled(false);
+
+                VideoView vView = view.findViewById(R.id.vViewQuiz);
+                vView.setVisibility(View.VISIBLE);
+
+                int rawID = getContext().getResources().getIdentifier(person+"video","raw",getContext().getPackageName());
+
+                Uri uri = Uri.parse("android.resource://" + getActivity().getPackageName() + "/" + rawID);
+
+                vView.setVideoURI(uri);
+                vView.start();
+
+                Player.getInstance().start();
+
+                new Thread(new Runnable() {
+                    public void run() {
+                        VideoView vView = view.findViewById(R.id.vViewQuiz);
+                        while (Player.getInstance().isPlaying()) {
+
+                            if (!vView.isPlaying()) {
+                                vView.start();
+                            }
+                        }
+                        vView.pause();
+                        vView.seekTo(vView.getDuration());
+                    }
+                }).start();
+
+
+
+            }
+        });
 
         correctAnswers = 0;
 
+
     }
+
+
+
+
 
 }

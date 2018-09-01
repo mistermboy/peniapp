@@ -1,13 +1,11 @@
 package es.uniovi.uo252406.simplefer.Fragments;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Typeface;
-import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
@@ -17,21 +15,15 @@ import android.provider.MediaStore;
 import android.provider.Settings;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.accessibility.AccessibilityManager;
-import android.widget.Adapter;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Spinner;
 import android.widget.Toast;
 
 import java.io.File;
@@ -142,7 +134,10 @@ public class AudiosFragment extends android.support.v4.app.Fragment {
             Typeface typeface = getResources().getFont(R.font.indieflower);
             button.setTypeface(typeface);
             //Aumentamos el tamaño de la letra
-            button.setTextSize(16);
+            button.setTextSize(20);
+            //Cambiamos colores
+            button.setBackgroundColor(getResources().getColor(R.color.black));
+            button.setTextColor(getResources().getColor(R.color.white));
             //Asignamos los listener
             button.setOnClickListener(new AudiosFragment.ButtonsOnClickListener(audios.get(i)));
             button.setOnLongClickListener(new AudiosFragment.ButtonsOnLongClickListener(audios.get(i)));
@@ -196,7 +191,7 @@ public class AudiosFragment extends android.support.v4.app.Fragment {
             pressed = name;
 
             final Dialog dialog = new Dialog(getActivity());
-            dialog.setContentView(R.layout.custom_dialog);
+            dialog.setContentView(R.layout.custom_dialog_options);
             dialog.show();
 
 
@@ -214,12 +209,12 @@ public class AudiosFragment extends android.support.v4.app.Fragment {
 
             closeDB();
 
-            btnFav.setTextSize(14);
-            btnRingtone.setTextSize(14);
-            btnShare.setTextSize(14);
-            btnCancel.setTextSize(14);
-            btnAlarm.setTextSize(14);
-            btnNotification.setTextSize(14);
+            btnFav.setTextSize(18);
+            btnRingtone.setTextSize(18);
+            btnShare.setTextSize(18);
+            btnCancel.setTextSize(18);
+            btnAlarm.setTextSize(18);
+            btnNotification.setTextSize(18);
 
 
             btnFav.setTextColor(getResources().getColor(R.color.black));
@@ -255,14 +250,20 @@ public class AudiosFragment extends android.support.v4.app.Fragment {
                         toast = Toast.makeText(getContext(), "Se ha eliminado de favoritos", Toast.LENGTH_SHORT);
 
                         if(isFavouriteFragment) {
-                            FragmentManager fm = getActivity().getSupportFragmentManager();
 
+                            FragmentManager fm = getActivity().getSupportFragmentManager();
                             AudiosFragment af = new AudiosFragment();
                             Bundle args = new Bundle();
-                            args.putBoolean("favourite", true);
-                            af.setArguments(args);
 
+                            if(bd.getAllFavorites(person).size()>0) {
+                                args.putBoolean("favourite", true);
+                            }else{
+                                args.putBoolean("favourite", false);
+                            }
+
+                            af.setArguments(args);
                             fm.beginTransaction().replace(R.id.escenario, af).commit();
+
                         }
                     }
                     closeDB();

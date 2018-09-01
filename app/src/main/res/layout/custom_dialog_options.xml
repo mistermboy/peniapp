@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="420dp"
     android:layout_gravity="center"
-    android:background="@android:color/darker_gray"
+    android:background="@android:color/white"
     android:orientation="vertical">
 
 
@@ -16,6 +16,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="24dp"
+        android:background="@android:color/transparent"
         android:text="Guardar como favorito" />
 
     <Button
@@ -25,6 +26,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
+        android:background="@android:color/transparent"
         android:text="Establecer como tono de llamada" />
 
 
@@ -35,6 +37,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
+        android:background="@android:color/transparent"
         android:text="Establecer como tono de Alarma" />
 
     <Button
@@ -44,6 +47,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
+        android:background="@android:color/transparent"
         android:text="Establecer como tono de Notificación" />
 
     <Button
@@ -53,6 +57,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
+        android:background="@android:color/transparent"
         android:text="Compartir..." />
 
     <Button
@@ -62,6 +67,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
+        android:background="@android:color/transparent"
         android:text="Cancelar" />
 
 

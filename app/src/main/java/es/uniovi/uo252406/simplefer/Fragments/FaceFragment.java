@@ -80,10 +80,11 @@ public class FaceFragment extends Fragment{
                     Player.getInstance().mpNull();
                 Player.getInstance().changeAudio(getActivity().getBaseContext(), audios);
                 try {
-                    Player.getInstance().start();
 
                     vView.setVideoURI(uri);
                     vView.start();
+
+                    Player.getInstance().start();
 
                     new Thread(new Runnable() {
                         public void run() {
