@@ -194,8 +194,6 @@ public class QuizFragment extends android.support.v4.app.Fragment {
         });
 
 
-
-
         if(isCorrect(selected)){
             correctAnswers++;
             markCorrect();
