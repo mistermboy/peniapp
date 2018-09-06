@@ -31,8 +31,8 @@ public class ImageAdapter extends BaseAdapter {
         if (convertView == null) {
             // if it's not recycled, initialize some attributes
             imageView = new ImageView(mContext);
-            imageView.setLayoutParams(new ViewGroup.LayoutParams(400, 400));
-            imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+            imageView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+            imageView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
             imageView.setPadding(20, 20, 20, 20);
         } else {
             imageView = (ImageView) convertView;
@@ -45,13 +45,6 @@ public class ImageAdapter extends BaseAdapter {
     // references to our images
     private Integer[] mThumbIds = {
             R.drawable.fercara, R.drawable.bertocara,
-            R.drawable.fercara,R.drawable.bertocara, R.drawable.fercara,
-            R.drawable.fercara,R.drawable.fercara, R.drawable.fercara,
-            R.drawable.fercara,R.drawable.fercara, R.drawable.fercara,
-            R.drawable.fercara,R.drawable.fercara, R.drawable.fercara,
-            R.drawable.fercara,R.drawable.fercara, R.drawable.fercara,
-            R.drawable.fercara,R.drawable.fercara, R.drawable.fercara,
-            R.drawable.fercara,R.drawable.fercara, R.drawable.fercara,
-            R.drawable.fercara
+            R.drawable.fercara,R.drawable.bertocara, R.drawable.fercara
     };
 }
