@@ -363,18 +363,23 @@ public class AudiosFragment extends android.support.v4.app.Fragment {
                 @Override
                 public void onClick(View view) {
 
+                    if(!havePermissons()) {
 
-                    copyFile();
-                    writeDB();
+                        ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_ACCESS_FINE);
 
-                    String sharePath = path+filename;
-                    Uri uri = Uri.parse(sharePath);
-                    Intent share = new Intent(Intent.ACTION_SEND);
-                    share.setType("audio/mp3");
-                    share.putExtra(Intent.EXTRA_STREAM, uri);
-                    startActivity(Intent.createChooser(share, "Share Sound File"));
+                    }else {
+                        copyFile();
+                        writeDB();
 
-                    dialog.dismiss();
+                        String sharePath = path + filename;
+                        Uri uri = Uri.parse(sharePath);
+                        Intent share = new Intent(Intent.ACTION_SEND);
+                        share.setType("audio/mp3");
+                        share.putExtra(Intent.EXTRA_STREAM, uri);
+                        startActivity(Intent.createChooser(share, "Share Sound File"));
+
+                        dialog.dismiss();
+                    }
                 }
             });
 

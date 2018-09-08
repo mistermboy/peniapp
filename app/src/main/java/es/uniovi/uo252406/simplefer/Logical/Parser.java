@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 import es.uniovi.uo252406.simplefer.Entities.Question;
 
+
 public class Parser {
 
     private ArrayList<Question> questions;
