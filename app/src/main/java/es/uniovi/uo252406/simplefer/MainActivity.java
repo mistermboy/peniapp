@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.GridView;
 import android.widget.ImageView;
 
 import es.uniovi.uo252406.simplefer.Logical.Player;
@@ -17,7 +19,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
-        /*
         GridView gridview = (GridView) findViewById(R.id.gridview);
         gridview.setAdapter(new ImageAdapter(this));
 
@@ -25,20 +26,20 @@ public class MainActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View v,
                                     int position, long id) {
 
-                if(position %2==0) {
+                if (position % 2 == 0) {
 
                     startMenu("fer");
-                }else {
+                } else {
                     startMenu("berto");
                 }
             }
         });
 
-        */
 
         //Crea todos los audios de todos los personajes
         Player.getInstance().createAllAudios();
 
+        /*
 
         ImageView fer = (ImageView) findViewById(R.id.imageFer);
         ImageView berto = (ImageView) findViewById(R.id.imageBerto);
@@ -60,6 +61,8 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+*/
+    }
 
     /**
      * Pasa al Menu
