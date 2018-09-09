@@ -26,7 +26,7 @@ import es.uniovi.uo252406.simplefer.Fragments.QuizFragment;
 import es.uniovi.uo252406.simplefer.Persistence.FavouritesDataSource;
 
 public class MenuActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements  NavigationView.OnNavigationItemSelectedListener {
 
 
     String person;
@@ -176,5 +176,4 @@ public class MenuActivity extends AppCompatActivity
 
 
     }
-
 }

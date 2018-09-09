@@ -2,9 +2,9 @@ package es.uniovi.uo252406.simplefer.Fragments;
 
 import android.graphics.Typeface;
 import android.net.Uri;
-import android.os.Build;
+import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.annotation.RequiresApi;
+import android.support.v4.content.res.ResourcesCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,7 +41,6 @@ public class QuizFragment extends android.support.v4.app.Fragment {
     private View vView;
 
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -70,7 +69,6 @@ public class QuizFragment extends android.support.v4.app.Fragment {
     /**
      * Localiza los componentes del QuizFragment
      */
-    @RequiresApi(api = Build.VERSION_CODES.O)
     private void prepareComponents(){
 
 
@@ -98,7 +96,7 @@ public class QuizFragment extends android.support.v4.app.Fragment {
         option2.setTextAlignment(View.TEXT_ALIGNMENT_VIEW_START);
         option3.setTextAlignment(View.TEXT_ALIGNMENT_VIEW_START);
 
-        Typeface typeface = getResources().getFont(R.font.indieflower);
+        Typeface typeface = ResourcesCompat.getFont(getContext(),R.font.indieflower);
 
         question.setTypeface(typeface);
         option1.setTypeface(typeface);
@@ -144,14 +142,13 @@ public class QuizFragment extends android.support.v4.app.Fragment {
             }
         });
 
+
         question.setText(questions.get(actualQuestion).getQuestion());
         option1.setText("a) "+questions.get(actualQuestion).getOption1());
         option2.setText("b) "+questions.get(actualQuestion).getOption2());
         option3.setText("c) "+questions.get(actualQuestion).getOption3());
 
     }
-
-
 
     public StringBuilder getJson() {
 
@@ -216,7 +213,6 @@ public class QuizFragment extends android.support.v4.app.Fragment {
 
 
         new Thread(new Runnable() {
-            @RequiresApi(api = Build.VERSION_CODES.O)
             public void run() {
                 try {
                     Thread.sleep(1000);
@@ -238,7 +234,6 @@ public class QuizFragment extends android.support.v4.app.Fragment {
      * Espera un tiempo corto y pasa a la siguiente pregunta
      */
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
     private void nextQuestion() {
         actualQuestion++;
         prepareComponents();
@@ -289,6 +284,7 @@ public class QuizFragment extends android.support.v4.app.Fragment {
 
         getActivity().runOnUiThread(new Runnable() {
             public void run() {
+
 
                 question.setEnabled(false);
                 option1.setEnabled(false);

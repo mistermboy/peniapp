@@ -13,10 +13,10 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.provider.Settings;
-import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.res.ResourcesCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -63,7 +63,6 @@ public class AudiosFragment extends android.support.v4.app.Fragment {
 
 
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -85,7 +84,6 @@ public class AudiosFragment extends android.support.v4.app.Fragment {
     /**
      * Selecciona los audios y crea todos los botones
      */
-    @RequiresApi(api = Build.VERSION_CODES.O)
     public void selectAndDraw() {
 
         //audios = createAudios(person);
@@ -131,7 +129,7 @@ public class AudiosFragment extends android.support.v4.app.Fragment {
             //Asignamos Texto al botón
             button.setText(buttonText);
             //Asignamos la fuente
-            Typeface typeface = getResources().getFont(R.font.indieflower);
+            Typeface typeface = ResourcesCompat.getFont(getContext(),R.font.indieflower);
             button.setTypeface(typeface);
             //Aumentamos el tamaño de la letra
             button.setTextSize(20);
@@ -183,7 +181,6 @@ public class AudiosFragment extends android.support.v4.app.Fragment {
             this.name = name;
         }
 
-        @RequiresApi(api = Build.VERSION_CODES.O)
         @Override
         public boolean onLongClick(View v) {
 
@@ -226,7 +223,7 @@ public class AudiosFragment extends android.support.v4.app.Fragment {
 
 
 
-            Typeface typeface = getResources().getFont(R.font.indieflower);
+            Typeface typeface = ResourcesCompat.getFont(getContext(),R.font.indieflower);
 
             btnFav.setTypeface(typeface);
             btnRingtone.setTypeface(typeface);
