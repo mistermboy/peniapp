@@ -1,5 +1,6 @@
 package es.uniovi.uo252406.simplefer.Fragments;
 
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -63,6 +64,7 @@ public class QuizFragment extends android.support.v4.app.Fragment {
         prepareComponents();
         writeQuiz();
 
+
         return view;
     }
 
@@ -86,6 +88,8 @@ public class QuizFragment extends android.support.v4.app.Fragment {
         option2.setTextColor(getResources().getColor(R.color.white));
         option3.setTextColor(getResources().getColor(R.color.white));
 
+
+
         question.setTextSize(36);
         option1.setTextSize(24);
         option2.setTextSize(24);
@@ -106,21 +110,21 @@ public class QuizFragment extends android.support.v4.app.Fragment {
         option1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                checkAnswer(1);
+                new Reviser().execute(1);
             }
         });
 
         option2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                checkAnswer(2);
+                new Reviser().execute(2);
             }
         });
 
         option3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                checkAnswer(3);
+                new Reviser().execute(3);
             }
         });
 
@@ -131,7 +135,6 @@ public class QuizFragment extends android.support.v4.app.Fragment {
      * Escribe el Quiz con la pregunta actual
      */
     private void writeQuiz() {
-
 
         getActivity().runOnUiThread(new Runnable() {
 
@@ -171,163 +174,167 @@ public class QuizFragment extends android.support.v4.app.Fragment {
     }
 
 
+    /**
+     *  Esta clase comprueba la opción seleccionada y actúa en consecuencia
+     */
+    private class Reviser extends AsyncTask<Integer, Integer, Integer> {
 
-    private void checkAnswer(int selected){
-
-
-        getActivity().runOnUiThread(new Runnable() {
-
-            public void run() {
-                option1.setEnabled(false);
-                option2.setEnabled(false);
-                option3.setEnabled(false);
-            }
-        });
-
-
-        if(isCorrect(selected)){
-            correctAnswers++;
-            markCorrect();
-        }else{
-
-            switch (selected){
-
-                case 1:
-                    option1.setTextColor(getResources().getColor(R.color.red));
-                    markCorrect();
-                    break;
-
-                case 2:
-                    option2.setTextColor(getResources().getColor(R.color.red));
-                    markCorrect();
-                    break;
-
-                case 3:
-                    option3.setTextColor(getResources().getColor(R.color.red));
-                    markCorrect();
-                    break;
-
-            }
-
+        @Override
+        protected void onPreExecute() {
+            option1.setEnabled(false);
+            option2.setEnabled(false);
+            option3.setEnabled(false);
         }
 
 
-        new Thread(new Runnable() {
-            public void run() {
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+
+        @Override
+        protected Integer doInBackground(Integer... integers) {
+            publishProgress(integers[0]);
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            return null;
+        }
+
+
+        @Override
+        protected void onProgressUpdate(Integer... integer) {
+
+            int selected = integer[0];
+
+            if (isCorrect(selected)) {
+                correctAnswers++;
+                markCorrect();
+            } else {
+
+                if (selected == 1) {
+
+                    option1.setTextColor(getResources().getColor(R.color.red));
+                    markCorrect();
+
+                } else if (selected == 2) {
+
+                    option2.setTextColor(getResources().getColor(R.color.red));
+                    markCorrect();
+
+                } else if (selected == 3) {
+
+                    option3.setTextColor(getResources().getColor(R.color.red));
+                    markCorrect();
+
                 }
 
-                if(actualQuestion<questions.size()-1)
+            }
+        }
+
+            @Override
+            protected void onPostExecute(Integer integer){
+                if (actualQuestion < questions.size() - 1)
                     nextQuestion();
                 else
                     finishQuiz();
+
             }
-        }).start();
-
-
-    }
-
-    /**
-     * Espera un tiempo corto y pasa a la siguiente pregunta
-     */
-
-    private void nextQuestion() {
-        actualQuestion++;
-        prepareComponents();
-        writeQuiz();
-    }
-
-
-    private void markCorrect() {
-
-        switch (questions.get(actualQuestion).getAnswer()){
-
-            case 1:
-                option1.setTextColor(getResources().getColor(R.color.green));
-                break;
-
-            case 2:
-                option2.setTextColor(getResources().getColor(R.color.green));
-                break;
-
-            case 3:
-                option3.setTextColor(getResources().getColor(R.color.green));
-                break;
 
         }
 
-    }
+        /**
+         * Espera un tiempo corto y pasa a la siguiente pregunta
+         */
 
-    private boolean isCorrect(int selected) {
-        return  questions.get(actualQuestion).getAnswer() == selected;
-    }
-
-
-    private void finishQuiz() {
-        actualQuestion = 0;
-
-        question.setText("Has respondido "+correctAnswers+ " preguntas bien de "+questions.size());
-        option1.setText("");
-        option2.setText("");
-        option3.setText("");
-
-        if(correctAnswers == questions.size()){
-            Player.getInstance().selectAudio(getContext(), "himno");
-        }else if(correctAnswers >= (questions.size())/2 ) {
-            Player.getInstance().selectAudio(getContext(), "quiz_good_" + person);
-        }else {
-            Player.getInstance().selectAudio(getContext(), "quiz_bad_" + person);
+        private void nextQuestion() {
+            actualQuestion++;
+            prepareComponents();
+            writeQuiz();
         }
 
-        getActivity().runOnUiThread(new Runnable() {
-            public void run() {
+
+        private void markCorrect() {
+
+            switch (questions.get(actualQuestion).getAnswer()) {
+
+                case 1:
+                    option1.setTextColor(getResources().getColor(R.color.green));
+                    break;
+
+                case 2:
+                    option2.setTextColor(getResources().getColor(R.color.green));
+                    break;
+
+                case 3:
+                    option3.setTextColor(getResources().getColor(R.color.green));
+                    break;
+
+            }
+
+        }
+
+        private boolean isCorrect(int selected) {
+            return questions.get(actualQuestion).getAnswer() == selected;
+        }
 
 
-                question.setEnabled(false);
-                option1.setEnabled(false);
-                option2.setEnabled(false);
-                option3.setEnabled(false);
+        private void finishQuiz() {
+            actualQuestion = 0;
 
-                VideoView vView = view.findViewById(R.id.vViewQuiz);
-                vView.setVisibility(View.VISIBLE);
+            question.setText("Has respondido " + correctAnswers + " preguntas bien de " + questions.size());
+            option1.setText("");
+            option2.setText("");
+            option3.setText("");
 
-                int rawID = getContext().getResources().getIdentifier(person+"video","raw",getContext().getPackageName());
+            if (correctAnswers == questions.size()) {
+                Player.getInstance().selectAudio(getContext(), "himno");
+            } else if (correctAnswers >= (questions.size()) / 2) {
+                Player.getInstance().selectAudio(getContext(), "quiz_good_" + person);
+            } else {
+                Player.getInstance().selectAudio(getContext(), "quiz_bad_" + person);
+            }
 
-                Uri uri = Uri.parse("android.resource://" + getActivity().getPackageName() + "/" + rawID);
 
-                vView.setVideoURI(uri);
-                vView.start();
+            getActivity().runOnUiThread(new Runnable() {
+                public void run() {
 
-                Player.getInstance().start();
 
-                new Thread(new Runnable() {
-                    public void run() {
-                        VideoView vView = view.findViewById(R.id.vViewQuiz);
-                        while (Player.getInstance().isPlaying()) {
+                    question.setEnabled(false);
+                    option1.setEnabled(false);
+                    option2.setEnabled(false);
+                    option3.setEnabled(false);
 
-                            if (!vView.isPlaying()) {
-                                vView.start();
+                    VideoView vView = view.findViewById(R.id.vViewQuiz);
+                    vView.setVisibility(View.VISIBLE);
+
+                    int rawID = getContext().getResources().getIdentifier(person + "video", "raw", getContext().getPackageName());
+
+                    Uri uri = Uri.parse("android.resource://" + getActivity().getPackageName() + "/" + rawID);
+
+                    vView.setVideoURI(uri);
+                    vView.start();
+
+                    Player.getInstance().start();
+
+                    new Thread(new Runnable() {
+                        public void run() {
+                            VideoView vView = view.findViewById(R.id.vViewQuiz);
+                            while (Player.getInstance().isPlaying()) {
+
+                                if (!vView.isPlaying()) {
+                                    vView.start();
+                                }
                             }
+                            vView.pause();
+                            vView.seekTo(vView.getDuration());
                         }
-                        vView.pause();
-                        vView.seekTo(vView.getDuration());
-                    }
-                }).start();
+                    }).start();
 
 
-
-            }
-        });
-
-        correctAnswers = 0;
-
-
-    }
-
-
+                }
+            });
+            correctAnswers = 0;
+        }
 
 
 

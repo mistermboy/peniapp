@@ -1,8 +1,10 @@
 package es.uniovi.uo252406.simplefer;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
@@ -17,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
 
 
         GridView gridview = (GridView) findViewById(R.id.gridview);
@@ -68,6 +71,7 @@ public class MainActivity extends AppCompatActivity {
      * Pasa al Menu
      */
     private void startMenu(String person) {
+
         intent = new Intent(getApplicationContext(), MenuActivity.class);
 
         Bundle bundle = new Bundle();
