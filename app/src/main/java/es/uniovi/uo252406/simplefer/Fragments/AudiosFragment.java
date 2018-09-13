@@ -5,9 +5,11 @@ import android.app.Dialog;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.media.RingtoneManager;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
@@ -24,6 +26,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import java.io.File;
@@ -75,76 +78,9 @@ public class AudiosFragment extends android.support.v4.app.Fragment {
         person = (String) b.getString("person");
         isFavouriteFragment = (boolean) getArguments().getBoolean("favourite");
 
-        selectAndDraw();
+        new Progress().execute();
 
         return view;
-    }
-
-
-    /**
-     * Selecciona los audios y crea todos los botones
-     */
-    public void selectAndDraw() {
-
-        //audios = createAudios(person);
-        if(isFavouriteFragment) {
-
-            openDB();
-            audios = bd.getAllFavorites(person);
-            closeDB();
-
-        }else
-            audios = Player.getInstance().getAudios(person);
-
-
-        //Obtenemos el linear layout del scroll
-        LinearLayout lScroll = (LinearLayout) view.findViewById(R.id.lScroll);
-
-
-        //Propiedades para los botones
-        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT);
-
-
-        ArrayList<String> elementos = new ArrayList<>();
-
-        elementos.add("Guadar como favorito");
-        elementos.add("Compartir en whatsapp");
-        elementos.add("Establecer como tono de llamada");
-
-
-        ArrayAdapter arrayAdapter = new ArrayAdapter(getActivity(),android.R.layout.simple_spinner_dropdown_item,elementos);
-
-        //Creaación de los botones
-
-        for (int i = 0; i < audios.size(); i++) {
-
-
-            Button button = new Button(view.getContext());
-            button.setId(i);
-            //Asignamos propiedades de layout al boton
-            button.setLayoutParams(lp);
-            //Nos quedamos solo con el texto que nos interesa
-            String buttonText = String.valueOf(audios.get(i)).replace("_", " ").replace(person, "").replace("0", "ñ"); //Los audios no pueden llevar "ñ" así que ponemos un 0 y luego sustituimos
-            //Asignamos Texto al botón
-            button.setText(buttonText);
-            //Asignamos la fuente
-            Typeface typeface = ResourcesCompat.getFont(getContext(),R.font.indieflower);
-            button.setTypeface(typeface);
-            //Aumentamos el tamaño de la letra
-            button.setTextSize(20);
-            //Cambiamos colores
-            button.setBackgroundColor(getResources().getColor(R.color.black));
-            button.setTextColor(getResources().getColor(R.color.white));
-            //Asignamos los listener
-            button.setOnClickListener(new AudiosFragment.ButtonsOnClickListener(audios.get(i)));
-            button.setOnLongClickListener(new AudiosFragment.ButtonsOnLongClickListener(audios.get(i)));
-
-
-            //Añadimos los botones a la botonera
-            lScroll.addView(button);
-
-        }
     }
 
 
@@ -171,6 +107,98 @@ public class AudiosFragment extends android.support.v4.app.Fragment {
 
         }
     }
+
+
+    private class Progress extends AsyncTask<Void, Void, Void> {
+
+
+        protected void onPreExecute() {
+
+            ProgressBar progressBar = view.findViewById(R.id.progressBar);
+            progressBar.setVisibility(View.VISIBLE);
+
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+
+            try {
+                Thread.sleep(300);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+
+
+            if (isFavouriteFragment) {
+
+                openDB();
+                audios = bd.getAllFavorites(person);
+                closeDB();
+
+            } else
+                audios = Player.getInstance().getAudios(person);
+
+            return null;
+        }
+
+        protected void onPostExecute (Void result){
+
+            ProgressBar progressBar = view.findViewById(R.id.progressBar);
+            progressBar.setVisibility(View.INVISIBLE);
+
+            //Obtenemos el linear layout del scroll
+            LinearLayout lScroll = (LinearLayout) view.findViewById(R.id.lScroll);
+
+
+            //Propiedades para los botones
+            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT);
+
+
+            ArrayList<String> elementos = new ArrayList<>();
+
+            elementos.add("Guadar como favorito");
+            elementos.add("Compartir en whatsapp");
+            elementos.add("Establecer como tono de llamada");
+
+
+            ArrayAdapter arrayAdapter = new ArrayAdapter(getActivity(), android.R.layout.simple_spinner_dropdown_item, elementos);
+
+            //Creaación de los botones
+
+            for (int i = 0; i < audios.size(); i++) {
+
+                Button button = new Button(view.getContext());
+                button.setId(i);
+                //Asignamos propiedades de layout al boton
+                button.setLayoutParams(lp);
+                //Nos quedamos solo con el texto que nos interesa
+                String buttonText = String.valueOf(audios.get(i)).replace("_", " ").replace(person, "").replace("0", "ñ"); //Los audios no pueden llevar "ñ" así que ponemos un 0 y luego sustituimos
+                //Asignamos Texto al botón
+                button.setText(buttonText);
+                //Asignamos la fuente
+                Typeface typeface = ResourcesCompat.getFont(getContext(), R.font.indieflower);
+                button.setTypeface(typeface);
+                //Aumentamos el tamaño de la letra
+                button.setTextSize(20);
+                //Cambiamos colores
+                button.setBackgroundColor(getResources().getColor(R.color.black));
+                button.setTextColor(getResources().getColor(R.color.white));
+                //Asignamos los listener
+                button.setOnClickListener(new AudiosFragment.ButtonsOnClickListener(audios.get(i)));
+                button.setOnLongClickListener(new AudiosFragment.ButtonsOnLongClickListener(audios.get(i)));
+
+
+                //Añadimos los botones a la botonera
+                lScroll.addView(button);
+
+            }
+
+
+        }
+    }
+
 
 
      class ButtonsOnLongClickListener implements View.OnLongClickListener {

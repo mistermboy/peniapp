@@ -20,5 +20,10 @@
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
 
+    <style name="MyProgressBarRectangle" parent="@style/Widget.AppCompat.ProgressBar">
+        <item name="android:indeterminateDrawable">@drawable/customprogress</item>
+        <item name="android:minHeight">80dp</item>
+        <item name="android:minWidth">200dp</item>
+    </style>
 
 </resources>
