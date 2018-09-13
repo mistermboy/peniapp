@@ -1,6 +1,7 @@
 package es.uniovi.uo252406.simplefer.Fragments;
 
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -43,15 +44,37 @@ public class FaceFragment extends Fragment{
         Bundle b = getActivity().getIntent().getExtras();
         person = (String) b.getString("person");
 
-
-        audios = Player.getInstance().getAudios(person);
-        asignaFuncionalidades();
+        new FaceCharger().execute();
 
         // Inflate the layout for this fragment
         return view;
     }
 
 
+
+    private class FaceCharger extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected void onPreExecute() {
+
+            vView = (VideoView)  view.findViewById(R.id.videoView);
+
+            int rawID = getContext().getResources().getIdentifier(person+"video","raw",getContext().getPackageName());
+
+            uri = Uri.parse("android.resource://" + getActivity().getPackageName() + "/" + rawID);
+
+            vView.setVideoURI(uri);
+            vView.seekTo(vView.getDuration());
+
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            audios = Player.getInstance().getAudios(person);
+            asignaFuncionalidades();
+            return null;
+        }
+    }
 
     /**
      * Asigna funcionalidad a los botones
@@ -60,14 +83,6 @@ public class FaceFragment extends Fragment{
 
         btnPrincipal = view.findViewById(R.id.btnPrincipal);
 
-        vView = (VideoView)  view.findViewById(R.id.videoView);
-
-        int rawID = getContext().getResources().getIdentifier(person+"video","raw",getContext().getPackageName());
-
-        uri = Uri.parse("android.resource://" + getActivity().getPackageName() + "/" + rawID);
-
-        vView.setVideoURI(uri);
-        vView.seekTo(vView.getDuration());
 
         btnPrincipal.setOnClickListener(new View.OnClickListener() {
 
