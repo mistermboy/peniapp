@@ -29,11 +29,14 @@ public class MainActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View v,
                                     int position, long id) {
 
-                if (position % 2 == 0) {
+                if (position % 2 != 0 && position!=0) {
 
                     startMenu("fer");
-                } else {
+
+                } else if(position % 2 == 0 && position!=0){
+
                     startMenu("berto");
+
                 }
             }
         });
@@ -42,29 +45,7 @@ public class MainActivity extends AppCompatActivity {
         //Crea todos los audios de todos los personajes
         Player.getInstance().createAllAudios();
 
-        /*
 
-        ImageView fer = (ImageView) findViewById(R.id.imageFer);
-        ImageView berto = (ImageView) findViewById(R.id.imageBerto);
-
-        fer.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startMenu("fer");
-            }
-        });
-
-        berto.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startMenu("berto");
-            }
-        });
-
-
-    }
-
-*/
     }
 
     /**

@@ -207,9 +207,12 @@ public class QuizFragment extends android.support.v4.app.Fragment {
             int selected = integer[0];
 
             if (isCorrect(selected)) {
+                Player.getInstance().selectAudio(getContext(),"correct");
                 correctAnswers++;
                 markCorrect();
             } else {
+
+                Player.getInstance().selectAudio(getContext(),"incorrect");
 
                 if (selected == 1) {
 
@@ -229,6 +232,8 @@ public class QuizFragment extends android.support.v4.app.Fragment {
                 }
 
             }
+
+            Player.getInstance().start();
         }
 
             @Override
