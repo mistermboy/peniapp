@@ -35,6 +35,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Collections;
 
 import es.uniovi.uo252406.simplefer.Logical.Player;
 import es.uniovi.uo252406.simplefer.Persistence.FavouritesDataSource;
@@ -139,6 +140,7 @@ public class AudiosFragment extends android.support.v4.app.Fragment {
             } else
                 audios = Player.getInstance().getAudios(person);
 
+            Collections.sort(audios);
             return null;
         }
 
