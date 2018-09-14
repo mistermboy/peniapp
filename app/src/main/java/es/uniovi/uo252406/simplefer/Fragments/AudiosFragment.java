@@ -5,12 +5,10 @@ import android.app.Dialog;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -35,6 +33,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Collections;
 
 import es.uniovi.uo252406.simplefer.Logical.Player;
 import es.uniovi.uo252406.simplefer.Persistence.FavouritesDataSource;
@@ -139,6 +138,7 @@ public class AudiosFragment extends android.support.v4.app.Fragment {
             } else
                 audios = Player.getInstance().getAudios(person);
 
+            Collections.sort(audios);
             return null;
         }
 

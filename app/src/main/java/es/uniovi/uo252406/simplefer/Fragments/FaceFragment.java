@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.VideoView;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import es.uniovi.uo252406.simplefer.Logical.Player;
 import es.uniovi.uo252406.simplefer.R;
@@ -71,6 +72,7 @@ public class FaceFragment extends Fragment{
         @Override
         protected Void doInBackground(Void... voids) {
             audios = Player.getInstance().getAudios(person);
+            Collections.shuffle(audios);
             asignaFuncionalidades();
             return null;
         }

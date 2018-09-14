@@ -96,16 +96,14 @@ public class Player {
 
     private ArrayList<String> getAudiosFromRaw(String person) {
         ArrayList<String> audios = new ArrayList<>();
-        int numAudios = 0;
         for (Field f : R.raw.class.getFields()) {
             //Es  un audio de la persona que estamos buscando?
             if (f.getName().split("_")[0].equals(person)) {
                 audios.add(f.getName());
-                numAudios++;
             }
 
         }
-        return audios;
+        return  audios;
     }
 
 

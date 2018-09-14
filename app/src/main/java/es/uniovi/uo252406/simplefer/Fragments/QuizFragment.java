@@ -1,6 +1,5 @@
 package es.uniovi.uo252406.simplefer.Fragments;
 
-import android.content.Intent;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -207,9 +206,12 @@ public class QuizFragment extends android.support.v4.app.Fragment {
             int selected = integer[0];
 
             if (isCorrect(selected)) {
+                Player.getInstance().selectAudio(getContext(),"correct");
                 correctAnswers++;
                 markCorrect();
             } else {
+
+                Player.getInstance().selectAudio(getContext(),"incorrect");
 
                 if (selected == 1) {
 
@@ -229,6 +231,8 @@ public class QuizFragment extends android.support.v4.app.Fragment {
                 }
 
             }
+
+            Player.getInstance().start();
         }
 
             @Override
@@ -287,7 +291,7 @@ public class QuizFragment extends android.support.v4.app.Fragment {
             option3.setText("");
 
             if (correctAnswers == questions.size()) {
-                Player.getInstance().selectAudio(getContext(), "himno");
+                Player.getInstance().selectAudio(getContext(), "quiz_perfect_"+person);
             } else if (correctAnswers >= (questions.size()) / 2) {
                 Player.getInstance().selectAudio(getContext(), "quiz_good_" + person);
             } else {
