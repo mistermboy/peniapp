@@ -1,14 +1,11 @@
 package es.uniovi.uo252406.simplefer;
 
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
-import android.widget.ImageView;
 
 import es.uniovi.uo252406.simplefer.Logical.Player;
 

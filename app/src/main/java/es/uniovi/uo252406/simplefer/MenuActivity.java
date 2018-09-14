@@ -1,6 +1,5 @@
 package es.uniovi.uo252406.simplefer;
 
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
@@ -9,11 +8,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.Spannable;
-import android.text.SpannableString;
-import android.view.Menu;
 import android.view.MenuItem;
-import android.view.SubMenu;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -95,9 +90,7 @@ public class MenuActivity extends AppCompatActivity
 
             fm.beginTransaction().replace(R.id.escenario,af).commit();
 
-          //  toolbar.setTitle("Pulsa para reproducir");
-          //  toolbar.setSubtitle("Mantén pulsado para más opciones");
-            toolbar.setTitleTextColor(getResources().getColor(R.color.white));
+            toolbar.setSubtitle("Mantén pulsado para más opciones");
 
         } else if (id == R.id.fav) {
 
@@ -113,9 +106,7 @@ public class MenuActivity extends AppCompatActivity
 
                 fm.beginTransaction().replace(R.id.escenario,af).commit();
 
-           //     toolbar.setTitle("Pulsa para reproducir");
-           //     toolbar.setSubtitle("Mantén pulsado para más opciones");
-                toolbar.setTitleTextColor(getResources().getColor(R.color.white));
+                toolbar.setSubtitle("Mantén pulsado para más opciones");
 
             }else{
 
