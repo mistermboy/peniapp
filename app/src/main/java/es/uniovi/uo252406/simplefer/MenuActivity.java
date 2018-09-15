@@ -1,5 +1,6 @@
 package es.uniovi.uo252406.simplefer;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
@@ -11,6 +12,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,6 +38,7 @@ public class MenuActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
@@ -50,7 +53,9 @@ public class MenuActivity extends AppCompatActivity
 
         FragmentManager fm = getSupportFragmentManager();
 
-        fm.beginTransaction().replace(R.id.escenario,new FaceFragment()).commit();
+        fm.beginTransaction().replace(R.id.escenario, new FaceFragment()).commit();
+
+
 
     }
 
@@ -90,7 +95,6 @@ public class MenuActivity extends AppCompatActivity
 
             fm.beginTransaction().replace(R.id.escenario,af).commit();
 
-            toolbar.setSubtitle("Mantén pulsado para más opciones");
 
         } else if (id == R.id.fav) {
 
@@ -106,7 +110,6 @@ public class MenuActivity extends AppCompatActivity
 
                 fm.beginTransaction().replace(R.id.escenario,af).commit();
 
-                toolbar.setSubtitle("Mantén pulsado para más opciones");
 
             }else{
 
@@ -161,10 +164,13 @@ public class MenuActivity extends AppCompatActivity
             name.setText("Alberto García");
             name.setTextColor(getResources().getColor(R.color.white));
 
-            description.setText("Drogopropulsado. Subo videos de mi gato a insta");
+            description.setText("Drogopropulsado. Vampiro si, pero solo en Halloween");
             description.setTextColor(getResources().getColor(R.color.white));
         }
 
 
     }
+
+
+
 }
