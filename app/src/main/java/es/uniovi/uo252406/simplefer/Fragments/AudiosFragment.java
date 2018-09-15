@@ -3,6 +3,7 @@ package es.uniovi.uo252406.simplefer.Fragments;
 import android.Manifest;
 import android.app.Dialog;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Typeface;
@@ -23,6 +24,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -79,33 +81,42 @@ public class AudiosFragment extends android.support.v4.app.Fragment {
 
         new Progress().execute();
 
+        checkFirstRun();
+
         return view;
     }
 
 
 
-    class ButtonsOnClickListener  implements View.OnClickListener {
+    private  void checkFirstRun(){
+        boolean isFirtsRun = getActivity().getSharedPreferences("PREFERENCE", Context.MODE_PRIVATE).getBoolean("isFirstRun",true);
+        if(isFirtsRun){
 
-        private String name;
+            final Dialog info = new Dialog(getActivity());
+            info.setContentView(R.layout.info_dialog);
+            info.show();
 
-        public ButtonsOnClickListener(String name) {
-            this.name = name;
+
+            final CheckBox checkBox = info.findViewById(R.id.checkNoMore);
+            Button button = info.findViewById(R.id.btnAceptInfoDialog);
+
+            button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    if(checkBox.isChecked())
+                        getActivity().getSharedPreferences("PREFERENCE", Context.MODE_PRIVATE).edit().putBoolean("isFirstRun",false).apply();
+
+                    info.dismiss();
+                }
+            });
+
 
         }
 
-        @Override
-        public void onClick(View v) {
-            if (Player.getInstance() != null)
-                Player.getInstance().mpNull();
-            Player.getInstance().selectAudio(getActivity().getBaseContext(), name);
-            try {
-                Player.getInstance().start();
-            } catch (IllegalStateException e) {
-                Log.e("IllegalStateException", "Illegal State Exception: " + e.getMessage());
-            }
-
-        }
     }
+
+
 
 
     private class Progress extends AsyncTask<Void, Void, Void> {
@@ -196,12 +207,39 @@ public class AudiosFragment extends android.support.v4.app.Fragment {
             }
 
 
+
+
         }
     }
 
 
 
-     class ButtonsOnLongClickListener implements View.OnLongClickListener {
+    class ButtonsOnClickListener  implements View.OnClickListener {
+
+        private String name;
+
+        public ButtonsOnClickListener(String name) {
+            this.name = name;
+
+        }
+
+        @Override
+        public void onClick(View v) {
+            if (Player.getInstance() != null)
+                Player.getInstance().mpNull();
+            Player.getInstance().selectAudio(getActivity().getBaseContext(), name);
+            try {
+                Player.getInstance().start();
+            } catch (IllegalStateException e) {
+                Log.e("IllegalStateException", "Illegal State Exception: " + e.getMessage());
+            }
+
+        }
+    }
+
+
+
+    class ButtonsOnLongClickListener implements View.OnLongClickListener {
 
         private String name;
 

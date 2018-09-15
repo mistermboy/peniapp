@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="484dp"
+    android:layout_gravity="center"
+    android:background="@android:color/white"
+    android:orientation="vertical">
+
+
+    <TextView
+        android:id="@+id/textInfo"
+        android:layout_width="match_parent"
+        android:layout_height="390dp"
+        android:text="Pulsa en un audio para reproducirlo, manten pulsado sobre él para acceder a más opciones. Algunas de las opciones necesitan unos permisos especiales. Cuando pulses en alguna de estas opciones verás que se abre un cuadro solicitando permisos que deberás aceptar y además serás redirigido a tu menú de opciones donde debes buscar esta app para darle unos permisos adicionales."
+        android:textAlignment="center"
+        android:textColor="@android:color/background_dark"
+        android:textSize="22sp" />
+
+    <CheckBox
+        android:id="@+id/checkNoMore"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="No volver a mostrar" />
+
+    <Button
+        android:id="@+id/btnAceptInfoDialog"
+        android:layout_width="match_parent"
+        android:layout_height="66dp"
+        android:text="De acuerdo" />
+
+</LinearLayout>
