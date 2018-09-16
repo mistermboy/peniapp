@@ -31,15 +31,20 @@ public class MainActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View v,
                                     int position, long id) {
 
-                if (position % 2 != 0 && position!=0) {
+                if (position== 1) {
 
                     new Charger().execute("fer");
 
-                } else if(position % 2 == 0 && position!=0){
+                }else if(position == 2){
 
                     new Charger().execute("berto");
 
+                }else if(position == 3){
+
+                    new Charger().execute("nandu");
+
                 }
+
             }
         });
 

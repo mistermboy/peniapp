@@ -11,7 +11,7 @@
         android:id="@+id/textInfo"
         android:layout_width="match_parent"
         android:layout_height="390dp"
-        android:text="Pulsa en un audio para reproducirlo, manten pulsado sobre él para acceder a más opciones. Algunas de las opciones necesitan unos permisos especiales. Cuando pulses en alguna de estas opciones verás que se abre un cuadro solicitando permisos que deberás aceptar y además serás redirigido a tu menú de opciones donde debes buscar esta app para darle unos permisos adicionales."
+        android:text="Pulsa en un audio para reproducirlo, manten pulsado sobre él para acceder a más opciones. Algunas de las opciones necesitan unos permisos especiales. Cuando pulses en alguna de estas opciones verás que se abre un cuadro solicitando permisos que deberás aceptar y además serás redirigido a tu menú de ajustes del sistema donde debes buscar esta app para darle unos permisos adicionales."
         android:textAlignment="center"
         android:textColor="@android:color/background_dark"
         android:textSize="22sp" />
