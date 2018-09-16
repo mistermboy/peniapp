@@ -37,7 +37,7 @@ public class Player {
      *   Este método es llamado cada vez que el usuario presiona el botón principal de reproducción.
      */
     public void changeAudio(Context context,ArrayList<String> audios){
-        setMaxValor(audios.size());
+        setMaxValor(audios.size()-1);
         if(valor >= maxValor){
             valor = 0;
             mpNull();
