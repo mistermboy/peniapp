@@ -166,7 +166,14 @@ public class MenuActivity extends AppCompatActivity
 
             description.setText("Drogopropulsado. Vampiro si, pero solo en Halloween");
             description.setTextColor(getResources().getColor(R.color.white));
+        }else if(person.equals("nandu")){
+            name.setText("Fernando Abascal");
+            name.setTextColor(getResources().getColor(R.color.white));
+
+            description.setText("Veterano del mes. A veces me habla la tele.");
+            description.setTextColor(getResources().getColor(R.color.white));
         }
+
 
 
     }
