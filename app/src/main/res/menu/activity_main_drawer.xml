@@ -13,7 +13,7 @@
         <item
             android:id="@+id/quiz"
             android:icon="@drawable/ic_round_school_24px"
-            android:title="Examen" />
+            android:title="Test" />
 
         <item
             android:id="@+id/audios"
