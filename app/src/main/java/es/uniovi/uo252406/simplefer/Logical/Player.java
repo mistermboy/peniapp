@@ -89,6 +89,7 @@ public class Player {
 
         allAudios.put("fer",getAudiosFromRaw("fer"));
         allAudios.put("berto",getAudiosFromRaw("berto"));
+        allAudios.put("nandu",getAudiosFromRaw("nandu"));
 
     }
 

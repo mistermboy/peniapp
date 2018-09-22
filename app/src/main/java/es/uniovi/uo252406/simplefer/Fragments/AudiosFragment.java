@@ -25,6 +25,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -38,6 +39,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import es.uniovi.uo252406.simplefer.Logical.Player;
+import es.uniovi.uo252406.simplefer.Parpadeo;
 import es.uniovi.uo252406.simplefer.Persistence.FavouritesDataSource;
 import es.uniovi.uo252406.simplefer.R;
 
@@ -45,6 +47,7 @@ import es.uniovi.uo252406.simplefer.R;
 public class AudiosFragment extends android.support.v4.app.Fragment {
 
     View view;
+    ImageView swipe;
 
     ArrayList<String> audios;
     String person;
@@ -57,6 +60,8 @@ public class AudiosFragment extends android.support.v4.app.Fragment {
     String pressed = "";
 
     FavouritesDataSource bd;
+
+    Parpadeo parpadeo;
 
     private final int REQUEST_ACCESS_FINE =0;
 
@@ -79,9 +84,9 @@ public class AudiosFragment extends android.support.v4.app.Fragment {
         person = (String) b.getString("person");
         isFavouriteFragment = (boolean) getArguments().getBoolean("favourite");
 
-        new Progress().execute();
+        swipe =  view.findViewById(R.id.audiosSwipe);
 
-        checkFirstRun();
+        new Progress().execute();
 
         return view;
     }
@@ -91,6 +96,8 @@ public class AudiosFragment extends android.support.v4.app.Fragment {
     private  void checkFirstRun(){
         boolean isFirtsRun = getActivity().getSharedPreferences("PREFERENCE", Context.MODE_PRIVATE).getBoolean("isFirstRun",true);
         if(isFirtsRun){
+
+            swipe.setVisibility(View.INVISIBLE);
 
             final Dialog info = new Dialog(getActivity());
             info.setContentView(R.layout.info_dialog);
@@ -104,14 +111,25 @@ public class AudiosFragment extends android.support.v4.app.Fragment {
                 @Override
                 public void onClick(View view) {
 
-                    if(checkBox.isChecked())
-                        getActivity().getSharedPreferences("PREFERENCE", Context.MODE_PRIVATE).edit().putBoolean("isFirstRun",false).apply();
+                    if (checkBox.isChecked())
+                        getActivity().getSharedPreferences("PREFERENCE", Context.MODE_PRIVATE).edit().putBoolean("isFirstRun", false).apply();
 
                     info.dismiss();
+
+                    if (audios.size() > 10) {
+                        swipe.setVisibility(View.VISIBLE);
+                        parpadeo = new Parpadeo(view.getContext(), swipe);
+                    }
+
                 }
             });
 
 
+        }else{
+            if(audios.size()>10)
+                parpadeo = new Parpadeo(view.getContext(),swipe);
+            else
+                swipe.setVisibility(View.INVISIBLE);
         }
 
     }
@@ -126,6 +144,8 @@ public class AudiosFragment extends android.support.v4.app.Fragment {
 
             ProgressBar progressBar = view.findViewById(R.id.progressBar);
             progressBar.setVisibility(View.VISIBLE);
+
+            swipe.setVisibility(View.INVISIBLE);
 
         }
 
@@ -154,6 +174,8 @@ public class AudiosFragment extends android.support.v4.app.Fragment {
         }
 
         protected void onPostExecute (Void result){
+
+            checkFirstRun();
 
             ProgressBar progressBar = view.findViewById(R.id.progressBar);
             progressBar.setVisibility(View.INVISIBLE);
@@ -204,6 +226,7 @@ public class AudiosFragment extends android.support.v4.app.Fragment {
                 //Añadimos los botones a la botonera
                 lScroll.addView(button);
 
+
             }
 
 
@@ -233,6 +256,7 @@ public class AudiosFragment extends android.support.v4.app.Fragment {
             } catch (IllegalStateException e) {
                 Log.e("IllegalStateException", "Illegal State Exception: " + e.getMessage());
             }
+
 
         }
     }

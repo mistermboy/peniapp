@@ -7,18 +7,18 @@
         <item
             android:id="@+id/perfil"
             android:icon="@drawable/ic_baseline_face_24px"
-            android:title="Face" />
+            android:title="Jeta" />
 
 
         <item
             android:id="@+id/quiz"
             android:icon="@drawable/ic_round_school_24px"
-            android:title="Quiz" />
+            android:title="Test" />
 
         <item
             android:id="@+id/audios"
             android:icon="@drawable/ic_baseline_audiotrack_24px"
-            android:title="Audios" />
+            android:title="Sonidos" />
 
         <item
             android:id="@+id/fav"
@@ -34,13 +34,13 @@
 
     </group>
 
-    <item android:title="Communicate">
+    <item android:title="Sobre la app">
         <menu>
             <item
                 android:id="@+id/aboutUs"
                 android:icon="@drawable/ic_baseline_people_24px"
                 android:fontFamily="@font/indieflower"
-                android:title="About us" />
+                android:title="¿Quienes somos?" />
 
         </menu>
     </item>
