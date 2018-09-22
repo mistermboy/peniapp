@@ -18,6 +18,7 @@ public class MainActivity extends AppCompatActivity {
     private Intent intent;
     private GridView gridview;
     private ProgressBar progressMenu;
+    private  Parpadeo parpadeo;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,7 +53,8 @@ public class MainActivity extends AppCompatActivity {
         });
 
         //Se crea la animación
-        new Animation().execute();
+        ImageView swipe = findViewById(R.id.mainSwipe);
+        parpadeo = new Parpadeo(getBaseContext(),swipe);
 
         //Crea todos los audios de todos los personajes
         Player.getInstance().createAllAudios();
@@ -71,49 +73,20 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-    private class Animation extends AsyncTask<Void, Void, Void> {
 
 
-        ImageView swipe = (ImageView) findViewById(R.id.mainSwipe);
+    private class Charger extends AsyncTask<String, Parpadeo, String> {
 
-        protected void onPreExecute() {
-
-
-            new Parpadeo(getBaseContext(),swipe);
-
-        }
 
         @Override
-        protected Void doInBackground(Void... voids) {
-
-            /*
-            int i=0;
-            try {
-                while (i<5){
-                    Thread.sleep(100);
-                    i++;
-                }
-
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            */
-
-            return null;
-        }
-
-    }
-
-
-    private class Charger extends AsyncTask<String, Void, String> {
-
-
         protected void onPreExecute() {
 
+            parpadeo.forceFinish();
             ProgressBar progressMenu = findViewById(R.id.progressMenu);
             progressMenu.setVisibility(View.VISIBLE);
 
             gridview.setVisibility(View.INVISIBLE);
+
 
         }
 

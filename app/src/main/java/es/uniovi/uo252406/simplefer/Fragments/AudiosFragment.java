@@ -25,6 +25,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -38,6 +39,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import es.uniovi.uo252406.simplefer.Logical.Player;
+import es.uniovi.uo252406.simplefer.Parpadeo;
 import es.uniovi.uo252406.simplefer.Persistence.FavouritesDataSource;
 import es.uniovi.uo252406.simplefer.R;
 
@@ -45,6 +47,7 @@ import es.uniovi.uo252406.simplefer.R;
 public class AudiosFragment extends android.support.v4.app.Fragment {
 
     View view;
+    ImageView swipe;
 
     ArrayList<String> audios;
     String person;
@@ -57,6 +60,8 @@ public class AudiosFragment extends android.support.v4.app.Fragment {
     String pressed = "";
 
     FavouritesDataSource bd;
+
+    Parpadeo parpadeo;
 
     private final int REQUEST_ACCESS_FINE =0;
 
@@ -79,6 +84,8 @@ public class AudiosFragment extends android.support.v4.app.Fragment {
         person = (String) b.getString("person");
         isFavouriteFragment = (boolean) getArguments().getBoolean("favourite");
 
+        swipe =  view.findViewById(R.id.audiosSwipe);
+
         new Progress().execute();
 
         checkFirstRun();
@@ -92,6 +99,8 @@ public class AudiosFragment extends android.support.v4.app.Fragment {
         boolean isFirtsRun = getActivity().getSharedPreferences("PREFERENCE", Context.MODE_PRIVATE).getBoolean("isFirstRun",true);
         if(isFirtsRun){
 
+            swipe.setVisibility(View.INVISIBLE);
+
             final Dialog info = new Dialog(getActivity());
             info.setContentView(R.layout.info_dialog);
             info.show();
@@ -104,14 +113,25 @@ public class AudiosFragment extends android.support.v4.app.Fragment {
                 @Override
                 public void onClick(View view) {
 
-                    if(checkBox.isChecked())
-                        getActivity().getSharedPreferences("PREFERENCE", Context.MODE_PRIVATE).edit().putBoolean("isFirstRun",false).apply();
+                    if (checkBox.isChecked())
+                        getActivity().getSharedPreferences("PREFERENCE", Context.MODE_PRIVATE).edit().putBoolean("isFirstRun", false).apply();
 
                     info.dismiss();
+
+                    if (audios.size() > 10) {
+                        swipe.setVisibility(View.VISIBLE);
+                        parpadeo = new Parpadeo(view.getContext(), swipe);
+                    }
+
                 }
             });
 
 
+        }else{
+            if(audios.size()>10)
+                parpadeo = new Parpadeo(view.getContext(),swipe);
+            else
+                swipe.setVisibility(View.INVISIBLE);
         }
 
     }

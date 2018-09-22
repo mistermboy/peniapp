@@ -44,6 +44,11 @@ public class Parpadeo {
     }
 
 
+    public void forceFinish(){
+        img.setAnimation(null);
+        img.setVisibility(View.INVISIBLE);
+    }
+
     /**
      * Starts the animation
      */
@@ -84,6 +89,7 @@ public class Parpadeo {
                 animationCont++;
             }
             else{
+                img.post(mLaunchFadeOutAnimation);
                 img.setVisibility(View.INVISIBLE);
             }
 
@@ -103,9 +109,7 @@ public class Parpadeo {
                 img.post(mLaunchFadeInAnimation);
                 animationCont++;
             }
-            else{
-                img.setVisibility(View.INVISIBLE);
-            }
+
         }
         public void onAnimationRepeat(Animation animation) {
         }
