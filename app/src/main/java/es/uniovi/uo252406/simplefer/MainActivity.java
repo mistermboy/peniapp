@@ -7,7 +7,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import es.uniovi.uo252406.simplefer.Logical.Player;
 
@@ -20,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
 
         progressMenu = findViewById(R.id.progressMenu);
         progressMenu.setVisibility(View.INVISIBLE);
@@ -48,8 +51,12 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //Se crea la animación
+        new Animation().execute();
+
         //Crea todos los audios de todos los personajes
         Player.getInstance().createAllAudios();
+
 
     }
 
@@ -62,6 +69,40 @@ public class MainActivity extends AppCompatActivity {
         gridview.setVisibility(View.VISIBLE);
     }
 
+
+
+    private class Animation extends AsyncTask<Void, Void, Void> {
+
+
+        ImageView swipe = (ImageView) findViewById(R.id.mainSwipe);
+
+        protected void onPreExecute() {
+
+
+            new Parpadeo(getBaseContext(),swipe);
+
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+
+            /*
+            int i=0;
+            try {
+                while (i<5){
+                    Thread.sleep(100);
+                    i++;
+                }
+
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            */
+
+            return null;
+        }
+
+    }
 
 
     private class Charger extends AsyncTask<String, Void, String> {
