@@ -67,6 +67,8 @@ public class FaceFragment extends Fragment{
             vView.setVideoURI(uri);
             vView.seekTo(vView.getDuration());
 
+
+
         }
 
         @Override
@@ -115,8 +117,6 @@ public class FaceFragment extends Fragment{
                             vView.seekTo(vView.getDuration());
                         }
                     }).start();
-
-
 
 
                 } catch (IllegalStateException e) {
