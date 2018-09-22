@@ -88,8 +88,6 @@ public class AudiosFragment extends android.support.v4.app.Fragment {
 
         new Progress().execute();
 
-        checkFirstRun();
-
         return view;
     }
 
@@ -147,6 +145,8 @@ public class AudiosFragment extends android.support.v4.app.Fragment {
             ProgressBar progressBar = view.findViewById(R.id.progressBar);
             progressBar.setVisibility(View.VISIBLE);
 
+            swipe.setVisibility(View.INVISIBLE);
+
         }
 
         @Override
@@ -174,6 +174,8 @@ public class AudiosFragment extends android.support.v4.app.Fragment {
         }
 
         protected void onPostExecute (Void result){
+
+            checkFirstRun();
 
             ProgressBar progressBar = view.findViewById(R.id.progressBar);
             progressBar.setVisibility(View.INVISIBLE);
