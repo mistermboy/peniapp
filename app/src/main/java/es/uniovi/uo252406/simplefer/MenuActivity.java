@@ -1,5 +1,6 @@
 package es.uniovi.uo252406.simplefer;
 
+import android.app.Dialog;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
@@ -10,14 +11,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONException;
-
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 
 import es.uniovi.uo252406.simplefer.Logical.Entities.PersonalData;
 import es.uniovi.uo252406.simplefer.Logical.Parser;
@@ -131,7 +130,22 @@ public class MenuActivity extends AppCompatActivity
         }
         else if (id == R.id.inicio) {
             finish();
+        } else if (id == R.id.aboutUs) {
+            final Dialog info = new Dialog(this);
+            info.setContentView(R.layout.aboutus_dialog);
+            info.show();
+
+            Button ok = info.findViewById(R.id.btnOkAboutUs);
+            ok.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    info.dismiss();
+                }
+            });
+
         }
+
+
 
 
 
