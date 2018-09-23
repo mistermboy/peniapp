@@ -97,7 +97,7 @@ public class Parser {
 
     public StringBuilder getJson(View view,String person) {
 
-        int rawID = view.getContext().getResources().getIdentifier(person,"raw",view.getContext().getPackageName());
+        int rawID = view.getContext().getResources().getIdentifier("j"+person,"raw",view.getContext().getPackageName());
 
 
         BufferedReader bR = new BufferedReader(new InputStreamReader(view.getResources().openRawResource(rawID)));

@@ -139,7 +139,9 @@ public class Player {
     }
 
     public boolean isPlaying() {
-        return  mp.isPlaying();
+        if(mp!=null)
+            return  mp.isPlaying();
+        return false;
     }
 
     public void pause() {
