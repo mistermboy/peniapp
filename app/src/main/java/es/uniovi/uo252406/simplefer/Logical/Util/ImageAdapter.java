@@ -1,10 +1,12 @@
-package es.uniovi.uo252406.simplefer;
+package es.uniovi.uo252406.simplefer.Logical.Util;
 
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+
+import es.uniovi.uo252406.simplefer.R;
 
 public class ImageAdapter extends BaseAdapter {
     private Context mContext;

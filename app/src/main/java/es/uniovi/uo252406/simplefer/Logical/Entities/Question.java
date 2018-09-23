@@ -1,4 +1,4 @@
-package es.uniovi.uo252406.simplefer.Entities;
+package es.uniovi.uo252406.simplefer.Logical.Entities;
 
 public class Question {
 

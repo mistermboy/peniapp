@@ -39,8 +39,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import es.uniovi.uo252406.simplefer.Logical.Player;
-import es.uniovi.uo252406.simplefer.Parpadeo;
-import es.uniovi.uo252406.simplefer.Persistence.FavouritesDataSource;
+import es.uniovi.uo252406.simplefer.Logical.Util.Parpadeo;
+import es.uniovi.uo252406.simplefer.Logical.Persistence.FavouritesDataSource;
 import es.uniovi.uo252406.simplefer.R;
 
 
@@ -116,7 +116,7 @@ public class AudiosFragment extends android.support.v4.app.Fragment {
 
                     info.dismiss();
 
-                    if (audios.size() > 10) {
+                    if (audios.size() > 11) {
                         swipe.setVisibility(View.VISIBLE);
                         parpadeo = new Parpadeo(view.getContext(), swipe);
                     }

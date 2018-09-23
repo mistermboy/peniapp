@@ -18,7 +18,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
-import es.uniovi.uo252406.simplefer.Entities.Question;
+import es.uniovi.uo252406.simplefer.Logical.Entities.Question;
 import es.uniovi.uo252406.simplefer.Logical.Parser;
 import es.uniovi.uo252406.simplefer.Logical.Player;
 import es.uniovi.uo252406.simplefer.R;
@@ -40,7 +40,6 @@ public class QuizFragment extends android.support.v4.app.Fragment {
     private int correctAnswers = 0;
     private View vView;
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -54,7 +53,7 @@ public class QuizFragment extends android.support.v4.app.Fragment {
 
 
         try {
-            questions = Parser.getInstance().parse(getJson());
+            questions = Parser.getInstance().getQuiz(view,person);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -78,9 +77,9 @@ public class QuizFragment extends android.support.v4.app.Fragment {
         vView.setVisibility(View.INVISIBLE);
 
         question = view.findViewById(R.id.textQuestion);
-        option1 = view.findViewById(R.id.btnO1);
-        option2 = view.findViewById(R.id.btnO2);
-        option3 = view.findViewById(R.id.btnO3);
+        option1 = view.findViewById(R.id.option1);
+        option2 = view.findViewById(R.id.option2);
+        option3 = view.findViewById(R.id.option3);
 
         question.setTextColor(getResources().getColor(R.color.white));
         option1.setTextColor(getResources().getColor(R.color.white));
@@ -150,26 +149,6 @@ public class QuizFragment extends android.support.v4.app.Fragment {
         option2.setText("b) "+questions.get(actualQuestion).getOption2());
         option3.setText("c) "+questions.get(actualQuestion).getOption3());
 
-    }
-
-    public StringBuilder getJson() {
-
-        int rawID = getContext().getResources().getIdentifier(person+"quiz","raw",getContext().getPackageName());
-
-
-        BufferedReader bR = new BufferedReader(new InputStreamReader(getResources().openRawResource(rawID)));
-        StringBuilder sB = new StringBuilder();
-        String linea = null;
-
-        try {
-            while ((linea = bR.readLine()) != null) {
-                sB.append(linea).append('\n');
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return sB;
     }
 
 
@@ -285,7 +264,10 @@ public class QuizFragment extends android.support.v4.app.Fragment {
         private void finishQuiz() {
             actualQuestion = 0;
 
-            question.setText("Has respondido " + correctAnswers + " preguntas bien de " + questions.size());
+            if(correctAnswers == 1)
+                question.setText("Has respondido " + correctAnswers + " pregunta bien de " + questions.size());
+            else
+                question.setText("Has respondido " + correctAnswers + " preguntas bien de " + questions.size());
             option1.setText("");
             option2.setText("");
             option3.setText("");
