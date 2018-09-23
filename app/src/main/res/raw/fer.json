@@ -1,0 +1,37 @@
+{
+  "person": {
+    "data": {
+      "name": "Fernando Amado",
+      "description": "Español ante todo. La patria siempre por delante"
+    },
+    "quiz": {
+      "q1": {
+        "question": "¿Qué es lo primero que hace Fer al levantarse?",
+        "options": [
+          "Sentirse muy español",
+          "Lavarse los dientes",
+          "Cantar el himno"
+        ],
+        "answer": "1"
+      },
+      "q2": {
+        "question": "¿Cúal es la mayor afición de Fer?",
+        "options": [
+          "Insultar a M",
+          "Escupir en la sopa a mendigos",
+          "Ver Interconomía"
+        ],
+        "answer": "2"
+      },
+      "q3": {
+        "question": "¿Comida favorita de Fer?",
+        "options": [
+          "Rabo de toro del náutico",
+          "Ensalada mixta del balneario",
+          "Rojos de mierda"
+        ],
+        "answer": "3"
+      }
+    }
+  }
+}

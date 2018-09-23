@@ -1,12 +1,12 @@
-package es.uniovi.uo252406.simplefer;
+package es.uniovi.uo252406.simplefer.Logical.Util;
 
 import android.content.Context;
-import android.os.AsyncTask;
-import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
+
+import es.uniovi.uo252406.simplefer.R;
 
 public class Parpadeo {
 

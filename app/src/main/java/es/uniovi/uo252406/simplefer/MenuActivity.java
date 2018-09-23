@@ -1,6 +1,5 @@
 package es.uniovi.uo252406.simplefer;
 
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
@@ -12,15 +11,21 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONException;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+
+import es.uniovi.uo252406.simplefer.Logical.Entities.PersonalData;
+import es.uniovi.uo252406.simplefer.Logical.Parser;
 import es.uniovi.uo252406.simplefer.Logical.Player;
 import es.uniovi.uo252406.simplefer.Fragments.AudiosFragment;
 import es.uniovi.uo252406.simplefer.Fragments.FaceFragment;
 import es.uniovi.uo252406.simplefer.Fragments.QuizFragment;
-import es.uniovi.uo252406.simplefer.Persistence.FavouritesDataSource;
+import es.uniovi.uo252406.simplefer.Logical.Persistence.FavouritesDataSource;
 
 public class MenuActivity extends AppCompatActivity
         implements  NavigationView.OnNavigationItemSelectedListener {
@@ -153,31 +158,26 @@ public class MenuActivity extends AppCompatActivity
         int rawID = getResources().getIdentifier(person+"cara","drawable",getPackageName());
         perfil.setImageResource(rawID);
 
-        if(person.equals("fer")) {
-            name.setText("Fernando Amado");
+
+        try {
+
+            PersonalData personalData = Parser.getInstance().getData(headView,person);
+
+            name.setText(personalData.getName());
             name.setTextColor(getResources().getColor(R.color.white));
 
-            description.setText("Español ante todo. La patría siempre por delante");
+            description.setText(personalData.getDescription());
             description.setTextColor(getResources().getColor(R.color.white));
 
-        }else if(person.equals("berto")){
-            name.setText("Alberto García");
-            name.setTextColor(getResources().getColor(R.color.white));
-
-            description.setText("Drogopropulsado. Vampiro si, pero solo en Halloween");
-            description.setTextColor(getResources().getColor(R.color.white));
-        }else if(person.equals("nandu")){
-            name.setText("Fernando Abascal");
-            name.setTextColor(getResources().getColor(R.color.white));
-
-            description.setText("Veterano del mes. A veces me habla la tele.");
-            description.setTextColor(getResources().getColor(R.color.white));
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
-
-
-
     }
 
-
+    @Override
+    public void onPause() {
+        super.onPause();
+        finish();
+    }
 
 }

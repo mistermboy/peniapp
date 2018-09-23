@@ -9,16 +9,17 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import es.uniovi.uo252406.simplefer.Logical.Player;
+import es.uniovi.uo252406.simplefer.Logical.Util.ImageAdapter;
+import es.uniovi.uo252406.simplefer.Logical.Util.Parpadeo;
 
 public class MainActivity extends AppCompatActivity {
 
     private Intent intent;
     private GridView gridview;
     private ProgressBar progressMenu;
-    private  Parpadeo parpadeo;
+    private Parpadeo parpadeo;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,15 +61,6 @@ public class MainActivity extends AppCompatActivity {
         Player.getInstance().createAllAudios();
 
 
-    }
-
-
-    @Override
-    public void onResume(){
-        super.onResume();
-
-        progressMenu.setVisibility(View.INVISIBLE);
-        gridview.setVisibility(View.VISIBLE);
     }
 
 
@@ -130,6 +122,19 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+
+    @Override
+    public void onResume(){
+        super.onResume();
+
+        progressMenu.setVisibility(View.INVISIBLE);
+        gridview.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+    }
 
 
 }
