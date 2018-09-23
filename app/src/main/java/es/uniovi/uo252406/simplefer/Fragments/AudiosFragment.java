@@ -116,7 +116,7 @@ public class AudiosFragment extends android.support.v4.app.Fragment {
 
                     info.dismiss();
 
-                    if (audios.size() > 10) {
+                    if (audios.size() > 11) {
                         swipe.setVisibility(View.VISIBLE);
                         parpadeo = new Parpadeo(view.getContext(), swipe);
                     }

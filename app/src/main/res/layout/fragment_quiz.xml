@@ -83,8 +83,8 @@
 
             <VideoView
                 android:id="@+id/vViewQuiz"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_width="340dp"
+                android:layout_height="340dp" />
         </android.support.constraint.ConstraintLayout>
 
     </FrameLayout>

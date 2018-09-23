@@ -264,7 +264,10 @@ public class QuizFragment extends android.support.v4.app.Fragment {
         private void finishQuiz() {
             actualQuestion = 0;
 
-            question.setText("Has respondido " + correctAnswers + " preguntas bien de " + questions.size());
+            if(correctAnswers == 1)
+                question.setText("Has respondido " + correctAnswers + " pregunta bien de " + questions.size());
+            else
+                question.setText("Has respondido " + correctAnswers + " preguntas bien de " + questions.size());
             option1.setText("");
             option2.setText("");
             option3.setText("");

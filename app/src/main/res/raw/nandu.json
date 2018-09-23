@@ -6,7 +6,7 @@
     },
     "quiz": {
       "q1": {
-        "question": "¿Desayuno ideal para Nanduko?",
+        "question": "¿Cuál es el desayuno ideal para Nanduko?",
         "options": [
           "Petilla de buenos días",
           "Pincho de la gasofa",
@@ -24,7 +24,7 @@
         "answer": "3"
       },
       "q3": {
-        "question": "¿Estación del año favorita de nanduko?",
+        "question": "¿Cuál es la estación del año favorita de nanduko?",
         "options": [
           "Verano... Sol,playa, jarana",
           "Primavera trompetera",
