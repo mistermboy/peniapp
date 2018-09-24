@@ -1,4 +1,4 @@
-package es.uniovi.uo252406.simplefer.Fragments;
+package es.uniovi.uo252406.peniapp.Fragments;
 
 import android.Manifest;
 import android.app.Dialog;
@@ -38,9 +38,9 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import es.uniovi.uo252406.simplefer.Logical.Player;
-import es.uniovi.uo252406.simplefer.Logical.Util.Parpadeo;
-import es.uniovi.uo252406.simplefer.Logical.Persistence.FavouritesDataSource;
+import es.uniovi.uo252406.peniapp.Logical.Player;
+import es.uniovi.uo252406.peniapp.Logical.Util.Parpadeo;
+import es.uniovi.uo252406.peniapp.Logical.Persistence.FavouritesDataSource;
 import es.uniovi.uo252406.simplefer.R;
 
 

@@ -1,4 +1,4 @@
-package es.uniovi.uo252406.simplefer.Logical;
+package es.uniovi.uo252406.peniapp.Logical;
 import android.content.Context;
 import android.util.Log;
 

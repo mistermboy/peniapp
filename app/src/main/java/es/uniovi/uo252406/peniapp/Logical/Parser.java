@@ -1,4 +1,4 @@
-package es.uniovi.uo252406.simplefer.Logical;
+package es.uniovi.uo252406.peniapp.Logical;
 
 import android.view.View;
 
@@ -10,8 +10,8 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
-import es.uniovi.uo252406.simplefer.Logical.Entities.PersonalData;
-import es.uniovi.uo252406.simplefer.Logical.Entities.Question;
+import es.uniovi.uo252406.peniapp.Logical.Entities.PersonalData;
+import es.uniovi.uo252406.peniapp.Logical.Entities.Question;
 
 
 public class Parser {

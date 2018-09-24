@@ -1,4 +1,4 @@
-package es.uniovi.uo252406.simplefer.Fragments;
+package es.uniovi.uo252406.peniapp.Fragments;
 
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -14,7 +14,7 @@ import android.widget.VideoView;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import es.uniovi.uo252406.simplefer.Logical.Player;
+import es.uniovi.uo252406.peniapp.Logical.Player;
 import es.uniovi.uo252406.simplefer.R;
 
 

@@ -1,4 +1,4 @@
-package es.uniovi.uo252406.simplefer.Fragments;
+package es.uniovi.uo252406.peniapp.Fragments;
 
 import android.graphics.Typeface;
 import android.net.Uri;
@@ -14,13 +14,11 @@ import android.widget.VideoView;
 
 import org.json.JSONException;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 
-import es.uniovi.uo252406.simplefer.Logical.Entities.Question;
-import es.uniovi.uo252406.simplefer.Logical.Parser;
-import es.uniovi.uo252406.simplefer.Logical.Player;
+import es.uniovi.uo252406.peniapp.Logical.Parser;
+import es.uniovi.uo252406.peniapp.Logical.Player;
+import es.uniovi.uo252406.peniapp.Logical.Entities.Question;
 import es.uniovi.uo252406.simplefer.R;
 
 

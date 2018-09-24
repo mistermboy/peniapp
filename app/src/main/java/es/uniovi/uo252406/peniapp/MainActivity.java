@@ -1,4 +1,4 @@
-package es.uniovi.uo252406.simplefer;
+package es.uniovi.uo252406.peniapp;
 
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -10,9 +10,10 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 
-import es.uniovi.uo252406.simplefer.Logical.Player;
-import es.uniovi.uo252406.simplefer.Logical.Util.ImageAdapter;
-import es.uniovi.uo252406.simplefer.Logical.Util.Parpadeo;
+import es.uniovi.uo252406.peniapp.Logical.Player;
+import es.uniovi.uo252406.peniapp.Logical.Util.ImageAdapter;
+import es.uniovi.uo252406.peniapp.Logical.Util.Parpadeo;
+import es.uniovi.uo252406.simplefer.R;
 
 public class MainActivity extends AppCompatActivity {
 

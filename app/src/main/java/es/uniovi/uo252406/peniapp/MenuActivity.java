@@ -1,4 +1,4 @@
-package es.uniovi.uo252406.simplefer;
+package es.uniovi.uo252406.peniapp;
 
 import android.app.Dialog;
 import android.os.Bundle;
@@ -18,13 +18,14 @@ import android.widget.Toast;
 
 import org.json.JSONException;
 
-import es.uniovi.uo252406.simplefer.Logical.Entities.PersonalData;
-import es.uniovi.uo252406.simplefer.Logical.Parser;
-import es.uniovi.uo252406.simplefer.Logical.Player;
-import es.uniovi.uo252406.simplefer.Fragments.AudiosFragment;
-import es.uniovi.uo252406.simplefer.Fragments.FaceFragment;
-import es.uniovi.uo252406.simplefer.Fragments.QuizFragment;
-import es.uniovi.uo252406.simplefer.Logical.Persistence.FavouritesDataSource;
+import es.uniovi.uo252406.peniapp.Fragments.AudiosFragment;
+import es.uniovi.uo252406.peniapp.Logical.Entities.PersonalData;
+import es.uniovi.uo252406.peniapp.Logical.Parser;
+import es.uniovi.uo252406.peniapp.Logical.Player;
+import es.uniovi.uo252406.peniapp.Fragments.FaceFragment;
+import es.uniovi.uo252406.peniapp.Fragments.QuizFragment;
+import es.uniovi.uo252406.peniapp.Logical.Persistence.FavouritesDataSource;
+import es.uniovi.uo252406.simplefer.R;
 
 public class MenuActivity extends AppCompatActivity
         implements  NavigationView.OnNavigationItemSelectedListener {
