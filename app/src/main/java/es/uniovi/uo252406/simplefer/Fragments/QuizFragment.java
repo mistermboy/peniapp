@@ -274,7 +274,7 @@ public class QuizFragment extends android.support.v4.app.Fragment {
 
             if (correctAnswers == questions.size()) {
                 Player.getInstance().selectAudio(getContext(), "quiz_perfect_"+person);
-            } else if (correctAnswers >= (questions.size()) / 2) {
+            } else if (correctAnswers >= 3 && correctAnswers < questions.size()) {
                 Player.getInstance().selectAudio(getContext(), "quiz_good_" + person);
             } else {
                 Player.getInstance().selectAudio(getContext(), "quiz_bad_" + person);

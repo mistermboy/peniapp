@@ -8,20 +8,20 @@
       "q1": {
         "question": "¿Qué es lo primero que hace Fer al levantarse?",
         "options": [
-          "Sentirse muy español",
           "Lavarse los dientes",
+          "Sentirse muy español",
           "Cantar el himno"
         ],
-        "answer": "1"
+        "answer": "2"
       },
       "q2": {
         "question": "¿Cúal es la mayor afición de Fer?",
         "options": [
-          "Insultar a M",
           "Escupir en la sopa a mendigos",
-          "Ver Interconomía"
+          "Insultar a M",
+          "Ver interconomía"
         ],
-        "answer": "2"
+        "answer": "1"
       },
       "q3": {
         "question": "¿Cuál es la comida favorita de Fer?",
@@ -31,6 +31,24 @@
           "Rojos de mierda"
         ],
         "answer": "3"
+      },
+      "q4": {
+        "question": "¿A donde va Fer cuando quiere divertirse?",
+        "options": [
+          "Al gym",
+          "A los toros",
+          "A porcular a mini"
+        ],
+        "answer": "3"
+      },
+      "q5": {
+        "question": "¿Que le suele pasar a Fer las noches que sale?",
+        "options": [
+          "Acaba en el Karaoke",
+          "Le abofetean desde un Land Rover",
+          "Discute con Quevedo"
+        ],
+        "answer": "2"
       }
     }
   }
