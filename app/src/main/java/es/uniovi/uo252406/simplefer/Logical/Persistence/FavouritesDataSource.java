@@ -1,4 +1,4 @@
-package es.uniovi.uo252406.simplefer.Persistence;
+package es.uniovi.uo252406.simplefer.Logical.Persistence;
 
 import android.content.ContentValues;
 import android.content.Context;

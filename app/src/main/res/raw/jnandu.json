@@ -1,0 +1,37 @@
+{
+  "person": {
+    "data": {
+      "name": "Fernando Abascal",
+      "description": "Meo más en botes que en vater. A veces me habla la tele"
+    },
+    "quiz": {
+      "q1": {
+        "question": "¿Cuál es el desayuno ideal para Nanduko?",
+        "options": [
+          "Petilla de buenos días",
+          "Pincho de la gasofa",
+          "Águila Negra del Jali"
+        ],
+        "answer": "2"
+      },
+      "q2": {
+        "question": "¿Cúal es la mayor afición de Nanduko?",
+        "options": [
+          "Rapear",
+          "Hacer bodyboard",
+          "Autoproclamarse veterano del mes"
+        ],
+        "answer": "3"
+      },
+      "q3": {
+        "question": "¿Cuál es la estación del año favorita de nanduko?",
+        "options": [
+          "Verano... Sol,playa, jarana",
+          "Primavera trompetera",
+          "Invierno, que hay más nieve"
+        ],
+        "answer": "3"
+      }
+    }
+  }
+}
