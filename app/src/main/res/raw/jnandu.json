@@ -18,7 +18,7 @@
         "question": "¿Cúal es la mayor afición de Nanduko?",
         "options": [
           "Rapear",
-          "Hacer bodyboard",
+          "Practicar bodyboard",
           "Autoproclamarse veterano del mes"
         ],
         "answer": "3"
@@ -31,6 +31,24 @@
           "Invierno, que hay más nieve"
         ],
         "answer": "3"
+      },
+      "q4": {
+        "question": "¿Qué aroma suele desprender Nanduko?",
+        "options": [
+          "Tortilla",
+          "Weed",
+          "Hash"
+        ],
+        "answer": "1"
+      },
+      "q5": {
+        "question": "¿Qué vestimenta caracteriza más a Nanduko?",
+        "options": [
+          "Su camiseta de ACDC",
+          "Su neopreno de pelota de tenis",
+          "Su riñonera de las medicinas"
+        ],
+        "answer": "2"
       }
     }
   }

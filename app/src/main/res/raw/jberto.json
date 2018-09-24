@@ -33,6 +33,35 @@
         "Bocata del jali"
       ],
       "answer": "1"
+    },
+
+    "q4": {
+      "question": "¿Qué caracteriza más a Alberto?",
+      "options": [
+        "Su bigote a lo Dalí",
+        "Su cicatriz del gangleo",
+        "Sus orejas pegadas"
+      ],
+      "answer": "3"
+    },
+    "q5": {
+      "question": "¿Cúal es la definición de noche perfecta para Alberto?",
+      "options": [
+        "Bañarse con Álex el Vago",
+        "Escupirle en la calva a Anes",
+        "Pillarse a la hija de la directora"
+      ],
+      "answer": "2"
+    },
+    "q6": {
+      "question": "¿Cúal de la siguientes anécdotas define mejor a Alberto?",
+      "options": [
+        "Hacerle un dibujo a la camarera de la luna",
+        "Hacer un Payaso en casa de Rojo",
+        "Ir disfrazado de vaca al Ramiro"
+      ],
+      "answer": "3"
     }
+
   }
 }}    
