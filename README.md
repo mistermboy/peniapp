@@ -2,7 +2,7 @@
 
 Android app for me and my friends
 
-## Contributors
+## Authors
 
 Developer: [mistermboy](https://github.com/mistermboy).
 
